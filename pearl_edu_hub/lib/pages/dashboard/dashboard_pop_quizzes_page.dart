@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
-
-class DashboardStudentsPage extends StatelessWidget {
-  const DashboardStudentsPage({super.key});
+class DashboardPopQuizzesPage extends StatelessWidget {
+  const DashboardPopQuizzesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,49 +30,43 @@ class DashboardStudentsPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                    child: CustomizedTextView(
-                  textData: "ID",
-                  textFontSize: kFont16,
-                  textFontWeight: FontWeight.w600,
-                  textAlign: TextAlign.start,
-                )),
+
                 Expanded(
                   flex: 2,
                   child: CustomizedTextView(
-                    textData: "Name",
+                    textData: "ID-Title",
                     textFontSize: kFont16,
                     textFontWeight: FontWeight.w600,
                   ),
                 ),
                 Expanded(
                     child: CustomizedTextView(
-                  textData: "Image",
-                  textFontSize: kFont16,
-                  textFontWeight: FontWeight.w600,
-                  textAlign: TextAlign.center,
-                )),
+                      textData: "Class",
+                      textFontSize: kFont16,
+                      textFontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    )),
                 Expanded(
                     child: CustomizedTextView(
-                  textData: "Phone",
-                  textFontSize: kFont16,
-                  textFontWeight: FontWeight.w600,
-                  textAlign: TextAlign.center,
-                )),
+                      textData: "Image",
+                      textFontSize: kFont16,
+                      textFontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    )),
                 Expanded(
                     child: CustomizedTextView(
-                  textData: "Email",
-                  textFontSize: kFont16,
-                  textFontWeight: FontWeight.w600,
-                  textAlign: TextAlign.center,
-                )),
+                      textData: "Lecture",
+                      textFontSize: kFont16,
+                      textFontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    )),
                 Expanded(
                     child: CustomizedTextView(
-                  textData: "Current Class",
-                  textFontSize: kFont16,
-                  textFontWeight: FontWeight.w600,
-                  textAlign: TextAlign.center,
-                )),
+                      textData: "Updated At",
+                      textFontSize: kFont16,
+                      textFontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    )),
               ],
             ),
           ),
@@ -83,7 +76,7 @@ class DashboardStudentsPage extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 40,
-            itemBuilder: (context, index) => const _StudentItemView(),
+            itemBuilder: (context, index) => const _QuizItemView(),
             separatorBuilder: (context, index) => const SizedBox(
               height: kMargin12,
             ),
@@ -93,27 +86,19 @@ class DashboardStudentsPage extends StatelessWidget {
     );
   }
 }
-
-class _StudentItemView extends StatelessWidget {
-  const _StudentItemView();
+class _QuizItemView extends StatelessWidget {
+  const _QuizItemView();
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding:
-          const EdgeInsets.symmetric(horizontal: kMargin4, vertical: kMargin16),
+      const EdgeInsets.symmetric(horizontal: kMargin4, vertical: kMargin16),
       decoration: BoxDecoration(border: Border.all(color: kInvisibleColor)),
       child: const Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-              child: CustomizedTextView(
-            textData: "1",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.start,
-          )),
           Expanded(
               flex: 2,
               child: MouseRegion(
@@ -128,37 +113,37 @@ class _StudentItemView extends StatelessWidget {
               )),
           Expanded(
               child: CustomizedTextView(
-            textData: "2900000",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          )),
+                textData: "2900000",
+                textFontSize: kFont16,
+                textFontWeight: FontWeight.w500,
+                textAlign: TextAlign.center,
+              )),
           Expanded(
               child: CustomizedTextView(
-            textData: "2023-32,232",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          )),
+                textData: "2023-32,232",
+                textFontSize: kFont16,
+                textFontWeight: FontWeight.w500,
+                textAlign: TextAlign.center,
+              )),
           Expanded(
               child: CustomizedTextView(
-            textData: "2023-32,232",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          )),
+                textData: "2023-32,232",
+                textFontSize: kFont16,
+                textFontWeight: FontWeight.w500,
+                textAlign: TextAlign.center,
+              )),
           Expanded(
               child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: CustomizedTextView(
-              textData: "80",
-              textFontSize: kFont16,
-              textFontWeight: FontWeight.w500,
-              textAlign: TextAlign.center,
-              textColor: kPrimaryColor,
-              textDecoration: TextDecoration.underline,
-            ),
-          )),
+                cursor: SystemMouseCursors.click,
+                child: CustomizedTextView(
+                  textData: "80",
+                  textFontSize: kFont16,
+                  textFontWeight: FontWeight.w500,
+                  textAlign: TextAlign.center,
+                  textColor: kPrimaryColor,
+                  textDecoration: TextDecoration.underline,
+                ),
+              )),
         ],
       ),
     );

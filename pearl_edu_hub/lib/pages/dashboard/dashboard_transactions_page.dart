@@ -3,8 +3,8 @@ import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 
-class DashboardStudentsPage extends StatelessWidget {
-  const DashboardStudentsPage({super.key});
+class DashboardTransactionsPage extends StatelessWidget {
+  const DashboardTransactionsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,45 +31,54 @@ class DashboardStudentsPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                    child: CustomizedTextView(
+                CustomizedTextView(
                   textData: "ID",
                   textFontSize: kFont16,
                   textFontWeight: FontWeight.w600,
                   textAlign: TextAlign.start,
-                )),
+                ),
+                SizedBox(
+                  width: kMargin32,
+                ),
                 Expanded(
-                  flex: 2,
                   child: CustomizedTextView(
-                    textData: "Name",
+                    textData: "Date & Time",
                     textFontSize: kFont16,
                     textFontWeight: FontWeight.w600,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Expanded(
                     child: CustomizedTextView(
-                  textData: "Image",
+                  textData: "Class",
                   textFontSize: kFont16,
                   textFontWeight: FontWeight.w600,
                   textAlign: TextAlign.center,
                 )),
                 Expanded(
                     child: CustomizedTextView(
-                  textData: "Phone",
+                  textData: "User Name",
                   textFontSize: kFont16,
                   textFontWeight: FontWeight.w600,
                   textAlign: TextAlign.center,
                 )),
                 Expanded(
                     child: CustomizedTextView(
-                  textData: "Email",
+                  textData: "Payment type",
                   textFontSize: kFont16,
                   textFontWeight: FontWeight.w600,
                   textAlign: TextAlign.center,
                 )),
                 Expanded(
                     child: CustomizedTextView(
-                  textData: "Current Class",
+                  textData: "Amount",
+                  textFontSize: kFont16,
+                  textFontWeight: FontWeight.w600,
+                  textAlign: TextAlign.center,
+                )),
+                Expanded(
+                    child: CustomizedTextView(
+                  textData: "Status",
                   textFontSize: kFont16,
                   textFontWeight: FontWeight.w600,
                   textAlign: TextAlign.center,
@@ -83,7 +92,7 @@ class DashboardStudentsPage extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: 40,
-            itemBuilder: (context, index) => const _StudentItemView(),
+            itemBuilder: (context, index) => const _TransactionItemView(),
             separatorBuilder: (context, index) => const SizedBox(
               height: kMargin12,
             ),
@@ -94,8 +103,8 @@ class DashboardStudentsPage extends StatelessWidget {
   }
 }
 
-class _StudentItemView extends StatelessWidget {
-  const _StudentItemView();
+class _TransactionItemView extends StatelessWidget {
+  const _TransactionItemView();
 
   @override
   Widget build(BuildContext context) {
@@ -107,25 +116,27 @@ class _StudentItemView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-              child: CustomizedTextView(
+          CustomizedTextView(
             textData: "1",
             textFontSize: kFont16,
             textFontWeight: FontWeight.w500,
             textAlign: TextAlign.start,
-          )),
+          ),
+          SizedBox(
+            width: kMargin32,
+          ),
           Expanded(
-              flex: 2,
               child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: CustomizedTextView(
-                  textData: "Pyi Theim Kyaw",
-                  textFontSize: kFont16,
-                  textFontWeight: FontWeight.w500,
-                  textColor: kPrimaryColor,
-                  textDecoration: TextDecoration.underline,
-                ),
-              )),
+            cursor: SystemMouseCursors.click,
+            child: CustomizedTextView(
+              textData: "Pyi Theim Kyaw",
+              textFontSize: kFont16,
+              textFontWeight: FontWeight.w500,
+              textColor: kPrimaryColor,
+              textDecoration: TextDecoration.underline,
+              textAlign: TextAlign.center,
+            ),
+          )),
           Expanded(
               child: CustomizedTextView(
             textData: "2900000",
@@ -146,6 +157,18 @@ class _StudentItemView extends StatelessWidget {
             textFontSize: kFont16,
             textFontWeight: FontWeight.w500,
             textAlign: TextAlign.center,
+          )),
+          Expanded(
+              child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: CustomizedTextView(
+              textData: "80",
+              textFontSize: kFont16,
+              textFontWeight: FontWeight.w500,
+              textAlign: TextAlign.center,
+              textColor: kPrimaryColor,
+              textDecoration: TextDecoration.underline,
+            ),
           )),
           Expanded(
               child: MouseRegion(

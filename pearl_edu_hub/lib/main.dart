@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pearl_edu_hub/rescources/fonts.dart';
 import 'package:pearl_edu_hub/route/AppRoute.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 void main() {
@@ -14,10 +15,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Pearl Edu Hub',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
+        fontFamily: kFontMulish,
       ),
       // routeInformationParser: AppRoute.returnRouter(false).routeInformationParser,
       // routerDelegate: AppRoute.returnRouter(false).routerDelegate,

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pearl_edu_hub/blocs/dashboard_page_bloc.dart';
 import 'package:pearl_edu_hub/pages/dashboard/admin_dashboard_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_assignments_page.dart';
 import 'package:pearl_edu_hub/pages/dashboard/dashboard_classes_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_lectures_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_payment_types_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_pop_quizzes_page.dart';
 import 'package:pearl_edu_hub/pages/dashboard/dashboard_students_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_transactions_page.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
 import 'package:pearl_edu_hub/rescources/images.dart';
@@ -94,9 +99,11 @@ class _ContentsSectionView extends StatelessWidget {
                 ),
                 const DashboardClassesPage(),
                 const DashboardStudentsPage(),
-                const SizedBox(
-                  child: Text("Lectures"),
-                ),
+                const DashboardLecturesPage(),
+                const DashboardAssignmentsPage(),
+                const DashboardPopQuizzesPage(),
+                const DashboardTransactionsPage(),
+                const DashboardPaymentTypesPage(),
               ][sidebarItemIndex],
             ),
           ],
@@ -317,8 +324,8 @@ class _DashboardAppBarView extends StatelessWidget {
             const SizedBox(
               width: kMargin16,
             ),
-            const CustomizedTextView(
-              textData: "Dash",
+            CustomizedTextView(
+              textData: bloc.titleList[bloc.sidebarItemIndex],
               textFontSize: kFont20,
               textFontWeight: FontWeight.w600,
             ),
@@ -341,6 +348,10 @@ class _DashboardAppBarView extends StatelessWidget {
             const SizedBox(
               width: kMargin16,
             ),
+            ElevatedButton.icon(onPressed: (){}, icon: Icon(
+              Icons.logout,
+              color: kRedColor,
+            ), label: Text('Logout')),
             GestureDetector(
               onTap: () {
                 //   TODO:
