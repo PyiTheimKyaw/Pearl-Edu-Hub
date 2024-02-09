@@ -3,7 +3,7 @@ import 'dart:js';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pearl_edu_hub/pages/about_page.dart';
-import 'package:pearl_edu_hub/pages/dashboard_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_page.dart';
 import 'package:pearl_edu_hub/pages/home_page.dart';
 import 'package:pearl_edu_hub/route/route_constants.dart';
 
@@ -39,7 +39,7 @@ class AppRoute {
       GoRoute(
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
-          return const HomePage();
+          return const DashboardPage();
         },
         routes: <RouteBase>[
           GoRoute(

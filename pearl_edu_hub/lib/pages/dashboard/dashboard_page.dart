@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:pearl_edu_hub/blocs/dashboard_page_bloc.dart';
-import 'package:pearl_edu_hub/pages/admin_dashboard_page.dart';
-import 'package:pearl_edu_hub/pages/dashboard_students_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/admin_dashboard_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_classes_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_students_page.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
 import 'package:pearl_edu_hub/rescources/images.dart';
@@ -75,21 +76,32 @@ class _ContentsSectionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const _DashboardAppBarView(),
-        SizedBox(
-          child: [
-            const AdminDashboardPage(),
-            const SizedBox(
-              child: Text("CLasses"),
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const _DashboardAppBarView(),
+            SizedBox(
+              child: [
+                AdminDashboardPage(
+                  onTapInfoItem: (index) {
+                    var bloc =
+                        Provider.of<DashboardPageBloc>(context, listen: false);
+                    bloc.onChangePageIndex(index);
+                  },
+                ),
+                const DashboardClassesPage(),
+                const DashboardStudentsPage(),
+                const SizedBox(
+                  child: Text("Lectures"),
+                ),
+              ][sidebarItemIndex],
             ),
-            const DashboardStudentsPage(),
-          ][sidebarItemIndex],
+          ],
         ),
-      ],
+      ),
     );
   }
 }
@@ -212,6 +224,9 @@ class _SideBarItemView extends StatelessWidget {
                 ? Icon(
                     itemIcon,
                     color: kPrimaryColor,
+                    size: isChosen
+                        ? kDashboardSelectedMenuItemSize
+                        : kDashboardMenuItemSize,
                   )
                 : Row(
                     mainAxisSize: MainAxisSize.min,
@@ -220,6 +235,9 @@ class _SideBarItemView extends StatelessWidget {
                       Icon(
                         itemIcon,
                         color: kPrimaryColor,
+                        size: isChosen
+                            ? kDashboardSelectedMenuItemSize
+                            : kDashboardMenuItemSize,
                       ),
                       const SizedBox(
                         width: kMargin16,
@@ -227,6 +245,9 @@ class _SideBarItemView extends StatelessWidget {
                       CustomizedTextView(
                         textData: itemLabel,
                         textColor: kWhiteColor,
+                        textFontSize: isChosen ? kFont16 : kFont13,
+                        textFontWeight:
+                            isChosen ? FontWeight.bold : FontWeight.w400,
                       )
                     ],
                   ),

@@ -31,3 +31,5 @@ const double kRadius90 = 90.0;
 
 // App specific
 const double kAppLogoSize = 90.0;
+const double kDashboardMenuItemSize = 24.0;
+const double kDashboardSelectedMenuItemSize = 30.0;
