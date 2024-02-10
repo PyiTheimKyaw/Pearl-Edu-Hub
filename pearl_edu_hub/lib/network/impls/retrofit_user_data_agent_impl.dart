@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:pearl_edu_hub/network/data_agents/user_data_agent.dart';
 import 'package:pearl_edu_hub/network/pearl_api.dart';
+import 'package:pearl_edu_hub/network/responses/base_response.dart';
 import 'package:pearl_edu_hub/network/responses/classes_response.dart';
+import 'package:pearl_edu_hub/network/responses/lectures_response.dart';
 import 'package:pearl_edu_hub/network/responses/students_response.dart';
 
 class RetrofitUserDataAgentImpl extends UserDataAgent {
@@ -18,6 +20,7 @@ class RetrofitUserDataAgentImpl extends UserDataAgent {
     final dio = createTokenDao();
     mPearlApi = PearlApi(dio);
   }
+
   static Dio createTokenDao() {
     Dio dio = Dio(
       BaseOptions(
@@ -46,5 +49,27 @@ class RetrofitUserDataAgentImpl extends UserDataAgent {
   @override
   Future<StudentsResponse> getStudents() {
     return mPearlApi.getStudents();
+  }
+
+  @override
+  Future<BaseResponse> createClass(
+      {String? className,
+      double? classFees,
+      String? classInfo,
+      String? startDate,
+      String? endDate,
+      List<int>? lectureIds}) {
+    return mPearlApi.createClass(
+        className: className,
+        classFees: classFees,
+        classInfo: classInfo,
+        startDate: startDate,
+        endDate: endDate,
+        lectureIds: lectureIds?.join(","));
+  }
+
+  @override
+  Future<LecturesResponse> getLectures() {
+    return mPearlApi.getLectures();
   }
 }
