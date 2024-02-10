@@ -1,9 +1,12 @@
 import 'package:pearl_edu_hub/blocs/base_bloc.dart';
+import 'package:pearl_edu_hub/data/models/user_data_model.dart';
+import 'package:pearl_edu_hub/data/vos/classes_vo.dart';
 import 'package:pearl_edu_hub/rescources/strings.dart';
 
 class DashboardPageBloc extends BaseBloc {
   int sidebarItemIndex = 0;
   bool isSideBarShown = true;
+
   List<String> titleList = [
     kTextDashboard,
     kTextClasses,
@@ -14,6 +17,7 @@ class DashboardPageBloc extends BaseBloc {
     kTextTransactions,
     kTextPaymentType
   ];
+
 
   void onTapMenu() {
     isSideBarShown = !isSideBarShown;

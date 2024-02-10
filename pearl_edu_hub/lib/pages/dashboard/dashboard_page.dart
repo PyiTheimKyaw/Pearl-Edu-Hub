@@ -35,10 +35,8 @@ class DashboardPage extends StatelessWidget {
           shouldRebuild: (next, prev) => next != prev,
           builder: (BuildContext context, sidebarItemIndex, Widget? child) =>
               Responsive(
-                  mobile: Expanded(
-                    child: _ContentsSectionView(
-                      sidebarItemIndex: sidebarItemIndex,
-                    ),
+                  mobile: _ContentsSectionView(
+                    sidebarItemIndex: sidebarItemIndex,
                   ),
                   desktop: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -49,8 +47,7 @@ class DashboardPage extends StatelessWidget {
                             AnimatedSize(
                                 duration: const Duration(milliseconds: 500),
                                 child: bloc.isSideBarShown
-                                    ? const Expanded(
-                                        child: _SideBarSectionView())
+                                    ? const _SideBarSectionView()
                                     : const SizedBox(
                                         width: 100,
                                         child: _SideBarSectionView(
@@ -348,10 +345,6 @@ class _DashboardAppBarView extends StatelessWidget {
             const SizedBox(
               width: kMargin16,
             ),
-            ElevatedButton.icon(onPressed: (){}, icon: Icon(
-              Icons.logout,
-              color: kRedColor,
-            ), label: Text('Logout')),
             GestureDetector(
               onTap: () {
                 //   TODO:
