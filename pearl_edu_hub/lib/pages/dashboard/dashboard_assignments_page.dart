@@ -1,87 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
+import 'package:pearl_edu_hub/rescources/strings.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
+import 'package:pearl_edu_hub/widgets/dashboard_app_bar_view.dart';
 
 class DashboardAssignmentsPage extends StatelessWidget {
-  const DashboardAssignmentsPage({super.key});
-
+  const DashboardAssignmentsPage({super.key,required this.onTapMenu});
+  final Function onTapMenu;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(
-          left: kMargin32, right: kMargin32, bottom: kMargin24),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(kRadius10),
-          border: Border.all(color: kInvisibleColor)),
+    return SingleChildScrollView(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          DashboardAppBarView(
+              onTapMenu: () {
+                onTapMenu();
+              },
+              appBarLabel: kTextAssignments),
           Container(
-            padding: const EdgeInsets.all(kMargin16),
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(
-              color: Color.fromRGBO(219, 226, 236, 1.0),
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(kRadius10),
-                  topRight: Radius.circular(kRadius10)),
-            ),
-            child: const Row(
+            margin: const EdgeInsets.only(
+                left: kMargin32, right: kMargin32, bottom: kMargin24),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(kRadius10),
+                border: Border.all(color: kInvisibleColor)),
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                Expanded(
-                  flex: 2,
-                  child: CustomizedTextView(
-                    textData: "ID-Title",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.w600,
+                Container(
+                  padding: const EdgeInsets.all(kMargin16),
+                  clipBehavior: Clip.antiAlias,
+                  decoration: const BoxDecoration(
+                    color: Color.fromRGBO(219, 226, 236, 1.0),
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(kRadius10),
+                        topRight: Radius.circular(kRadius10)),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+          
+                      Expanded(
+                        flex: 2,
+                        child: CustomizedTextView(
+                          textData: "ID-Title",
+                          textFontSize: kFont16,
+                          textFontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Expanded(
+                          child: CustomizedTextView(
+                            textData: "Class",
+                            textFontSize: kFont16,
+                            textFontWeight: FontWeight.w600,
+                            textAlign: TextAlign.center,
+                          )),
+                      Expanded(
+                          child: CustomizedTextView(
+                            textData: "Image",
+                            textFontSize: kFont16,
+                            textFontWeight: FontWeight.w600,
+                            textAlign: TextAlign.center,
+                          )),
+                      Expanded(
+                          child: CustomizedTextView(
+                            textData: "Lecture",
+                            textFontSize: kFont16,
+                            textFontWeight: FontWeight.w600,
+                            textAlign: TextAlign.center,
+                          )),
+                      Expanded(
+                          child: CustomizedTextView(
+                            textData: "Updated At",
+                            textFontSize: kFont16,
+                            textFontWeight: FontWeight.w600,
+                            textAlign: TextAlign.center,
+                          )),
+                    ],
                   ),
                 ),
-                Expanded(
-                    child: CustomizedTextView(
-                      textData: "Class",
-                      textFontSize: kFont16,
-                      textFontWeight: FontWeight.w600,
-                      textAlign: TextAlign.center,
-                    )),
-                Expanded(
-                    child: CustomizedTextView(
-                      textData: "Image",
-                      textFontSize: kFont16,
-                      textFontWeight: FontWeight.w600,
-                      textAlign: TextAlign.center,
-                    )),
-                Expanded(
-                    child: CustomizedTextView(
-                      textData: "Lecture",
-                      textFontSize: kFont16,
-                      textFontWeight: FontWeight.w600,
-                      textAlign: TextAlign.center,
-                    )),
-                Expanded(
-                    child: CustomizedTextView(
-                      textData: "Updated At",
-                      textFontSize: kFont16,
-                      textFontWeight: FontWeight.w600,
-                      textAlign: TextAlign.center,
-                    )),
+                ListView.separated(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: kMargin8, vertical: kMargin8),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: 40,
+                  itemBuilder: (context, index) => const _AssignmentItemView(),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: kMargin12,
+                  ),
+                )
               ],
             ),
           ),
-          ListView.separated(
-            padding: const EdgeInsets.symmetric(
-                horizontal: kMargin8, vertical: kMargin8),
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: 40,
-            itemBuilder: (context, index) => const _AssignmentItemView(),
-            separatorBuilder: (context, index) => const SizedBox(
-              height: kMargin12,
-            ),
-          )
         ],
       ),
     );

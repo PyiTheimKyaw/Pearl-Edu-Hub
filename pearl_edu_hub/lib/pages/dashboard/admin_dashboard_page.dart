@@ -4,25 +4,33 @@ import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
 import 'package:pearl_edu_hub/rescources/strings.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
+import 'package:pearl_edu_hub/widgets/dashboard_app_bar_view.dart';
 import 'package:provider/provider.dart';
 
 class AdminDashboardPage extends StatelessWidget {
-  const AdminDashboardPage({super.key, required this.onTapInfoItem});
+  const AdminDashboardPage(
+      {super.key, required this.onTapInfoItem, required this.onTapMenu});
 
   final Function(int) onTapInfoItem;
+  final Function onTapMenu;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) => AdminDashboardPageBloc(),
       child: Consumer<AdminDashboardPageBloc>(
-        builder: (BuildContext context, bloc, Widget? child) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: kMargin32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Wrap(
+        builder: (BuildContext context, bloc, Widget? child) => Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            DashboardAppBarView(
+                onTapMenu: () {
+                  onTapMenu();
+                },
+                appBarLabel: kTextDashboard),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: kMargin32),
+              child: Wrap(
                 alignment: WrapAlignment.start,
                 crossAxisAlignment: WrapCrossAlignment.start,
                 spacing: kMargin16,
@@ -80,8 +88,8 @@ class AdminDashboardPage extends StatelessWidget {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

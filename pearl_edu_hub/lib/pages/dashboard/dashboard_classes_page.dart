@@ -11,11 +11,14 @@ import 'package:pearl_edu_hub/rescources/dimens.dart';
 import 'package:pearl_edu_hub/rescources/strings.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_field.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
+import 'package:pearl_edu_hub/widgets/dashboard_app_bar_view.dart';
 import 'package:pearl_edu_hub/widgets/date_picker_view.dart';
 import 'package:provider/provider.dart';
 
 class DashboardClassesPage extends StatelessWidget {
-  const DashboardClassesPage({super.key});
+  const DashboardClassesPage({super.key, required this.onTapMenu});
+
+  final Function onTapMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,11 @@ class DashboardClassesPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          DashboardAppBarView(
+              onTapMenu: () {
+                onTapMenu();
+              },
+              appBarLabel: kTextClasses),
           const _CreateClassButtonView(),
           Container(
             margin: const EdgeInsets.only(

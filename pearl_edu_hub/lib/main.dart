@@ -1,14 +1,28 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:pearl_edu_hub/pages/main_screen_location.dart';
 import 'package:pearl_edu_hub/rescources/fonts.dart';
 import 'package:pearl_edu_hub/route/AppRoute.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+
 void main() {
   usePathUrlStrategy();
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({Key? key}) : super(key: key);
+  final routerDelegate = BeamerDelegate(
+    transitionDelegate: const NoAnimationTransitionDelegate(),
+
+    // NOTE FIRST METHOD
+    // locationBuilder: RoutesLocationBuilder(routes: {
+    //   '*': (context, state, data) => const LandingScreen(),
+    // }),
+
+    // NOTE Second Method
+    locationBuilder: (routeInformation, _) => HomeLocation(routeInformation),
+  );
 
   // This widget is the root of your application.
   @override
@@ -21,9 +35,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: kFontMulish,
       ),
-      // routeInformationParser: AppRoute.returnRouter(false).routeInformationParser,
+      routeInformationParser: BeamerParser(),
       // routerDelegate: AppRoute.returnRouter(false).routerDelegate,
-      routerConfig: AppRoute().router,
+      routerDelegate: routerDelegate,
     );
   }
 }
