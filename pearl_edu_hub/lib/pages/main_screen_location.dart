@@ -5,6 +5,7 @@ import 'package:pearl_edu_hub/pages/landing_screen.dart';
 
 class HomeLocation extends BeamLocation<BeamState> {
   HomeLocation(RouteInformation routeInformation) : super(routeInformation);
+
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
     return [

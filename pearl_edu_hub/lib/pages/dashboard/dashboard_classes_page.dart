@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
@@ -467,8 +468,10 @@ class _ClassItemView extends StatelessWidget {
         children: [
           Expanded(
               flex: 2,
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
+              child: InkWell(
+                onTap: (){
+                  context.beamToNamed("/dashboard/classes/${classItem?.id}");
+                },
                 child: CustomizedTextView(
                   textData: "#${classItem?.id}-${classItem?.className}",
                   textFontSize: kFont16,

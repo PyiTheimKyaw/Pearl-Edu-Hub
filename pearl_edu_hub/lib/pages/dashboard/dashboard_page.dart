@@ -2,6 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:pearl_edu_hub/blocs/dashboard_page_bloc.dart';
 import 'package:pearl_edu_hub/pages/dashboard/admin_dashboard_page.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_class_details_page.dart';
 import 'package:pearl_edu_hub/pages/dashboard/dashboard_assignments_page.dart';
 import 'package:pearl_edu_hub/pages/dashboard/dashboard_classes_page.dart';
 import 'package:pearl_edu_hub/pages/dashboard/dashboard_lectures_page.dart';
@@ -100,180 +101,435 @@ class _ContentsSectionView extends StatelessWidget {
       key: beamer,
       routerDelegate: BeamerDelegate(
         // NOTE First Method
-        locationBuilder: RoutesLocationBuilder(
-          routes: {
-            '*': (context, state, data) => const SizedBox(),
-            // '/settings': (context, state, data) {
-            //   print(state.pathPatternSegments);
-            //   if (state.pathPatternSegments.contains('account')) {
-            //     return BeamPage(
-            //       key: ValueKey('AccountsSettings - ${DateTime.now()}'),
-            //       type: BeamPageType.scaleTransition,
-            //       child: const AccountSettings(),
-            //     );
-            //   } else if (state.pathPatternSegments
-            //       .contains('profile')) {
-            //     return BeamPage(
-            //       key: ValueKey('ProfileSettings - ${DateTime.now()}'),
-            //       type: BeamPageType.scaleTransition,
-            //       child: const ProfileSettings(),
-            //     );
-            //   }
-            //   return BeamPage(
-            //     key: ValueKey('Settings - ${DateTime.now()}'),
-            //     type: BeamPageType.scaleTransition,
-            //     child: const Settings(),
-            //   );
-            // },
-            RouteConstants.getDashboard: (context, state, data) => BeamPage(
-                  key: const ValueKey(kTextDashboard),
-                  type: BeamPageType.scaleTransition,
-                  child: AdminDashboardPage(
-                    onTapInfoItem: (index) {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      bloc.onChangePageIndex(index);
-                    },
-                    onTapMenu: () {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      if (Responsive.isDesktop(context)) {
-                        bloc.onTapMenu();
-                      } else {
-                        scaffoldKey.currentState!.openDrawer();
-                      }
-                    },
-                  ),
-                ),
-            RouteConstants.getClasses: (context, state, data) => BeamPage(
-                  key: const ValueKey(kTextClasses),
-                  type: BeamPageType.scaleTransition,
-                  child: DashboardClassesPage(
-                    onTapMenu: () {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      if (Responsive.isDesktop(context)) {
-                        bloc.onTapMenu();
-                      } else {
-                        scaffoldKey.currentState!.openDrawer();
-                      }
-                    },
-                  ),
-                ),
-            RouteConstants.getStudents: (context, state, data) => BeamPage(
-                  key: const ValueKey(kTextStudents),
-                  type: BeamPageType.scaleTransition,
-                  child: DashboardStudentsPage(
-                    onTapMenu: () {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      if (Responsive.isDesktop(context)) {
-                        bloc.onTapMenu();
-                      } else {
-                        scaffoldKey.currentState!.openDrawer();
-                      }
-                    },
-                  ),
-                ),
-            RouteConstants.getLectures: (context, state, data) => BeamPage(
-                  key: const ValueKey(kTextLectures),
-                  type: BeamPageType.scaleTransition,
-                  child: DashboardLecturesPage(
-                    onTapMenu: () {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      if (Responsive.isDesktop(context)) {
-                        bloc.onTapMenu();
-                      } else {
-                        scaffoldKey.currentState!.openDrawer();
-                      }
-                    },
-                  ),
-                ),
-            RouteConstants.getAssignments: (context, state, data) => BeamPage(
-                  key: const ValueKey(kTextAssignments),
-                  type: BeamPageType.scaleTransition,
-                  child: DashboardAssignmentsPage(
-                    onTapMenu: () {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      if (Responsive.isDesktop(context)) {
-                        bloc.onTapMenu();
-                      } else {
-                        scaffoldKey.currentState!.openDrawer();
-                      }
-                    },
-                  ),
-                ),
-            RouteConstants.getQuizzes: (context, state, data) => BeamPage(
-                  key: const ValueKey(kTextPopQuizzes),
-                  type: BeamPageType.scaleTransition,
-                  child: DashboardPopQuizzesPage(
-                    onTapMenu: () {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      if (Responsive.isDesktop(context)) {
-                        bloc.onTapMenu();
-                      } else {
-                        scaffoldKey.currentState!.openDrawer();
-                      }
-                    },
-                  ),
-                ),
-            RouteConstants.getTransactions: (context, state, data) => BeamPage(
-                  key: const ValueKey(kTextTransactions),
-                  type: BeamPageType.scaleTransition,
-                  child: DashboardTransactionsPage(
-                    onTapMenu: () {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      if (Responsive.isDesktop(context)) {
-                        bloc.onTapMenu();
-                      } else {
-                        scaffoldKey.currentState!.openDrawer();
-                      }
-                    },
-                  ),
-                ),
-            RouteConstants.getPaymentTypes: (context, state, data) => BeamPage(
-                  key: const ValueKey(kTextPaymentType),
-                  type: BeamPageType.scaleTransition,
-                  child: DashboardPaymentTypesPage(
-                    onTapMenu: () {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      if (Responsive.isDesktop(context)) {
-                        bloc.onTapMenu();
-                      } else {
-                        scaffoldKey.currentState!.openDrawer();
-                      }
-                    },
-                  ),
-                ),
-          },
-        ),
+        // locationBuilder: RoutesLocationBuilder(
+        //   routes: {
+        //     '*': (context, state, data) => const SizedBox(),
+        //     RouteConstants.getClasses: (context, state, data) {
+        //
+        //       return BeamPage(
+        //         key: const ValueKey(kTextClasses),
+        //         type: BeamPageType.scaleTransition,
+        //         child: DashboardClassesPage(
+        //           onTapMenu: () {
+        //             var bloc =
+        //                 Provider.of<DashboardPageBloc>(context, listen: false);
+        //             if (Responsive.isDesktop(context)) {
+        //               bloc.onTapMenu();
+        //             } else {
+        //               scaffoldKey.currentState!.openDrawer();
+        //             }
+        //           },
+        //         ),
+        //       );
+        //     },
+        //     '${RouteConstants.getClasses}/:classId' : (context,state,data){
+        //       final String? bookIdParameter = state.pathParameters['classId'];
+        //       print("Class id => $bookIdParameter");
+        //       if (bookIdParameter != null) {
+        //         final bookId = int.tryParse(bookIdParameter);
+        //         // final book = books.firstWhereOrNull((book) => book.id == bookId);
+        //
+        //         return  BeamPage(
+        //             key: ValueKey('book-$bookIdParameter'),
+        //             title: 'Book #$bookIdParameter',
+        //             child: DashboardClassDetailsPage(classItem: "bookId ?? 0",),
+        //           );
+        //
+        //       }else{
+        //         return SizedBox();
+        //       }
+        //     },
+        //     RouteConstants.getDashboard: (context, state, data) => BeamPage(
+        //           key: const ValueKey(kTextDashboard),
+        //           type: BeamPageType.scaleTransition,
+        //           child: AdminDashboardPage(
+        //             onTapInfoItem: (index) {
+        //               var bloc = Provider.of<DashboardPageBloc>(context,
+        //                   listen: false);
+        //               bloc.onChangePageIndex(index);
+        //             },
+        //             onTapMenu: () {
+        //               var bloc = Provider.of<DashboardPageBloc>(context,
+        //                   listen: false);
+        //               if (Responsive.isDesktop(context)) {
+        //                 bloc.onTapMenu();
+        //               } else {
+        //                 scaffoldKey.currentState!.openDrawer();
+        //               }
+        //             },
+        //           ),
+        //         ),
+        //     RouteConstants.getStudents: (context, state, data) => BeamPage(
+        //           key: const ValueKey(kTextStudents),
+        //           type: BeamPageType.scaleTransition,
+        //           child: DashboardStudentsPage(
+        //             onTapMenu: () {
+        //               var bloc = Provider.of<DashboardPageBloc>(context,
+        //                   listen: false);
+        //               if (Responsive.isDesktop(context)) {
+        //                 bloc.onTapMenu();
+        //               } else {
+        //                 scaffoldKey.currentState!.openDrawer();
+        //               }
+        //             },
+        //           ),
+        //         ),
+        //     RouteConstants.getLectures: (context, state, data) => BeamPage(
+        //           key: const ValueKey(kTextLectures),
+        //           type: BeamPageType.scaleTransition,
+        //           child: DashboardLecturesPage(
+        //             onTapMenu: () {
+        //               var bloc = Provider.of<DashboardPageBloc>(context,
+        //                   listen: false);
+        //               if (Responsive.isDesktop(context)) {
+        //                 bloc.onTapMenu();
+        //               } else {
+        //                 scaffoldKey.currentState!.openDrawer();
+        //               }
+        //             },
+        //           ),
+        //         ),
+        //     RouteConstants.getAssignments: (context, state, data) => BeamPage(
+        //           key: const ValueKey(kTextAssignments),
+        //           type: BeamPageType.scaleTransition,
+        //           child: DashboardAssignmentsPage(
+        //             onTapMenu: () {
+        //               var bloc = Provider.of<DashboardPageBloc>(context,
+        //                   listen: false);
+        //               if (Responsive.isDesktop(context)) {
+        //                 bloc.onTapMenu();
+        //               } else {
+        //                 scaffoldKey.currentState!.openDrawer();
+        //               }
+        //             },
+        //           ),
+        //         ),
+        //     RouteConstants.getQuizzes: (context, state, data) => BeamPage(
+        //           key: const ValueKey(kTextPopQuizzes),
+        //           type: BeamPageType.scaleTransition,
+        //           child: DashboardPopQuizzesPage(
+        //             onTapMenu: () {
+        //               var bloc = Provider.of<DashboardPageBloc>(context,
+        //                   listen: false);
+        //               if (Responsive.isDesktop(context)) {
+        //                 bloc.onTapMenu();
+        //               } else {
+        //                 scaffoldKey.currentState!.openDrawer();
+        //               }
+        //             },
+        //           ),
+        //         ),
+        //     RouteConstants.getTransactions: (context, state, data) => BeamPage(
+        //           key: const ValueKey(kTextTransactions),
+        //           type: BeamPageType.scaleTransition,
+        //           child: DashboardTransactionsPage(
+        //             onTapMenu: () {
+        //               var bloc = Provider.of<DashboardPageBloc>(context,
+        //                   listen: false);
+        //               if (Responsive.isDesktop(context)) {
+        //                 bloc.onTapMenu();
+        //               } else {
+        //                 scaffoldKey.currentState!.openDrawer();
+        //               }
+        //             },
+        //           ),
+        //         ),
+        //     RouteConstants.getPaymentTypes: (context, state, data) => BeamPage(
+        //           key: const ValueKey(kTextPaymentType),
+        //           type: BeamPageType.scaleTransition,
+        //           child: DashboardPaymentTypesPage(
+        //             onTapMenu: () {
+        //               var bloc = Provider.of<DashboardPageBloc>(context,
+        //                   listen: false);
+        //               if (Responsive.isDesktop(context)) {
+        //                 bloc.onTapMenu();
+        //               } else {
+        //                 scaffoldKey.currentState!.openDrawer();
+        //               }
+        //             },
+        //           ),
+        //         ),
+        //   },
+        // ),
 
         // NOTE Secondary Method
-        // locationBuilder: (routeInfo, data) {
-        //   if (routeInfo.location!.contains('dashboard')) {
-        //     return DashboardLocation(routeInfo);
-        //   }
-        //   if (routeInfo.location!.contains('settings')) {
-        //     return SettingsLocation(routeInfo);
-        //   }
-        //   if (routeInfo.location!.contains('profile')) {
-        //     return ProfileLocation(routeInfo);
-        //   }
-        //   if (routeInfo.location!.contains('notifications')) {
-        //     return NotificationLocation(routeInfo);
-        //   }
-        //   if (routeInfo.location!.contains('about')) {
-        //     return AboutLocation(routeInfo);
-        //   }
-        //   return NotFound(path: routeInfo.location!.toString());
-        // },
+        locationBuilder: (routeInfo, data) {
+          print("ROUTE IS IS ${routeInfo.uri.pathSegments}");
+          if (routeInfo.uri.pathSegments.join("") == 'dashboard') {
+            return DashboardLocation();
+          }
+          if (routeInfo.uri.pathSegments.contains('classes')) {
+            return ClassesLocation();
+          }
+          if (routeInfo.uri.pathSegments.contains('students')) {
+            return StudentsLocation();
+          }
+          if (routeInfo.uri.pathSegments.contains('lectures')) {
+            return LectureLocation();
+          }
+          if (routeInfo.uri.pathSegments.contains('assignments')) {
+            return AssignmentsLocation();
+          }
+
+          if (routeInfo.uri.pathSegments.contains('assignments')) {
+            return AssignmentsLocation();
+          }
+          if (routeInfo.uri.pathSegments.contains('quizzes')) {
+            return QuizzesLocation();
+          }
+          if (routeInfo.uri.pathSegments.contains('transactions')) {
+            return TransactionsLocation();
+          }
+          if (routeInfo.uri.pathSegments.contains('payment-types')) {
+            return PaymentTypesLocation();
+          }
+
+          return NotFound(path: routeInfo.uri.pathSegments.toString());
+        },
       ),
     );
+  }
+}
+
+class PaymentTypesLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final pages = [
+      BeamPage(
+        key: const ValueKey(kTextPaymentType),
+        title: kAppName,
+        child: DashboardPaymentTypesPage(
+          onTapMenu: () {
+            var bloc = Provider.of<DashboardPageBloc>(context, listen: false);
+            if (Responsive.isDesktop(context)) {
+              bloc.onTapMenu();
+            } else {
+              scaffoldKey.currentState!.openDrawer();
+            }
+          },
+        ),
+      ),
+    ];
+
+    return pages;
+  }
+
+  @override
+  List<Pattern> get pathPatterns => [RouteConstants.getPaymentTypes];
+}
+
+class TransactionsLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final pages = [
+      BeamPage(
+        key: const ValueKey(kTextTransactions),
+        title: kAppName,
+        child: DashboardTransactionsPage(
+          onTapMenu: () {
+            var bloc = Provider.of<DashboardPageBloc>(context, listen: false);
+            if (Responsive.isDesktop(context)) {
+              bloc.onTapMenu();
+            } else {
+              scaffoldKey.currentState!.openDrawer();
+            }
+          },
+        ),
+      ),
+    ];
+
+    return pages;
+  }
+
+  @override
+  List<Pattern> get pathPatterns => [RouteConstants.getTransactions];
+}
+
+class QuizzesLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final pages = [
+      BeamPage(
+        key: const ValueKey(kTextPopQuizzes),
+        title: kAppName,
+        child: DashboardPopQuizzesPage(
+          onTapMenu: () {
+            var bloc = Provider.of<DashboardPageBloc>(context, listen: false);
+            if (Responsive.isDesktop(context)) {
+              bloc.onTapMenu();
+            } else {
+              scaffoldKey.currentState!.openDrawer();
+            }
+          },
+        ),
+      ),
+    ];
+
+    return pages;
+  }
+
+  @override
+  List<Pattern> get pathPatterns => ['${RouteConstants.getQuizzes}:/quizId'];
+}
+
+class AssignmentsLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final pages = [
+      BeamPage(
+        key: const ValueKey(kTextAssignments),
+        title: kAppName,
+        child: DashboardAssignmentsPage(
+          onTapMenu: () {
+            var bloc = Provider.of<DashboardPageBloc>(context, listen: false);
+            if (Responsive.isDesktop(context)) {
+              bloc.onTapMenu();
+            } else {
+              scaffoldKey.currentState!.openDrawer();
+            }
+          },
+        ),
+      ),
+    ];
+
+    return pages;
+  }
+
+  @override
+  List<Pattern> get pathPatterns =>
+      ['${RouteConstants.getAssignments}:/assignmentId'];
+}
+
+class LectureLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final pages = [
+      BeamPage(
+        key: const ValueKey(kTextLectures),
+        title: kAppName,
+        child: DashboardLecturesPage(
+          onTapMenu: () {
+            var bloc = Provider.of<DashboardPageBloc>(context, listen: false);
+            if (Responsive.isDesktop(context)) {
+              bloc.onTapMenu();
+            } else {
+              scaffoldKey.currentState!.openDrawer();
+            }
+          },
+        ),
+      ),
+    ];
+
+    return pages;
+  }
+
+  @override
+  List<Pattern> get pathPatterns =>
+      ['${RouteConstants.getLectures}:/lectureId'];
+}
+
+class DashboardLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final pages = [
+      BeamPage(
+        key: const ValueKey(kTextDashboard),
+        title: kAppName,
+        child: AdminDashboardPage(
+          onTapMenu: () {
+            var bloc = Provider.of<DashboardPageBloc>(context, listen: false);
+            if (Responsive.isDesktop(context)) {
+              bloc.onTapMenu();
+            } else {
+              scaffoldKey.currentState!.openDrawer();
+            }
+          },
+          onTapInfoItem: (int) {},
+        ),
+      ),
+    ];
+
+    return pages;
+  }
+
+  @override
+  List<Pattern> get pathPatterns => [RouteConstants.getDashboard];
+}
+
+class StudentsLocation extends BeamLocation<BeamState> {
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final pages = [
+      BeamPage(
+        key: const ValueKey(kTextStudents),
+        title: kAppName,
+        child: DashboardStudentsPage(
+          onTapMenu: () {
+            var bloc = Provider.of<DashboardPageBloc>(context, listen: false);
+            if (Responsive.isDesktop(context)) {
+              bloc.onTapMenu();
+            } else {
+              scaffoldKey.currentState!.openDrawer();
+            }
+          },
+        ),
+      ),
+    ];
+    final String? studentIdParameter = state.pathParameters['studentId'];
+    print("PARA $studentIdParameter");
+    if (studentIdParameter != null) {
+      final bookId = int.tryParse(studentIdParameter);
+      pages.add(
+        BeamPage(
+          key: ValueKey('book-$studentIdParameter'),
+          title: kAppName,
+          child: DashboardClassDetailsPage(classItem: studentIdParameter),
+        ),
+      );
+    }
+    return pages;
+  }
+
+  @override
+  List<Pattern> get pathPatterns =>
+      ['${RouteConstants.getStudents}/:studentId'];
+}
+
+class ClassesLocation extends BeamLocation<BeamState> {
+  @override
+  List<Pattern> get pathPatterns => ['${RouteConstants.getClasses}/:classId'];
+
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final pages = [
+      BeamPage(
+        key: const ValueKey(kTextClasses),
+        title: kAppName,
+        child: DashboardClassesPage(
+          onTapMenu: () {
+            var bloc = Provider.of<DashboardPageBloc>(context, listen: false);
+            if (Responsive.isDesktop(context)) {
+              bloc.onTapMenu();
+            } else {
+              scaffoldKey.currentState!.openDrawer();
+            }
+          },
+        ),
+      ),
+    ];
+    final String? bookIdParameter = state.pathParameters['classId'];
+    print("PARA $bookIdParameter");
+    if (bookIdParameter != null) {
+      final bookId = int.tryParse(bookIdParameter);
+      pages.add(
+        BeamPage(
+          key: ValueKey('book-$bookIdParameter'),
+          title: kAppName,
+          child: DashboardClassDetailsPage(classItem: bookIdParameter),
+        ),
+      );
+    }
+    return pages;
   }
 }
 
@@ -310,7 +566,7 @@ class _SideBarSectionViewState extends State<_SideBarSectionView> {
     ];
     final path = (context.currentBeamLocation.state as BeamState).uri.path;
     print('path $path');
-    if (path.contains(RouteConstants.getDashboard)) {
+    if (path == (RouteConstants.getDashboard)) {
       selected = 0;
     } else if (path.contains(RouteConstants.getClasses)) {
       selected = 1;

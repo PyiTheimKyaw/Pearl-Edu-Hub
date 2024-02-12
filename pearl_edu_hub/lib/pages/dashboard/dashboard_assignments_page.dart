@@ -6,8 +6,10 @@ import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 import 'package:pearl_edu_hub/widgets/dashboard_app_bar_view.dart';
 
 class DashboardAssignmentsPage extends StatelessWidget {
-  const DashboardAssignmentsPage({super.key,required this.onTapMenu});
+  const DashboardAssignmentsPage({super.key, required this.onTapMenu});
+
   final Function onTapMenu;
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -41,7 +43,6 @@ class DashboardAssignmentsPage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-          
                       Expanded(
                         flex: 2,
                         child: CustomizedTextView(
@@ -52,32 +53,32 @@ class DashboardAssignmentsPage extends StatelessWidget {
                       ),
                       Expanded(
                           child: CustomizedTextView(
-                            textData: "Class",
-                            textFontSize: kFont16,
-                            textFontWeight: FontWeight.w600,
-                            textAlign: TextAlign.center,
-                          )),
+                        textData: "Class",
+                        textFontSize: kFont16,
+                        textFontWeight: FontWeight.w600,
+                        textAlign: TextAlign.center,
+                      )),
                       Expanded(
                           child: CustomizedTextView(
-                            textData: "Image",
-                            textFontSize: kFont16,
-                            textFontWeight: FontWeight.w600,
-                            textAlign: TextAlign.center,
-                          )),
+                        textData: "Image",
+                        textFontSize: kFont16,
+                        textFontWeight: FontWeight.w600,
+                        textAlign: TextAlign.center,
+                      )),
                       Expanded(
                           child: CustomizedTextView(
-                            textData: "Lecture",
-                            textFontSize: kFont16,
-                            textFontWeight: FontWeight.w600,
-                            textAlign: TextAlign.center,
-                          )),
+                        textData: "Lecture",
+                        textFontSize: kFont16,
+                        textFontWeight: FontWeight.w600,
+                        textAlign: TextAlign.center,
+                      )),
                       Expanded(
                           child: CustomizedTextView(
-                            textData: "Updated At",
-                            textFontSize: kFont16,
-                            textFontWeight: FontWeight.w600,
-                            textAlign: TextAlign.center,
-                          )),
+                        textData: "Updated At",
+                        textFontSize: kFont16,
+                        textFontWeight: FontWeight.w600,
+                        textAlign: TextAlign.center,
+                      )),
                     ],
                   ),
                 ),
@@ -100,6 +101,7 @@ class DashboardAssignmentsPage extends StatelessWidget {
     );
   }
 }
+
 class _AssignmentItemView extends StatelessWidget {
   const _AssignmentItemView();
 
@@ -107,7 +109,7 @@ class _AssignmentItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding:
-      const EdgeInsets.symmetric(horizontal: kMargin4, vertical: kMargin16),
+          const EdgeInsets.symmetric(horizontal: kMargin4, vertical: kMargin16),
       decoration: BoxDecoration(border: Border.all(color: kInvisibleColor)),
       child: const Row(
         mainAxisSize: MainAxisSize.min,
@@ -127,37 +129,37 @@ class _AssignmentItemView extends StatelessWidget {
               )),
           Expanded(
               child: CustomizedTextView(
-                textData: "2900000",
-                textFontSize: kFont16,
-                textFontWeight: FontWeight.w500,
-                textAlign: TextAlign.center,
-              )),
+            textData: "2900000",
+            textFontSize: kFont16,
+            textFontWeight: FontWeight.w500,
+            textAlign: TextAlign.center,
+          )),
           Expanded(
               child: CustomizedTextView(
-                textData: "2023-32,232",
-                textFontSize: kFont16,
-                textFontWeight: FontWeight.w500,
-                textAlign: TextAlign.center,
-              )),
+            textData: "2023-32,232",
+            textFontSize: kFont16,
+            textFontWeight: FontWeight.w500,
+            textAlign: TextAlign.center,
+          )),
           Expanded(
               child: CustomizedTextView(
-                textData: "2023-32,232",
-                textFontSize: kFont16,
-                textFontWeight: FontWeight.w500,
-                textAlign: TextAlign.center,
-              )),
+            textData: "2023-32,232",
+            textFontSize: kFont16,
+            textFontWeight: FontWeight.w500,
+            textAlign: TextAlign.center,
+          )),
           Expanded(
               child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: CustomizedTextView(
-                  textData: "80",
-                  textFontSize: kFont16,
-                  textFontWeight: FontWeight.w500,
-                  textAlign: TextAlign.center,
-                  textColor: kPrimaryColor,
-                  textDecoration: TextDecoration.underline,
-                ),
-              )),
+            cursor: SystemMouseCursors.click,
+            child: CustomizedTextView(
+              textData: "80",
+              textFontSize: kFont16,
+              textFontWeight: FontWeight.w500,
+              textAlign: TextAlign.center,
+              textColor: kPrimaryColor,
+              textDecoration: TextDecoration.underline,
+            ),
+          )),
         ],
       ),
     );
