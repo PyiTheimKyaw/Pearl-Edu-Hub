@@ -271,9 +271,6 @@ class _ContentsSectionView extends StatelessWidget {
             return AssignmentsLocation();
           }
 
-          if (routeInfo.uri.pathSegments.contains('assignments')) {
-            return AssignmentsLocation();
-          }
           if (routeInfo.uri.pathSegments.contains('quizzes')) {
             return QuizzesLocation();
           }
@@ -444,7 +441,7 @@ class DashboardLocation extends BeamLocation<BeamState> {
               scaffoldKey.currentState!.openDrawer();
             }
           },
-          onTapInfoItem: (int) {},
+          onTapInfoItem: (item) {},
         ),
       ),
     ];
@@ -475,18 +472,6 @@ class StudentsLocation extends BeamLocation<BeamState> {
         ),
       ),
     ];
-    final String? studentIdParameter = state.pathParameters['studentId'];
-    print("PARA $studentIdParameter");
-    if (studentIdParameter != null) {
-      final bookId = int.tryParse(studentIdParameter);
-      pages.add(
-        BeamPage(
-          key: ValueKey('book-$studentIdParameter'),
-          title: kAppName,
-          child: DashboardClassDetailsPage(classItem: studentIdParameter),
-        ),
-      );
-    }
     return pages;
   }
 
@@ -520,12 +505,21 @@ class ClassesLocation extends BeamLocation<BeamState> {
     final String? bookIdParameter = state.pathParameters['classId'];
     print("PARA $bookIdParameter");
     if (bookIdParameter != null) {
-      final bookId = int.tryParse(bookIdParameter);
       pages.add(
         BeamPage(
           key: ValueKey('book-$bookIdParameter'),
           title: kAppName,
-          child: DashboardClassDetailsPage(classItem: bookIdParameter),
+          child: DashboardClassDetailsPage(
+            classId: bookIdParameter,
+            onTapMenu: () {
+              var bloc = Provider.of<DashboardPageBloc>(context, listen: false);
+              if (Responsive.isDesktop(context)) {
+                bloc.onTapMenu();
+              } else {
+                scaffoldKey.currentState!.openDrawer();
+              }
+            },
+          ),
         ),
       );
     }

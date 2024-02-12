@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:pearl_edu_hub/network/data_agents/user_data_agent.dart';
 import 'package:pearl_edu_hub/network/pearl_api.dart';
 import 'package:pearl_edu_hub/network/responses/base_response.dart';
+import 'package:pearl_edu_hub/network/responses/class_details_response.dart';
 import 'package:pearl_edu_hub/network/responses/classes_response.dart';
 import 'package:pearl_edu_hub/network/responses/lectures_response.dart';
 import 'package:pearl_edu_hub/network/responses/students_response.dart';
@@ -71,5 +72,10 @@ class RetrofitUserDataAgentImpl extends UserDataAgent {
   @override
   Future<LecturesResponse> getLectures() {
     return mPearlApi.getLectures();
+  }
+
+  @override
+  Future<ClassDetailsResponse> getClassDetail({required int classId}) {
+    return mPearlApi.getClassDetail(classId);
   }
 }

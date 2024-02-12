@@ -44,4 +44,10 @@ class UserDataModel {
   Future<List<LectureVO>?> getLectures() {
     return userDataAgent.getLectures().then((value) => value.lectures);
   }
+
+  Future<ClassesVO?> getClassDetail({required int classId}) {
+    return userDataAgent
+        .getClassDetail(classId: classId)
+        .then((value) => value.classDetail);
+  }
 }

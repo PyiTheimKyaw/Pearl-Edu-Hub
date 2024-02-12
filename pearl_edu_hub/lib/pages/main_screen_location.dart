@@ -1,6 +1,5 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
-import 'package:pearl_edu_hub/pages/home_page.dart';
 import 'package:pearl_edu_hub/pages/landing_screen.dart';
 
 class HomeLocation extends BeamLocation<BeamState> {

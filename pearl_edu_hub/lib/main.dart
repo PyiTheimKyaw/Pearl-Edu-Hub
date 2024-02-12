@@ -2,7 +2,6 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:pearl_edu_hub/pages/main_screen_location.dart';
 import 'package:pearl_edu_hub/rescources/fonts.dart';
-import 'package:pearl_edu_hub/route/AppRoute.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() {

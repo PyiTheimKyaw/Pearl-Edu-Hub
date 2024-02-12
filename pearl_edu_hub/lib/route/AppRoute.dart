@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pearl_edu_hub/pages/dashboard/dashboard_page.dart';

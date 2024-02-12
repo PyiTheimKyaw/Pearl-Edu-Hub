@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:pearl_edu_hub/network/api_constants.dart';
 import 'package:pearl_edu_hub/network/responses/base_response.dart';
+import 'package:pearl_edu_hub/network/responses/class_details_response.dart';
 import 'package:pearl_edu_hub/network/responses/classes_response.dart';
 import 'package:pearl_edu_hub/network/responses/lectures_response.dart';
 import 'package:pearl_edu_hub/network/responses/students_response.dart';
@@ -30,4 +31,9 @@ abstract class PearlApi {
 
   @GET(kEndPointGetLectures)
   Future<LecturesResponse> getLectures();
+
+  @GET(kEndPointGetClassDetail)
+  Future<ClassDetailsResponse> getClassDetail(
+    @Query(kParamClassId) int classId,
+  );
 }

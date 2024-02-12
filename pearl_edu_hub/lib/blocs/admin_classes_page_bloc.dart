@@ -56,7 +56,6 @@ class AdminClassesPageBloc extends BaseBloc {
       }
     }).toList();
     notifySafely();
-    print("Lecture ids ${ids}");
     return ids;
   }
 
@@ -94,21 +93,15 @@ class AdminClassesPageBloc extends BaseBloc {
     return userDataModel.getLectures().then((value) {
       lectures = value;
 
-      print("Lecture list is ${value?.first.name}");
       notifySafely();
-    }).catchError((error) {
-      print("Lecture error is ${error.toString()}");
-    });
+    }).catchError((error) {});
   }
 
   Future<List<ClassesVO>?> getClassesForAdminClassesPage() {
     return userDataModel.getClassesForAdmin().then((value) {
       classes = value;
-      print("Classes list ${classes?.length}");
 
       notifySafely();
-    }).catchError((error) {
-      print("Error is ${error.toString()}");
-    });
+    }).catchError((error) {});
   }
 }
