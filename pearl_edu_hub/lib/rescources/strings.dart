@@ -12,5 +12,16 @@ const String kTextTotalStudents = "Total Students";
 const String kTextTotalLectures = "Total Lectures";
 const String kTextDone = "Done";
 const String kTextClose = "Close";
+const String kTextNA = "N/A";
+const String kTextSave = "Save";
+const String kTextCreate = "Create";
 //Classes page
 const String kTextCreateClass = "Create class";
+const String kTextEditClass = "Edit Class";
+const String kTextAddNewStudent = "Add Student";
+const String kTextAddAssignment = "Add Assignment";
+const String kTextAddPopQuiz = "Add Pop Quiz";
+const String kTextAddLiveSession = "Add Live Session";
+const String kTextEnrolledStudents = "Enrolled Students";
+const String kTextLiveSessions = "Live Sessions";
+const String kTextMeetingLink = "Meeting Link";

@@ -17,6 +17,7 @@ class CustomizedTextView extends StatelessWidget {
     this.textOverflow = TextOverflow.visible,
     this.allInOneStyle,
     this.textDecoration,
+    this.fontStyle,
   });
 
   final String textData;
@@ -28,12 +29,12 @@ class CustomizedTextView extends StatelessWidget {
   final int? maxLines;
   final TextStyle? allInOneStyle;
   final TextDecoration? textDecoration;
-
+  final FontStyle? fontStyle;
   @override
   Widget build(BuildContext context) {
 
     double? getFontSizeOnMultiDimensions() {
-        if (Responsive.isTablet(context)) {
+        if (Responsive.isTabletFromMediaQuery(context)) {
           switch (textFontSize) {
             case kFont13:
               return kFont16;
@@ -65,6 +66,7 @@ class CustomizedTextView extends StatelessWidget {
                 fontSize: getFontSizeOnMultiDimensions(),
                 fontWeight: textFontWeight,
                 fontFamily: kFontMulish,
+                fontStyle: fontStyle,
                 height: 1.2,
                 decoration: textDecoration),
         textAlign: textAlign,

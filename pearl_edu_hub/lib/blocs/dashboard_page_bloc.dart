@@ -6,6 +6,9 @@ class DashboardPageBloc extends BaseBloc {
   int sidebarItemIndex = 0;
   bool isSideBarShown = true;
   String path = '';
+
+
+
   List<String> titleList = [
     kTextDashboard,
     kTextClasses,
@@ -16,6 +19,8 @@ class DashboardPageBloc extends BaseBloc {
     kTextTransactions,
     kTextPaymentType
   ];
+
+
 
   void getPath(final pat) {
     path = pat;
@@ -47,7 +52,6 @@ class DashboardPageBloc extends BaseBloc {
     } else if (path.contains(RouteConstants.getPaymentTypes)) {
       sidebarItemIndex = 7;
     }
-    print("Selected item index $sidebarItemIndex $path");
     notifySafely();
   }
 }
