@@ -22,16 +22,15 @@ import 'package:provider/provider.dart';
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key, required this.beamerKey});
+  const DashboardPage({super.key, });
 
-  final GlobalKey<BeamerState> beamerKey;
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-
+  final  beamerKey = GlobalKey<BeamerState>();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -41,7 +40,7 @@ class _DashboardPageState extends State<DashboardPage> {
         key: scaffoldKey,
         drawerEnableOpenDragGesture: false,
         drawer: _SideBarSectionView(
-          beamer: widget.beamerKey,
+          beamer: beamerKey,
         ),
         body: Selector<DashboardPageBloc, int>(
           selector: (context, bloc) => bloc.sidebarItemIndex,
@@ -50,7 +49,7 @@ class _DashboardPageState extends State<DashboardPage> {
             return Responsive(
                 mobile: _ContentsSectionView(
                   sidebarItemIndex: sidebarItemIndex,
-                  beamer: widget.beamerKey,
+                  beamer: beamerKey,
                 ),
                 desktop: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -62,13 +61,13 @@ class _DashboardPageState extends State<DashboardPage> {
                               duration: const Duration(milliseconds: 500),
                               child: bloc.isSideBarShown
                                   ? _SideBarSectionView(
-                                      beamer: widget.beamerKey,
+                                      beamer: beamerKey,
                                     )
                                   : SizedBox(
                                       width: 100,
                                       child: _SideBarSectionView(
                                         isMinimizeSideBar: true,
-                                        beamer: widget.beamerKey,
+                                        beamer: beamerKey,
                                       ),
                                     )),
                     ),
@@ -76,7 +75,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       flex: 4,
                       child: _ContentsSectionView(
                         sidebarItemIndex: sidebarItemIndex,
-                        beamer: widget.beamerKey,
+                        beamer: beamerKey,
                       ),
                     ),
                   ],
@@ -104,192 +103,192 @@ class _ContentsSectionView extends StatelessWidget {
         key: beamer,
         routerDelegate: BeamerDelegate(
           // NOTE First Method
-          locationBuilder: RoutesLocationBuilder(
-            routes: {
-              '*': (context, state, data) => const SizedBox(),
-              RouteConstants.getClasses: (context, state, data) {
-                return BeamPage(
-                  key: const ValueKey(kTextClasses),
-                  type: BeamPageType.scaleTransition,
-                  child: DashboardClassesPage(
-                    onTapMenu: () {
-                      var bloc = Provider.of<DashboardPageBloc>(context,
-                          listen: false);
-                      if (Responsive.isDesktop(context)) {
-                        bloc.onTapMenu();
-                      } else {
-                        scaffoldKey.currentState!.openDrawer();
-                      }
-                    },
-                  ),
-                );
-              },
-              '${RouteConstants.getClasses}/:classId': (context, state, data) {
-                final String? bookIdParameter = state.pathParameters['classId'];
-                print("Class id => $bookIdParameter");
-                if (bookIdParameter != null) {
-                  final bookId = int.tryParse(bookIdParameter);
-                  // final book = books.firstWhereOrNull((book) => book.id == bookId);
-
-                  return BeamPage(
-                    key: ValueKey('book-$bookIdParameter'),
-                    title: 'Book #$bookIdParameter',
-                    child: DashboardClassDetailsPage(
-                      classId: "bookId ?? 0",
-                      onTapMenu: () {},
-                    ),
-                  );
-                } else {
-                  return SizedBox();
-                }
-              },
-              RouteConstants.getDashboard: (context, state, data) => BeamPage(
-                    key: const ValueKey(kTextDashboard),
-                    type: BeamPageType.scaleTransition,
-                    child: AdminDashboardPage(
-                      onTapInfoItem: (index) {
-                        var bloc = Provider.of<DashboardPageBloc>(context,
-                            listen: false);
-                        bloc.onChangePageIndex(index);
-                      },
-                      onTapMenu: () {
-                        var bloc = Provider.of<DashboardPageBloc>(context,
-                            listen: false);
-                        if (Responsive.isDesktop(context)) {
-                          bloc.onTapMenu();
-                        } else {
-                          scaffoldKey.currentState!.openDrawer();
-                        }
-                      },
-                    ),
-                  ),
-              RouteConstants.getStudents: (context, state, data) => BeamPage(
-                    key: const ValueKey(kTextStudents),
-                    type: BeamPageType.scaleTransition,
-                    child: DashboardStudentsPage(
-                      onTapMenu: () {
-                        var bloc = Provider.of<DashboardPageBloc>(context,
-                            listen: false);
-                        if (Responsive.isDesktop(context)) {
-                          bloc.onTapMenu();
-                        } else {
-                          scaffoldKey.currentState!.openDrawer();
-                        }
-                      },
-                    ),
-                  ),
-              RouteConstants.getLectures: (context, state, data) => BeamPage(
-                    key: const ValueKey(kTextLectures),
-                    type: BeamPageType.scaleTransition,
-                    child: DashboardLecturesPage(
-                      onTapMenu: () {
-                        var bloc = Provider.of<DashboardPageBloc>(context,
-                            listen: false);
-                        if (Responsive.isDesktop(context)) {
-                          bloc.onTapMenu();
-                        } else {
-                          scaffoldKey.currentState!.openDrawer();
-                        }
-                      },
-                    ),
-                  ),
-              RouteConstants.getAssignments: (context, state, data) => BeamPage(
-                    key: const ValueKey(kTextAssignments),
-                    type: BeamPageType.scaleTransition,
-                    child: DashboardAssignmentsPage(
-                      onTapMenu: () {
-                        var bloc = Provider.of<DashboardPageBloc>(context,
-                            listen: false);
-                        if (Responsive.isDesktop(context)) {
-                          bloc.onTapMenu();
-                        } else {
-                          scaffoldKey.currentState!.openDrawer();
-                        }
-                      },
-                    ),
-                  ),
-              RouteConstants.getQuizzes: (context, state, data) => BeamPage(
-                    key: const ValueKey(kTextPopQuizzes),
-                    type: BeamPageType.scaleTransition,
-                    child: DashboardPopQuizzesPage(
-                      onTapMenu: () {
-                        var bloc = Provider.of<DashboardPageBloc>(context,
-                            listen: false);
-                        if (Responsive.isDesktop(context)) {
-                          bloc.onTapMenu();
-                        } else {
-                          scaffoldKey.currentState!.openDrawer();
-                        }
-                      },
-                    ),
-                  ),
-              RouteConstants.getTransactions: (context, state, data) =>
-                  BeamPage(
-                    key: const ValueKey(kTextTransactions),
-                    type: BeamPageType.scaleTransition,
-                    child: DashboardTransactionsPage(
-                      onTapMenu: () {
-                        var bloc = Provider.of<DashboardPageBloc>(context,
-                            listen: false);
-                        if (Responsive.isDesktop(context)) {
-                          bloc.onTapMenu();
-                        } else {
-                          scaffoldKey.currentState!.openDrawer();
-                        }
-                      },
-                    ),
-                  ),
-              RouteConstants.getPaymentTypes: (context, state, data) =>
-                  BeamPage(
-                    key: const ValueKey(kTextPaymentType),
-                    type: BeamPageType.scaleTransition,
-                    child: DashboardPaymentTypesPage(
-                      onTapMenu: () {
-                        var bloc = Provider.of<DashboardPageBloc>(context,
-                            listen: false);
-                        if (Responsive.isDesktop(context)) {
-                          bloc.onTapMenu();
-                        } else {
-                          scaffoldKey.currentState!.openDrawer();
-                        }
-                      },
-                    ),
-                  ),
-            },
-          ),
+          // locationBuilder: RoutesLocationBuilder(
+          //   routes: {
+          //     '*': (context, state, data) => const SizedBox(),
+          //     RouteConstants.getClasses: (context, state, data) {
+          //       return BeamPage(
+          //         key: const ValueKey(kTextClasses),
+          //         type: BeamPageType.scaleTransition,
+          //         child: DashboardClassesPage(
+          //           onTapMenu: () {
+          //             var bloc = Provider.of<DashboardPageBloc>(context,
+          //                 listen: false);
+          //             if (Responsive.isDesktop(context)) {
+          //               bloc.onTapMenu();
+          //             } else {
+          //               scaffoldKey.currentState!.openDrawer();
+          //             }
+          //           },
+          //         ),
+          //       );
+          //     },
+          //     '${RouteConstants.getClasses}/:classId': (context, state, data) {
+          //       final String? bookIdParameter = state.pathParameters['classId'];
+          //       print("Class id => $bookIdParameter");
+          //       if (bookIdParameter != null) {
+          //         final bookId = int.tryParse(bookIdParameter);
+          //         // final book = books.firstWhereOrNull((book) => book.id == bookId);
+          //
+          //         return BeamPage(
+          //           key: ValueKey('book-$bookIdParameter'),
+          //           title: 'Book #$bookIdParameter',
+          //           child: DashboardClassDetailsPage(
+          //             classId: "bookId ?? 0",
+          //             onTapMenu: () {},
+          //           ),
+          //         );
+          //       } else {
+          //         return SizedBox();
+          //       }
+          //     },
+          //     RouteConstants.getDashboard: (context, state, data) => BeamPage(
+          //           key: const ValueKey(kTextDashboard),
+          //           type: BeamPageType.scaleTransition,
+          //           child: AdminDashboardPage(
+          //             onTapInfoItem: (index) {
+          //               var bloc = Provider.of<DashboardPageBloc>(context,
+          //                   listen: false);
+          //               bloc.onChangePageIndex(index);
+          //             },
+          //             onTapMenu: () {
+          //               var bloc = Provider.of<DashboardPageBloc>(context,
+          //                   listen: false);
+          //               if (Responsive.isDesktop(context)) {
+          //                 bloc.onTapMenu();
+          //               } else {
+          //                 scaffoldKey.currentState!.openDrawer();
+          //               }
+          //             },
+          //           ),
+          //         ),
+          //     RouteConstants.getStudents: (context, state, data) => BeamPage(
+          //           key: const ValueKey(kTextStudents),
+          //           type: BeamPageType.scaleTransition,
+          //           child: DashboardStudentsPage(
+          //             onTapMenu: () {
+          //               var bloc = Provider.of<DashboardPageBloc>(context,
+          //                   listen: false);
+          //               if (Responsive.isDesktop(context)) {
+          //                 bloc.onTapMenu();
+          //               } else {
+          //                 scaffoldKey.currentState!.openDrawer();
+          //               }
+          //             },
+          //           ),
+          //         ),
+          //     RouteConstants.getLectures: (context, state, data) => BeamPage(
+          //           key: const ValueKey(kTextLectures),
+          //           type: BeamPageType.scaleTransition,
+          //           child: DashboardLecturesPage(
+          //             onTapMenu: () {
+          //               var bloc = Provider.of<DashboardPageBloc>(context,
+          //                   listen: false);
+          //               if (Responsive.isDesktop(context)) {
+          //                 bloc.onTapMenu();
+          //               } else {
+          //                 scaffoldKey.currentState!.openDrawer();
+          //               }
+          //             },
+          //           ),
+          //         ),
+          //     RouteConstants.getAssignments: (context, state, data) => BeamPage(
+          //           key: const ValueKey(kTextAssignments),
+          //           type: BeamPageType.scaleTransition,
+          //           child: DashboardAssignmentsPage(
+          //             onTapMenu: () {
+          //               var bloc = Provider.of<DashboardPageBloc>(context,
+          //                   listen: false);
+          //               if (Responsive.isDesktop(context)) {
+          //                 bloc.onTapMenu();
+          //               } else {
+          //                 scaffoldKey.currentState!.openDrawer();
+          //               }
+          //             },
+          //           ),
+          //         ),
+          //     RouteConstants.getQuizzes: (context, state, data) => BeamPage(
+          //           key: const ValueKey(kTextPopQuizzes),
+          //           type: BeamPageType.scaleTransition,
+          //           child: DashboardPopQuizzesPage(
+          //             onTapMenu: () {
+          //               var bloc = Provider.of<DashboardPageBloc>(context,
+          //                   listen: false);
+          //               if (Responsive.isDesktop(context)) {
+          //                 bloc.onTapMenu();
+          //               } else {
+          //                 scaffoldKey.currentState!.openDrawer();
+          //               }
+          //             },
+          //           ),
+          //         ),
+          //     RouteConstants.getTransactions: (context, state, data) =>
+          //         BeamPage(
+          //           key: const ValueKey(kTextTransactions),
+          //           type: BeamPageType.scaleTransition,
+          //           child: DashboardTransactionsPage(
+          //             onTapMenu: () {
+          //               var bloc = Provider.of<DashboardPageBloc>(context,
+          //                   listen: false);
+          //               if (Responsive.isDesktop(context)) {
+          //                 bloc.onTapMenu();
+          //               } else {
+          //                 scaffoldKey.currentState!.openDrawer();
+          //               }
+          //             },
+          //           ),
+          //         ),
+          //     RouteConstants.getPaymentTypes: (context, state, data) =>
+          //         BeamPage(
+          //           key: const ValueKey(kTextPaymentType),
+          //           type: BeamPageType.scaleTransition,
+          //           child: DashboardPaymentTypesPage(
+          //             onTapMenu: () {
+          //               var bloc = Provider.of<DashboardPageBloc>(context,
+          //                   listen: false);
+          //               if (Responsive.isDesktop(context)) {
+          //                 bloc.onTapMenu();
+          //               } else {
+          //                 scaffoldKey.currentState!.openDrawer();
+          //               }
+          //             },
+          //           ),
+          //         ),
+          //   },
+          // ),
 
           // NOTE Secondary Method
-          // locationBuilder: (routeInfo, data) {
-          //   print("Route info is ${routeInfo.uri.pathSegments}");
-          //   if (routeInfo.uri.pathSegments.join("") == 'dashboard') {
-          //     print("Reached Dash location");
-          //     return DashboardLocation();
-          //   }
-          //   if (routeInfo.uri.pathSegments.contains('classes')) {
-          //     return ClassesLocation();
-          //   }
-          //   if (routeInfo.uri.pathSegments.contains('students')) {
-          //     return StudentsLocation();
-          //   }
-          //   if (routeInfo.uri.pathSegments.contains('lectures')) {
-          //     return LectureLocation();
-          //   }
-          //   if (routeInfo.uri.pathSegments.contains('assignments')) {
-          //     return AssignmentsLocation();
-          //   }
-          //
-          //   if (routeInfo.uri.pathSegments.contains('quizzes')) {
-          //     return QuizzesLocation();
-          //   }
-          //   if (routeInfo.uri.pathSegments.contains('transactions')) {
-          //     return TransactionsLocation();
-          //   }
-          //   if (routeInfo.uri.pathSegments.contains('payment-types')) {
-          //     return PaymentTypesLocation();
-          //   }
-          //
-          //   return NotFound(path: routeInfo.uri.pathSegments.toString());
-          // },
+          locationBuilder: (routeInfo, data) {
+            print("Route info is ${routeInfo.uri.pathSegments}");
+            if (routeInfo.uri.pathSegments.join("") == 'dashboard') {
+              print("Reached Dash location");
+              return DashboardLocation();
+            }
+            if (routeInfo.uri.pathSegments.contains('classes')) {
+              return ClassesLocation();
+            }
+            if (routeInfo.uri.pathSegments.contains('students')) {
+              return StudentsLocation();
+            }
+            if (routeInfo.uri.pathSegments.contains('lectures')) {
+              return LectureLocation();
+            }
+            if (routeInfo.uri.pathSegments.contains('assignments')) {
+              return AssignmentsLocation();
+            }
+
+            if (routeInfo.uri.pathSegments.contains('quizzes')) {
+              return QuizzesLocation();
+            }
+            if (routeInfo.uri.pathSegments.contains('transactions')) {
+              return TransactionsLocation();
+            }
+            if (routeInfo.uri.pathSegments.contains('payment-types')) {
+              return PaymentTypesLocation();
+            }
+
+            return NotFound(path: routeInfo.uri.pathSegments.toString());
+          },
         ),
       ),
     );
@@ -622,9 +621,9 @@ class _SideBarSectionViewState extends State<_SideBarSectionView> {
                   isChosen: selected == 1,
                   isMinimize: widget.isMinimizeSideBar ?? false,
                   onChoose: () {
-                    setState(() {
-                      context.beamToNamed(navs[1], data: {"data": "1"});
-                    });
+                    // setState(() {
+                      widget.beamer.currentState?.routerDelegate.beamToNamed(navs[1], data: {"data": "1"});
+                    // });
                   },
                 ),
                 _SideBarItemView(

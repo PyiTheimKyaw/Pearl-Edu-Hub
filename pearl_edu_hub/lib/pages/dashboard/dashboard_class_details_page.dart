@@ -6,11 +6,14 @@ import 'package:pearl_edu_hub/data/vos/enrollment_vo.dart';
 import 'package:pearl_edu_hub/dialogs/lecture_selection_dialog.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
+import 'package:pearl_edu_hub/rescources/images.dart';
 import 'package:pearl_edu_hub/rescources/strings.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_field.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 import 'package:pearl_edu_hub/widgets/dashboard_app_bar_view.dart';
 import 'package:pearl_edu_hub/widgets/date_picker_view.dart';
+import 'package:pearl_edu_hub/widgets/loading_state_widget.dart';
+import 'package:pearl_edu_hub/widgets/loading_widget.dart';
 import 'package:pearl_edu_hub/widgets/primary_button.dart';
 import 'package:pearl_edu_hub/widgets/title_and_text_field_view.dart';
 import 'package:provider/provider.dart';
@@ -27,49 +30,47 @@ class DashboardClassDetailsPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) =>
           DashboardClassDetailsPageBloc(classId: int.parse(classId)),
-      child: Selector<DashboardClassDetailsPageBloc, ClassesVO?>(
-        selector: (BuildContext context, bloc) => bloc.classDetail,
-        builder: (BuildContext context, classDetail, Widget? child) =>
-            SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              DashboardAppBarView(
-                  onTapMenu: () {
-                    onTapMenu();
-                  },
-                  appBarLabel: '$kTextClasses/${classDetail?.id}'),
-              classDetail != null
-                  ? Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: kMargin32),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _ClassInfoAndActionButtons(
-                            classDetail: classDetail,
-                          ),
-                          const SizedBox(
-                            height: kMargin24,
-                          ),
-                          _ClassDetailsInfoSectionView(
-                            onChangeTabIndex: (index) {
-                              var bloc =
-                                  Provider.of<DashboardClassDetailsPageBloc>(
-                                      context,
-                                      listen: false);
-                              bloc.onChangeTabIndex(index);
-                            },
-                          )
-                        ],
+      child: Consumer<DashboardClassDetailsPageBloc>(
+        builder: (BuildContext context, bloc, Widget? child) =>
+            LoadingStateWidget<DashboardClassDetailsPageBloc>(
+              loadingState: bloc.getLoadingState,
+              dialogLoadingState: bloc.getDialogLoadingState,
+              widgetForSuccessState: SingleChildScrollView(
+                        child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DashboardAppBarView(
+                    onTapMenu: () {
+                      onTapMenu();
+                    },
+                    appBarLabel: '$kTextClasses/${bloc.classDetail?.id}'),
+                if (bloc.classDetail != null) Padding(
+                        padding:
+                            const EdgeInsets.symmetric(horizontal: kMargin32),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _ClassInfoAndActionButtons(
+                              classDetail: bloc.classDetail!,
+                            ),
+                            const SizedBox(
+                              height: kMargin24,
+                            ),
+                            _ClassDetailsInfoSectionView(
+                              onChangeTabIndex: (index) {
+
+                                bloc.onChangeTabIndex(index);
+                              },
+                            )
+                          ],
+                        ),
+                      ) else const SizedBox.shrink(),
+              ],
+                        ),
                       ),
-                    )
-                  : const SizedBox.shrink(),
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }
@@ -475,19 +476,30 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
                         onChooseDOB: (date) {
                           bloc.onChooseStartDate(date: date);
                         },
-                        hintText: "Start Date",
+                        hintText: "Date",
                         chosenDate: bloc.chosenStartDate,
                       ),
                       const SizedBox(
                         height: kMargin24,
                       ),
-                      TimePickerDialog(initialTime: TimeOfDay.now()),
                       DatePickerView(
                         onChooseDOB: (date) {
-                          bloc.onChooseEndDate(date: date);
+                          bloc.onChooseStartTime(time: date);
                         },
-                        hintText: "End Date",
-                        chosenDate: bloc.chosenEndDate,
+                        hintText: "Start Time",
+                        chosenDate: bloc.chosenStartTime,
+                        isTime: true,
+                      ),
+                      const SizedBox(
+                        height: kMargin24,
+                      ),
+                      DatePickerView(
+                        onChooseDOB: (date) {
+                          bloc.onChooseEndTime(time: date);
+                        },
+                        hintText: "End Time",
+                        chosenDate: bloc.chosenEndTime,
+                        isTime: true,
                       ),
                       const SizedBox(
                         height: kMargin24,
@@ -533,7 +545,14 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
                       PrimaryButton(
                           buttonText: kTextCreate,
                           isDense: true,
-                          onTapButton: () {}),
+                          onTapButton: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) => LoadingWidget(color: Colors.transparent,));
+                            bloc.createLiveSession().then((value) {
+                              print("Created live session ${value?.msg}");
+                            });
+                          }),
                     ],
                   ),
                 ),

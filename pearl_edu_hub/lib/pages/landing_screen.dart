@@ -28,11 +28,10 @@ class _LandingScreenState extends State<LandingScreen> {
                   type: BeamPageType.scaleTransition,
                   child: HomePage(),
                 ),
-            RouteConstants.getDashboard: (context, state, data) => BeamPage(
+            RouteConstants.getDashboard: (context, state, data) => const BeamPage(
                   key: ValueKey(kTextDashboard),
                   type: BeamPageType.scaleTransition,
                   child: DashboardPage(
-                    beamerKey: _beamerKey,
                   ),
                 ),
           },

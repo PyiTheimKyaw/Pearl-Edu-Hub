@@ -50,4 +50,21 @@ class UserDataModel {
         .getClassDetail(classId: classId)
         .then((value) => value.classDetail);
   }
+
+  Future<BaseResponse> createLiveSession({
+    String? startTime,
+    String? endTime,
+    String? date,
+    String? meetUrl,
+    List<int>? lectureIds,
+    int? classId,
+  }) {
+    return userDataAgent.createLiveSession(
+        startTime: startTime,
+        endTime: endTime,
+        date: date,
+        meetUrl: meetUrl,
+        lectureIds: lectureIds,
+        classId: classId);
+  }
 }

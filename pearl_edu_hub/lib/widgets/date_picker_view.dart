@@ -8,15 +8,17 @@ import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 class DatePickerView extends StatelessWidget {
   const DatePickerView(
       {super.key,
-        required this.onChooseDOB,
-        this.chosenDate,
-        this.isYear = false,
-        required this.hintText});
+      required this.onChooseDOB,
+      this.chosenDate,
+      this.isYear = false,
+      this.isTime,
+      required this.hintText});
 
   final Function(String) onChooseDOB;
   final String? chosenDate;
   final String hintText;
   final bool? isYear;
+  final bool? isTime;
 
   @override
   Widget build(BuildContext context) {
@@ -27,11 +29,9 @@ class DatePickerView extends StatelessWidget {
       inputValue: chosenDate,
       suffixIcon: const Icon(Icons.date_range),
       inputBorder: const OutlineInputBorder(
-          borderSide:
-          BorderSide(color: kLightBrownColor)),
+          borderSide: BorderSide(color: kLightBrownColor)),
       focusedBorder: const OutlineInputBorder(
-          borderSide:
-          BorderSide(color: kLightBrownColor)),
+          borderSide: BorderSide(color: kLightBrownColor)),
       onTapTextField: () async {
         if (isYear ?? false) {
           showDialog(
@@ -63,6 +63,19 @@ class DatePickerView extends StatelessWidget {
               );
             },
           );
+        } else if (isTime ?? false) {
+          // TimePickerDialog(initialTime: TimeOfDay.now());
+          Future<TimeOfDay?> selectedTime = showTimePicker(
+            initialTime: TimeOfDay.now(),
+            context: context,
+          );
+
+          selectedTime.then((value) {
+            print("Selected time ${value?.hour}");
+            if (value != null) {
+              onChooseDOB("${value.hour}-${value.minute}");
+            }
+          });
         } else {
           // Date ရွေးတဲ့ text field ကို နှိပ်လိုက်ရင် Calendar view ကို ပြပါမယ်/ ရွေးလိုက်တဲ့ date ကို ရလာပါမယ်
           DateTime? pickedDate = await showDatePicker(

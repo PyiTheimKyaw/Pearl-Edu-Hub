@@ -20,4 +20,13 @@ abstract class UserDataAgent {
   Future<LecturesResponse> getLectures();
 
   Future<ClassDetailsResponse> getClassDetail({required int classId});
+
+  Future<BaseResponse> createLiveSession({
+    String? startTime,
+    String? endTime,
+    String? date,
+    String? meetUrl,
+    List<int>? lectureIds,
+    int? classId,
+  });
 }
