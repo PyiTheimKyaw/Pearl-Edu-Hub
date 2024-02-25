@@ -21,7 +21,7 @@ class LoadingWidget extends StatelessWidget {
       color:  color ?? kWhiteColor,
       child: Container(
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
         ),
         child: Center(

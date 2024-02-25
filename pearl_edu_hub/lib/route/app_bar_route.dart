@@ -1,5 +1,5 @@
-class RouteConstants {
-  static const getDashboard = "/dashboard";
+class AppBarRoute {
+  static const getClassDetail = "Classes/";
   static const getClasses = "/dashboard/classes";
   static const getStudents = "/dashboard/students";
   static const getLectures = "/dashboard/lectures";

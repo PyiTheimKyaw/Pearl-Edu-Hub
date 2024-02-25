@@ -172,27 +172,25 @@ class _PearlApi implements PearlApi {
   }
 
   @override
-  Future<BaseResponse> createLiveSession({
-    String? startTime,
-    String? endTime,
-    String? date,
-    String? meetUrl,
-    String? lectureIds,
-    int? classId,
-  }) async {
+  Future<BaseResponse> createLiveSession(
+    String startTime,
+    String endTime,
+    String date,
+    String meetUrl,
+    String lectureIds,
+    int classId,
+  ) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{};
-    final _data = {
-      'start_time': startTime,
-      'end_time': endTime,
-      'date': date,
-      'meet_url': meetUrl,
-      'lecture_ids': lectureIds,
-      'class_id': classId,
+    final queryParameters = <String, dynamic>{
+      r'start_time': startTime,
+      r'end_time': endTime,
+      r'date': date,
+      r'meet_url': meetUrl,
+      r'lecture_ids': lectureIds,
+      r'class_id': classId,
     };
-    _data.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<BaseResponse>(Options(
       method: 'POST',

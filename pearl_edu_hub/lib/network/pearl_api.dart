@@ -38,12 +38,12 @@ abstract class PearlApi {
   );
 
   @POST(kEndPointCreateLiveSession)
-  Future<BaseResponse> createLiveSession({
-    @Field(kParamStartTime) String? startTime,
-    @Field(kParamEndTime) String? endTime,
-    @Field(kParamDate) String? date,
-    @Field(kParamMeetUrl) String? meetUrl,
-    @Field(kParamLectureIds) String? lectureIds,
-    @Field(kParamClassId) int? classId,
-  });
+  Future<BaseResponse> createLiveSession(
+    @Query(kParamStartTime) String startTime,
+    @Query(kParamEndTime) String endTime,
+    @Query(kParamDate) String date,
+    @Query(kParamMeetUrl) String meetUrl,
+    @Query(kParamLectureIds) String lectureIds,
+    @Query(kParamClassId) int classId,
+  );
 }

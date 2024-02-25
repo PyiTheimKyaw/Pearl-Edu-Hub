@@ -41,10 +41,10 @@ class Responsive extends StatelessWidget {
 
   // This isMobile, isTablet, isDesktop helep us later
   static bool isMobile(BoxConstraints constraints) {
-    final _breakpoint = Breakpoint.fromConstraints(constraints);
-    return _breakpoint.device == LayoutClass.largeHandset ||
-        _breakpoint.device == LayoutClass.mediumHandset ||
-        _breakpoint.device == LayoutClass.smallHandset;
+    final breakpoint = Breakpoint.fromConstraints(constraints);
+    return breakpoint.device == LayoutClass.largeHandset ||
+        breakpoint.device == LayoutClass.mediumHandset ||
+        breakpoint.device == LayoutClass.smallHandset;
   }
 
   static bool isSmallMobile(BuildContext context) {
@@ -52,10 +52,10 @@ class Responsive extends StatelessWidget {
   }
 
   static bool isMobileFromMediaQuery(BuildContext context) {
-    final _breakpoint = Breakpoint.fromMediaQuery(context);
-    return _breakpoint.device == LayoutClass.largeHandset ||
-        _breakpoint.device == LayoutClass.mediumHandset ||
-        _breakpoint.device == LayoutClass.smallHandset ||
+    final breakpoint = Breakpoint.fromMediaQuery(context);
+    return breakpoint.device == LayoutClass.largeHandset ||
+        breakpoint.device == LayoutClass.mediumHandset ||
+        breakpoint.device == LayoutClass.smallHandset ||
         MediaQuery.of(context).size.width < 768;
   }
 
@@ -101,8 +101,8 @@ class Responsive extends StatelessWidget {
   }
 
   static bool isSmallTabletFromMediaQuery(BuildContext context) {
-    final _breakpoint = Breakpoint.fromMediaQuery(context);
-    return _breakpoint.device == LayoutClass.smallTablet;
+    final breakpoint = Breakpoint.fromMediaQuery(context);
+    return breakpoint.device == LayoutClass.smallTablet;
   }
 
   static bool isTabletLargerThanNexus9(BuildContext context) {
@@ -135,28 +135,28 @@ class Responsive extends StatelessWidget {
   }
 
   static bool isSmallTableFromMediaQuery(BuildContext context) {
-    final _breakpoint = Breakpoint.fromMediaQuery(context);
-    return _breakpoint.device == LayoutClass.smallTablet;
+    final breakpoint = Breakpoint.fromMediaQuery(context);
+    return breakpoint.device == LayoutClass.smallTablet;
   }
 
   static bool isLargeTableFromMediaQuery(BuildContext context) {
-    final _breakpoint = Breakpoint.fromMediaQuery(context);
-    return _breakpoint.device == LayoutClass.largeTablet;
+    final breakpoint = Breakpoint.fromMediaQuery(context);
+    return breakpoint.device == LayoutClass.largeTablet;
   }
 
   static bool isSmallHandsetFromMediaQuery(BuildContext context) {
-    final _breakpoint = Breakpoint.fromMediaQuery(context);
-    return _breakpoint.device == LayoutClass.smallHandset;
+    final breakpoint = Breakpoint.fromMediaQuery(context);
+    return breakpoint.device == LayoutClass.smallHandset;
   }
 
   static bool isMediumHandsetFromMediaQuery(BuildContext context) {
-    final _breakpoint = Breakpoint.fromMediaQuery(context);
-    return _breakpoint.device == LayoutClass.mediumHandset;
+    final breakpoint = Breakpoint.fromMediaQuery(context);
+    return breakpoint.device == LayoutClass.mediumHandset;
   }
 
   static bool isLargeHandsetFromMediaQuery(BuildContext context) {
-    final _breakpoint = Breakpoint.fromMediaQuery(context);
-    return _breakpoint.device == LayoutClass.largeHandset;
+    final breakpoint = Breakpoint.fromMediaQuery(context);
+    return breakpoint.device == LayoutClass.largeHandset;
   }
 
   static bool isSmallDesktopFromMediaQuery(BuildContext context) {
@@ -167,11 +167,10 @@ class Responsive extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final _breakpoint = Breakpoint.fromConstraints(constraints);
-        print(_breakpoint.device);
-        if (_breakpoint.device == LayoutClass.largeHandset ||
-            _breakpoint.device == LayoutClass.mediumHandset ||
-            _breakpoint.device == LayoutClass.smallHandset ||
+        final breakpoint = Breakpoint.fromConstraints(constraints);
+        if (breakpoint.device == LayoutClass.largeHandset ||
+            breakpoint.device == LayoutClass.mediumHandset ||
+            breakpoint.device == LayoutClass.smallHandset ||
             MediaQuery.of(context).size.width < 768) {
           return mobile;
         }

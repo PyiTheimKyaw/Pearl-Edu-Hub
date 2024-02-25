@@ -19,6 +19,9 @@ ClassesVO _$ClassesVOFromJson(Map<String, dynamic> json) => ClassesVO(
       (json['enrollments'] as List<dynamic>?)
           ?.map((e) => EnrollmentVO.fromJson(e as Map<String, dynamic>))
           .toList(),
+      (json['liveSessions'] as List<dynamic>?)
+          ?.map((e) => LiveSessionVO.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ClassesVOToJson(ClassesVO instance) => <String, dynamic>{
@@ -30,4 +33,5 @@ Map<String, dynamic> _$ClassesVOToJson(ClassesVO instance) => <String, dynamic>{
       'fees': instance.fees,
       'lectures': instance.lectures,
       'enrollments': instance.enrollments,
+      'liveSessions': instance.liveSessions,
     };

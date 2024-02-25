@@ -15,6 +15,7 @@ const String kTextClose = "Close";
 const String kTextNA = "N/A";
 const String kTextSave = "Save";
 const String kTextCreate = "Create";
+const String kTextSuccess = "Success";
 //Classes page
 const String kTextCreateClass = "Create class";
 const String kTextEditClass = "Edit Class";

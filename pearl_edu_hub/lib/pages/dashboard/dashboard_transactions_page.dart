@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
-import 'package:pearl_edu_hub/rescources/strings.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
-import 'package:pearl_edu_hub/widgets/dashboard_app_bar_view.dart';
 
 class DashboardTransactionsPage extends StatelessWidget {
   const DashboardTransactionsPage({super.key, required this.onTapMenu});
@@ -13,106 +11,97 @@ class DashboardTransactionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          DashboardAppBarView(
-              onTapMenu: () {
-                onTapMenu();
-              },
-              appBarLabel: kTextTransactions),
-          Container(
-            margin: const EdgeInsets.only(
-                left: kMargin32, right: kMargin32, bottom: kMargin24),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(kRadius10),
-                border: Border.all(color: kInvisibleColor)),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(kMargin16),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(219, 226, 236, 1.0),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(kRadius10),
-                        topRight: Radius.circular(kRadius10)),
+      child: Container(
+        margin: const EdgeInsets.only(
+            left: kMargin32, right: kMargin32, bottom: kMargin24),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(kRadius10),
+            border: Border.all(color: kInvisibleColor)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(kMargin16),
+              clipBehavior: Clip.antiAlias,
+              decoration: const BoxDecoration(
+                color: Color.fromRGBO(219, 226, 236, 1.0),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(kRadius10),
+                    topRight: Radius.circular(kRadius10)),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomizedTextView(
+                    textData: "ID",
+                    textFontSize: kFont16,
+                    textFontWeight: FontWeight.w600,
+                    textAlign: TextAlign.start,
                   ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomizedTextView(
-                        textData: "ID",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.start,
-                      ),
-                      SizedBox(
-                        width: kMargin32,
-                      ),
-                      Expanded(
-                        child: CustomizedTextView(
-                          textData: "Date & Time",
-                          textFontSize: kFont16,
-                          textFontWeight: FontWeight.w600,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Expanded(
-                          child: CustomizedTextView(
-                        textData: "Class",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
-                      )),
-                      Expanded(
-                          child: CustomizedTextView(
-                        textData: "User Name",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
-                      )),
-                      Expanded(
-                          child: CustomizedTextView(
-                        textData: "Payment type",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
-                      )),
-                      Expanded(
-                          child: CustomizedTextView(
-                        textData: "Amount",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
-                      )),
-                      Expanded(
-                          child: CustomizedTextView(
-                        textData: "Status",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
-                      )),
-                    ],
+                  SizedBox(
+                    width: kMargin32,
                   ),
-                ),
-                ListView.separated(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: kMargin8, vertical: kMargin8),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 40,
-                  itemBuilder: (context, index) => const _TransactionItemView(),
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: kMargin12,
+                  Expanded(
+                    child: CustomizedTextView(
+                      textData: "Date & Time",
+                      textFontSize: kFont16,
+                      textFontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                )
-              ],
+                  Expanded(
+                      child: CustomizedTextView(
+                    textData: "Class",
+                    textFontSize: kFont16,
+                    textFontWeight: FontWeight.w600,
+                    textAlign: TextAlign.center,
+                  )),
+                  Expanded(
+                      child: CustomizedTextView(
+                    textData: "User Name",
+                    textFontSize: kFont16,
+                    textFontWeight: FontWeight.w600,
+                    textAlign: TextAlign.center,
+                  )),
+                  Expanded(
+                      child: CustomizedTextView(
+                    textData: "Payment type",
+                    textFontSize: kFont16,
+                    textFontWeight: FontWeight.w600,
+                    textAlign: TextAlign.center,
+                  )),
+                  Expanded(
+                      child: CustomizedTextView(
+                    textData: "Amount",
+                    textFontSize: kFont16,
+                    textFontWeight: FontWeight.w600,
+                    textAlign: TextAlign.center,
+                  )),
+                  Expanded(
+                      child: CustomizedTextView(
+                    textData: "Status",
+                    textFontSize: kFont16,
+                    textFontWeight: FontWeight.w600,
+                    textAlign: TextAlign.center,
+                  )),
+                ],
+              ),
             ),
-          ),
-        ],
+            ListView.separated(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: kMargin8, vertical: kMargin8),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: 40,
+              itemBuilder: (context, index) => const _TransactionItemView(),
+              separatorBuilder: (context, index) => const SizedBox(
+                height: kMargin12,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

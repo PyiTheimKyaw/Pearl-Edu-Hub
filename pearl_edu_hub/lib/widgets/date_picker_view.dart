@@ -71,7 +71,6 @@ class DatePickerView extends StatelessWidget {
           );
 
           selectedTime.then((value) {
-            print("Selected time ${value?.hour}");
             if (value != null) {
               onChooseDOB("${value.hour}-${value.minute}");
             }

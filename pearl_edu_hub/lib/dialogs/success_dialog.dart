@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
 import 'package:pearl_edu_hub/rescources/strings.dart';
@@ -61,12 +61,13 @@ class SuccessDialog extends StatelessWidget {
             ),
             PrimaryButton(
                 buttonText: kTextClose,
+                isDense: true,
                 buttonTextSize: kFont16,
                 borderRadius: kRadius30,
                 buttonWidth: MediaQuery.of(context).size.width/3,
                 buttonPadding: kMargin12,
                 onTapButton: () {
-                  context.pop();
+                  Get.back();
                 }),
           ],
         ),

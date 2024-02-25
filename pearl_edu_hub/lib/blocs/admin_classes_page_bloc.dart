@@ -13,14 +13,26 @@ class AdminClassesPageBloc extends BaseBloc {
   String? chosenStartDate;
   String? chosenEndDate;
   List<LectureVO>? lectures;
+  ClassesVO? selectedClass;
   bool isVisibleLectureChoiceDialog = false;
   final HtmlEditorController controller = HtmlEditorController();
 
   final UserDataModel userDataModel = UserDataModel();
 
   AdminClassesPageBloc() {
+    selectedClass = null;
     getClassesForAdminClassesPage();
     getLectures();
+  }
+
+  void onChooseClass({required ClassesVO chosenClass}) {
+    selectedClass = chosenClass;
+    notifySafely();
+  }
+
+  void onTapPopFromClassDetail() {
+    selectedClass = null;
+    notifySafely();
   }
 
   void onChooseLecture(int id, bool isSelected) {

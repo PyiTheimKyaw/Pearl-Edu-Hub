@@ -6,6 +6,7 @@ import 'package:pearl_edu_hub/network/responses/class_details_response.dart';
 import 'package:pearl_edu_hub/network/responses/classes_response.dart';
 import 'package:pearl_edu_hub/network/responses/lectures_response.dart';
 import 'package:pearl_edu_hub/network/responses/students_response.dart';
+import 'package:pearl_edu_hub/utils/error_handler.dart';
 
 class RetrofitUserDataAgentImpl extends UserDataAgent {
   static RetrofitUserDataAgentImpl? instance;
@@ -35,10 +36,10 @@ class RetrofitUserDataAgentImpl extends UserDataAgent {
       ),
     );
     dio.options.contentType = "application/x-www-form-urlencoded";
-    // dio.interceptors.addAll({
-    //   TokenInterceptor(dio),
-    //   ErrorHandler(dio),
-    // });
+    dio.interceptors.addAll({
+      //   TokenInterceptor(dio),
+      ErrorHandler(dio),
+    });
     return dio;
   }
 
@@ -87,12 +88,7 @@ class RetrofitUserDataAgentImpl extends UserDataAgent {
       String? meetUrl,
       List<int>? lectureIds,
       int? classId}) {
-    return mPearlApi.createLiveSession(
-        startTime: startTime,
-        endTime: endTime,
-        date: date,
-        meetUrl: meetUrl,
-        lectureIds: lectureIds?.join(","),
-        classId: classId);
+    return mPearlApi.createLiveSession(startTime ?? "", endTime ?? "",
+        date ?? "", meetUrl ?? "", lectureIds?.join(",") ?? "", classId ?? 0);
   }
 }

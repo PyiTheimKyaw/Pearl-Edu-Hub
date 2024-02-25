@@ -1,125 +1,152 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:pearl_edu_hub/blocs/admin_classes_page_bloc.dart';
 import 'package:pearl_edu_hub/data/vos/classes_vo.dart';
-import 'package:pearl_edu_hub/data/vos/lecture_vo.dart';
 import 'package:pearl_edu_hub/dialogs/lecture_selection_dialog.dart';
 import 'package:pearl_edu_hub/dialogs/success_dialog.dart';
+import 'package:pearl_edu_hub/pages/dashboard/dashboard_class_details_page.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
 import 'package:pearl_edu_hub/rescources/strings.dart';
+import 'package:pearl_edu_hub/route/app_bar_route.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_field.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
-import 'package:pearl_edu_hub/widgets/dashboard_app_bar_view.dart';
 import 'package:pearl_edu_hub/widgets/date_picker_view.dart';
 import 'package:provider/provider.dart';
 
 class DashboardClassesPage extends StatelessWidget {
-  const DashboardClassesPage({super.key, required this.onTapMenu});
+  const DashboardClassesPage({super.key, required this.onChangeAppBarTitle,required this.isInitPage});
 
-  final Function onTapMenu;
-
+  final Function(String?) onChangeAppBarTitle;
+  final bool isInitPage;
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) => AdminClassesPageBloc(),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          DashboardAppBarView(
-              onTapMenu: () {
-                onTapMenu();
+      child: Consumer<AdminClassesPageBloc>(
+        builder: (BuildContext context, bloc, Widget? child) {
+          if (bloc.selectedClass != null && !isInitPage) {
+            return DashboardClassDetailsPage(
+              classId: (bloc.selectedClass?.id ?? 0).toString(),
+              onTapBack: () {
+                bloc.onTapPopFromClassDetail();
+                onChangeAppBarTitle(null);
               },
-              appBarLabel: kTextClasses),
-          const _CreateClassButtonView(),
-          Container(
-            margin: const EdgeInsets.only(
-                left: kMargin32, right: kMargin32, bottom: kMargin24),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(kRadius10),
-                border: Border.all(color: kInvisibleColor)),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(kMargin16),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(219, 226, 236, 1.0),
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(kRadius10),
-                        topRight: Radius.circular(kRadius10)),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: CustomizedTextView(
-                          textData: "ID-Title",
-                          textFontSize: kFont16,
-                          textFontWeight: FontWeight.w600,
-                        ),
+            );
+          }
+          return _ClassesSectionView(
+            onChangeAppBarTitle: onChangeAppBarTitle,
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _ClassesSectionView extends StatelessWidget {
+  const _ClassesSectionView({required this.onChangeAppBarTitle});
+
+  final Function(String?) onChangeAppBarTitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        const _CreateClassButtonView(),
+        Container(
+          margin: const EdgeInsets.only(
+              left: kMargin32, right: kMargin32, bottom: kMargin24),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(kRadius10),
+              border: Border.all(color: kInvisibleColor)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(kMargin16),
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(219, 226, 236, 1.0),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(kRadius10),
+                      topRight: Radius.circular(kRadius10)),
+                ),
+                child: const Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: CustomizedTextView(
+                        textData: "ID-Title",
+                        textFontSize: kFont16,
+                        textFontWeight: FontWeight.w600,
                       ),
-                      Expanded(
-                          child: CustomizedTextView(
-                        textData: "Price",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
-                      )),
-                      Expanded(
-                          child: CustomizedTextView(
-                        textData: "Start Date",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
-                      )),
-                      Expanded(
-                          child: CustomizedTextView(
-                        textData: "End Date",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
-                      )),
-                      Expanded(
-                          child: CustomizedTextView(
-                        textData: "Enrollments",
-                        textFontSize: kFont16,
-                        textFontWeight: FontWeight.w600,
-                        textAlign: TextAlign.center,
-                      )),
-                    ],
+                    ),
+                    Expanded(
+                        child: CustomizedTextView(
+                      textData: "Price",
+                      textFontSize: kFont16,
+                      textFontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    )),
+                    Expanded(
+                        child: CustomizedTextView(
+                      textData: "Start Date",
+                      textFontSize: kFont16,
+                      textFontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    )),
+                    Expanded(
+                        child: CustomizedTextView(
+                      textData: "End Date",
+                      textFontSize: kFont16,
+                      textFontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    )),
+                    Expanded(
+                        child: CustomizedTextView(
+                      textData: "Enrollments",
+                      textFontSize: kFont16,
+                      textFontWeight: FontWeight.w600,
+                      textAlign: TextAlign.center,
+                    )),
+                  ],
+                ),
+              ),
+              Selector<AdminClassesPageBloc, List<ClassesVO>?>(
+                selector: (BuildContext context, bloc) => bloc.classes,
+                builder: (BuildContext context, classes, Widget? child) =>
+                    ListView.separated(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: kMargin8, vertical: kMargin8),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: classes?.length ?? 0,
+                  itemBuilder: (context, index) => _ClassItemView(
+                    classItem: classes?[index],
+                    onTapClassItem: (classItem) {
+                      var bloc = Provider.of<AdminClassesPageBloc>(context,
+                          listen: false);
+                      bloc.onChooseClass(chosenClass: classItem);
+                      onChangeAppBarTitle(
+                          "${AppBarRoute.getClassDetail}${classItem.className}");
+                    },
+                  ),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: kMargin12,
                   ),
                 ),
-                Selector<AdminClassesPageBloc, List<ClassesVO>?>(
-                  selector: (BuildContext context, bloc) => bloc.classes,
-                  builder: (BuildContext context, classes, Widget? child) =>
-                      ListView.separated(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: kMargin8, vertical: kMargin8),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: classes?.length ?? 0,
-                    itemBuilder: (context, index) => _ClassItemView(
-                      classItem: classes?[index],
-                    ),
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: kMargin12,
-                    ),
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -326,7 +353,7 @@ class _CreateClassDialogView extends StatelessWidget {
                             onPressed: () {
                               bloc.onTapCreateClass().then((value) {
                                 onCompleteCreateClass();
-                                context.pop();
+                                Get.back();
                                 showDialog(
                                     context: context,
                                     builder: (context) {
@@ -370,11 +397,11 @@ class _CreateClassDialogView extends StatelessWidget {
   }
 }
 
-
 class _ClassItemView extends StatelessWidget {
-  const _ClassItemView({required this.classItem});
+  const _ClassItemView({required this.classItem, required this.onTapClassItem});
 
   final ClassesVO? classItem;
+  final Function(ClassesVO) onTapClassItem;
 
   @override
   Widget build(BuildContext context) {
@@ -390,8 +417,9 @@ class _ClassItemView extends StatelessWidget {
               flex: 2,
               child: InkWell(
                 onTap: () {
-                  context.beamToNamed("/dashboard/classes/${classItem?.id}",
-                      popToNamed: "/dashboard/classes/");
+                  if (classItem != null) {
+                    onTapClassItem(classItem!);
+                  }
                 },
                 child: CustomizedTextView(
                   textData: "#${classItem?.id}-${classItem?.className}",
@@ -494,7 +522,6 @@ class _HtmlEditorView extends StatelessWidget {
         callbacks: Callbacks(
             onBeforeCommand: (String? currentHtml) {},
             onChangeContent: (String? changed) {
-              print("ONCHNAGE HTML $changed");
               bloc.onChangedSummary(changed);
             },
             onChangeCodeview: (String? changed) {},
