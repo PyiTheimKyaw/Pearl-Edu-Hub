@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pearl_edu_hub/helpers/box_helper.dart';
 import 'package:pearl_edu_hub/pages/dashboard/dashboard_page.dart';
 import 'package:pearl_edu_hub/pages/home_page.dart';
 import 'package:pearl_edu_hub/rescources/fonts.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:pearl_edu_hub/route/navi.dart';
 
-void main() {
+void main() async {
   usePathUrlStrategy();
+  await Hive.initFlutter();
+  await BoxHelper().openBoxes();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
 
   // This widget is the root of your application.
   @override
@@ -42,5 +45,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
-

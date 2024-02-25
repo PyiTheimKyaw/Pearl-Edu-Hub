@@ -274,7 +274,7 @@ class _SideBarItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<DashboardPageBloc>(
-      builder: (BuildContext context, bloc, Widget? child) => GestureDetector(
+      builder: (BuildContext context, bloc, Widget? child) => InkWell(
         onTap: () {
           bloc.onChangePageIndex(indexOfItem);
         },

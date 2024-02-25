@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pearl_edu_hub/blocs/base_bloc.dart';
+import 'package:pearl_edu_hub/data/impls/user_data_model_impl.dart';
 import 'package:pearl_edu_hub/data/models/user_data_model.dart';
 import 'package:pearl_edu_hub/data/vos/classes_vo.dart';
 import 'package:pearl_edu_hub/data/vos/live_session_vo.dart';
@@ -24,7 +25,7 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
   String? meetingLink;
   bool isVisibleLectureChoiceDialog = false;
 
-  final UserDataModel _userDataModel = UserDataModel();
+  final UserDataModel _userDataModel = UserDataModelImpl();
 
   DashboardClassDetailsPageBloc({required int classId}) {
     setSuccessState();
@@ -94,15 +95,12 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
             meetUrl: meetingLink,
             classId: classDetail?.id,
             lectureIds: getLectureIds())
-        .then((value) async{
+        .then((value) async {
+      await fetchAndGetClassDetail(id: classDetail?.id ?? 0);
       Get.back();
       Get.back();
-      await fetchAndGetClassDetail(id: classDetail?.id ?? 0)
-          .then((val) {
-
-        Get.dialog(SuccessDialog(
-            dialogSubTitle: value.msg ?? "", dialogTitle: kTextSuccess));
-      });
+      Get.dialog(SuccessDialog(
+          dialogSubTitle: value.msg ?? "", dialogTitle: kTextSuccess));
     }).catchError((error) async {
       Get.back();
       switch (error.runtimeType) {
@@ -123,14 +121,13 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
     });
   }
 
-  Future<ClassesVO?> fetchAndGetClassDetail({required int id}) {
-    return _userDataModel.getClassDetail(classId: id).then((value) {
+  Future<void> fetchAndGetClassDetail({required int id}) async {
+    return _userDataModel
+        .getClassDetailFromDatabase(classId: id)
+        .listen((value) {
       classDetail = value;
       liveSessions = classDetail?.liveSessions;
-      print("Live session length ${liveSessions?.length}");
       notifySafely();
-    }).catchError((error) {
-      print("Class detail error ${error.toString()}");
-    });
+    }).onError((error) {});
   }
 }

@@ -144,9 +144,7 @@ class _ClassDetailsInfoSectionViewState
 }
 
 class _LiveListSectionView extends StatelessWidget {
-  const _LiveListSectionView({
-    super.key,
-  });
+  const _LiveListSectionView();
 
   @override
   Widget build(BuildContext context) {

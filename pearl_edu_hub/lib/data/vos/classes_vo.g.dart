@@ -3,6 +3,68 @@
 part of 'classes_vo.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class ClassesVOAdapter extends TypeAdapter<ClassesVO> {
+  @override
+  final int typeId = 1;
+
+  @override
+  ClassesVO read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return ClassesVO(
+      fields[0] as int?,
+      fields[1] as String?,
+      fields[2] as String?,
+      fields[3] as String?,
+      (fields[6] as List).cast<LectureVO>(),
+      fields[4] as String?,
+      fields[5] as double?,
+      (fields[7] as List?)?.cast<EnrollmentVO>(),
+      (fields[8] as List?)?.cast<LiveSessionVO>(),
+    );
+  }
+
+  @override
+  void write(BinaryWriter writer, ClassesVO obj) {
+    writer
+      ..writeByte(9)
+      ..writeByte(0)
+      ..write(obj.id)
+      ..writeByte(1)
+      ..write(obj.className)
+      ..writeByte(2)
+      ..write(obj.classInfo)
+      ..writeByte(3)
+      ..write(obj.startDate)
+      ..writeByte(4)
+      ..write(obj.endDate)
+      ..writeByte(5)
+      ..write(obj.fees)
+      ..writeByte(6)
+      ..write(obj.lectures)
+      ..writeByte(7)
+      ..write(obj.enrollments)
+      ..writeByte(8)
+      ..write(obj.liveSessions);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ClassesVOAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}
+
+// **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 

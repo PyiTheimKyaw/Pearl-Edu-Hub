@@ -1,5 +1,6 @@
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:pearl_edu_hub/blocs/base_bloc.dart';
+import 'package:pearl_edu_hub/data/impls/user_data_model_impl.dart';
 import 'package:pearl_edu_hub/data/models/user_data_model.dart';
 import 'package:pearl_edu_hub/data/vos/classes_vo.dart';
 import 'package:pearl_edu_hub/data/vos/lecture_vo.dart';
@@ -17,7 +18,7 @@ class AdminClassesPageBloc extends BaseBloc {
   bool isVisibleLectureChoiceDialog = false;
   final HtmlEditorController controller = HtmlEditorController();
 
-  final UserDataModel userDataModel = UserDataModel();
+  final UserDataModel userDataModel = UserDataModelImpl();
 
   AdminClassesPageBloc() {
     selectedClass = null;
@@ -109,11 +110,10 @@ class AdminClassesPageBloc extends BaseBloc {
     }).catchError((error) {});
   }
 
-  Future<List<ClassesVO>?> getClassesForAdminClassesPage() {
-    return userDataModel.getClassesForAdmin().then((value) {
+  Future getClassesForAdminClassesPage() async {
+    return userDataModel.getDashboardClassesVoFromDatabase().listen((value) {
       classes = value;
-
       notifySafely();
-    }).catchError((error) {});
+    }).onError((error) {});
   }
 }
