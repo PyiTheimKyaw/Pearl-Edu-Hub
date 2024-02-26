@@ -3,6 +3,7 @@ import 'package:pearl_edu_hub/data/vos/classes_vo.dart';
 import 'package:pearl_edu_hub/data/vos/enrollment_vo.dart';
 import 'package:pearl_edu_hub/data/vos/lecture_vo.dart';
 import 'package:pearl_edu_hub/data/vos/live_session_vo.dart';
+import 'package:pearl_edu_hub/data/vos/student_vo.dart';
 import 'package:pearl_edu_hub/utils/hive_constants.dart';
 
 class BoxHelper {
@@ -15,7 +16,8 @@ class BoxHelper {
       ..registerAdapter(ClassesVOAdapter())
       ..registerAdapter(LectureVOAdapter())
       ..registerAdapter(EnrollmentVOAdapter())
-      ..registerAdapter(LiveSessionVOAdapter());
+      ..registerAdapter(LiveSessionVOAdapter())
+      ..registerAdapter(StudentVOAdapter());
   }
 
   Future<void> openBoxes() async {

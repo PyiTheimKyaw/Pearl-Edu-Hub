@@ -27,10 +27,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
-        fontFamily: kFontMulish,
+        fontFamily: kFontTWK,
       ),
-      home: const HomePage(),
-      initialRoute: Navi.initialRoute,
+      home: const DashboardPage(),
+      initialRoute: Navi.getDashboard,
       getPages: [
         GetPage(
           name: Navi.initialRoute,

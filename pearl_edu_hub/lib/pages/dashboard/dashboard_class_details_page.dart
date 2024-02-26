@@ -1,17 +1,25 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:pearl_edu_hub/blocs/dashboard_class_details_page_bloc.dart';
 import 'package:pearl_edu_hub/data/vos/classes_vo.dart';
 import 'package:pearl_edu_hub/data/vos/enrollment_vo.dart';
+import 'package:pearl_edu_hub/data/vos/lecture_vo.dart';
 import 'package:pearl_edu_hub/data/vos/live_session_vo.dart';
 import 'package:pearl_edu_hub/dialogs/lecture_selection_dialog.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
+import 'package:pearl_edu_hub/rescources/images.dart';
 import 'package:pearl_edu_hub/rescources/strings.dart';
+import 'package:pearl_edu_hub/utils/strings_extension.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_field.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 import 'package:pearl_edu_hub/widgets/date_picker_view.dart';
 import 'package:pearl_edu_hub/widgets/loading_state_widget.dart';
 import 'package:pearl_edu_hub/widgets/primary_button.dart';
+import 'package:pearl_edu_hub/widgets/rounded_image_view.dart';
 import 'package:provider/provider.dart';
 
 class DashboardClassDetailsPage extends StatelessWidget {
@@ -93,127 +101,86 @@ class _ClassDetailsInfoSectionViewState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TabBar(
-          dividerColor: Colors.transparent,
-          controller: tabController,
-          labelColor: Colors.black,
-          unselectedLabelColor: kUnselectedTabColor,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorColor: kPrimaryColor,
-          padding: EdgeInsets.zero,
-          labelPadding: const EdgeInsets.only(bottom: kMargin16),
-          labelStyle:
-              const TextStyle(fontSize: kFont16, fontWeight: FontWeight.bold),
-          tabs: const [
-            Text(
-              kTextEnrolledStudents,
+    return Consumer<DashboardClassDetailsPageBloc>(
+      builder: (BuildContext context, bloc, Widget? child) => Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TabBar(
+            dividerColor: Colors.transparent,
+            controller: tabController,
+            labelColor: Colors.black,
+            unselectedLabelColor: kUnselectedTabColor,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: kPrimaryColor,
+            padding: EdgeInsets.zero,
+            labelPadding: const EdgeInsets.only(bottom: kMargin16),
+            labelStyle:
+                const TextStyle(fontSize: kFont16, fontWeight: FontWeight.bold),
+            tabs: const [
+              Text(
+                kTextEnrolledStudents,
+              ),
+              Text(
+                kTextAssignments,
+              ),
+              Text(
+                kTextPopQuizzes,
+              ),
+              Text(
+                kTextLiveSessions,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: kMargin8,
+          ),
+          [
+            // Company Profile section view
+            const _EnrolledStudentsSectionView(),
+            // Job Description Section View
+            const Text("Addign"),
+            const Text("Stud"),
+            // Job Description Section View
+            _LiveListSectionView(
+              classLectures: bloc.classDetail?.lectures,
             ),
-            Text(
-              kTextAssignments,
-            ),
-            Text(
-              kTextPopQuizzes,
-            ),
-            Text(
-              kTextLiveSessions,
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: kMargin8,
-        ),
-        [
-          // Company Profile section view
-          const _EnrolledStudentsSectionView(),
-          // Job Description Section View
-          const Text("Addign"),
-          const Text("Stud"),
-          // Job Description Section View
-          const _LiveListSectionView(),
-        ][tabController.index],
-        const SizedBox(
-          height: kMargin48,
-        ),
-      ],
+          ][tabController.index],
+          const SizedBox(
+            height: kMargin48,
+          ),
+        ],
+      ),
     );
   }
 }
 
 class _LiveListSectionView extends StatelessWidget {
-  const _LiveListSectionView();
+  const _LiveListSectionView({required this.classLectures});
+
+  final List<LectureVO>? classLectures;
 
   @override
   Widget build(BuildContext context) {
-    return Selector<DashboardClassDetailsPageBloc,List<LiveSessionVO>?>(
-      selector: (context,bloc) => bloc.liveSessions,
-      shouldRebuild: (next,prev) => next!=prev,
+    return Selector<DashboardClassDetailsPageBloc, List<LiveSessionVO>?>(
+      selector: (context, bloc) => bloc.liveSessions,
+      shouldRebuild: (next, prev) => next != prev,
       builder: (BuildContext context, liveSessions, Widget? child) => Container(
-        decoration: BoxDecoration(
-            color: kWhiteColor, border: Border.all(color: kInvisibleColor)),
-        child: Column(
-          children: [
-            Container(
-              color: kPrimaryColor,
-              padding: const EdgeInsets.all(kMargin16),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomizedTextView(
-                    textData: "ID",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                  ),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Date",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Start Time",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "End Time",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Meet Url",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                  )),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: kMargin12,
-            ),
-            ListView.separated(
-              padding: const EdgeInsets.all(kMargin16),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: liveSessions?.length ?? 0,
-              itemBuilder: (context, index) => _LiveSessionItemView(
-                  liveSession: liveSessions?[index]),
-              separatorBuilder: (context, index) => const SizedBox(
-                height: kMargin16,
-              ),
-            ),
-          ],
+        decoration: const BoxDecoration(
+          color: kWhiteColor,
+        ),
+        child: ListView.separated(
+          padding: const EdgeInsets.all(kMargin16),
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: liveSessions?.length ?? 0,
+          itemBuilder: (context, index) => _LiveSessionItemView(
+            liveSession: liveSessions?[index],
+            classLectures: classLectures,
+          ),
+          separatorBuilder: (context, index) => const SizedBox(
+            height: kMargin16,
+          ),
         ),
       ),
     );
@@ -299,73 +266,108 @@ class _EnrolledStudentsSectionView extends StatelessWidget {
 class _LiveSessionItemView extends StatelessWidget {
   const _LiveSessionItemView({
     required this.liveSession,
+    required this.classLectures,
   });
 
   final LiveSessionVO? liveSession;
+  final List<LectureVO>? classLectures;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          const EdgeInsets.symmetric(horizontal: kMargin4, vertical: kMargin8),
+      padding: const EdgeInsets.symmetric(
+          horizontal: kMargin16, vertical: kMargin24),
       decoration: BoxDecoration(
         color: kWhiteColor,
-        border: Border.all(color: kInvisibleColor),
-        borderRadius: BorderRadius.circular(kRadius10),
-        boxShadow: [
-          BoxShadow(
-            offset: const Offset(1, 3),
-            color: Colors.black.withOpacity(
-              0.2,
-            ),
-            blurRadius: 2,
-          ),
-        ],
+        border: Border.all(color: kInvisibleColor.withOpacity(0.3)),
+        // boxShadow: [
+        //   BoxShadow(
+        //     offset: const Offset(1, 3),
+        //     color: Colors.black.withOpacity(
+        //       0.2,
+        //     ),
+        //     blurRadius: 2,
+        //   ),
+        // ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomizedTextView(
-            textData: "# ${liveSession?.id ?? 0}",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
+          Expanded(
+            child: CustomizedTextView(
+              textData: "# ${liveSession?.id ?? 0} - ${liveSession?.liveTitle}",
+              textFontSize: kFont16,
+              textFontWeight: FontWeight.w600,
+              textColor: kPrimaryColor,
+            ),
+          ),
+          Expanded(
+              child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ...?liveSession
+                  ?.getLecturesForLiveSession(classLectures)
+                  ?.map((e) => Padding(
+                        padding: const EdgeInsets.only(bottom: kMargin4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            (kIsWeb)
+                                ? RoundedImageView(
+                                    imageData:
+                                        NetworkImage(kUserPlaceHolderImage),
+                                  )
+                                : RoundedImageView(
+                                    imageData:
+                                        AssetImage(kUserPlaceHolderImage),
+                                  ),
+                            const SizedBox(
+                              width: kMargin4,
+                            ),
+                            CustomizedTextView(
+                              textData: e.name ?? kTextNA,
+                              textFontSize: kFont16,
+                              textFontWeight: FontWeight.w600,
+                              textAlign: TextAlign.start,
+                            )
+                          ],
+                        ),
+                      ))
+            ],
+          )),
+          Expanded(
+            child: CustomizedTextView(
+              textData: liveSession?.date ?? "",
+              textFontSize: kFont16,
+              textFontWeight: FontWeight.w600,
+            ),
           ),
           Expanded(
               child: CustomizedTextView(
-            textData: liveSession?.date ?? "",
+            textData:
+                "${liveSession?.startTime.formattedTime()} - ${liveSession?.endTime.formattedTime()}",
             textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          )),
-          Expanded(
-              child: InkWell(
-            onTap: () {
-              //   TODO: student detail action
-            },
-            child: CustomizedTextView(
-              textData: liveSession?.startTime ?? "",
-              textFontSize: kFont16,
-              textColor: kPrimaryColor,
-              textFontWeight: FontWeight.w600,
-              textAlign: TextAlign.center,
-            ),
-          )),
-          Expanded(
-              child: CustomizedTextView(
-            textData: liveSession?.endTime ?? kTextNA,
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
+            textFontWeight: FontWeight.w600,
           )),
           Expanded(
             child: CustomizedTextView(
               textData: liveSession?.meetUrl ?? kTextNA,
               textFontSize: kFont16,
-              textFontWeight: FontWeight.w500,
-              textAlign: TextAlign.center,
+              textFontWeight: FontWeight.w600,
+              textColor: kPrimaryColor,
             ),
           ),
+          InkWell(
+              onTap: () {
+                //   TODO: add action for delete live session
+              },
+              child: const Icon(
+                Icons.delete,
+                color: kRedColor,
+              ))
         ],
       ),
     );
@@ -612,6 +614,24 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      CustomizedTextField(
+                        inputValue: bloc.liveTitle,
+                        labelText: kTextLiveTitle,
+                        prefixIcon: const Icon(
+                          Icons.live_tv,
+                          color: kPrimaryColor,
+                        ),
+                        inputBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: kLightBrownColor)),
+                        focusedBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(color: kLightBrownColor)),
+                        onChangeValue: (value) {
+                          bloc.onChangedLiveTitle(value);
+                        },
+                      ),
+                      const SizedBox(
+                        height: kMargin24,
+                      ),
                       DatePickerView(
                         onChooseDOB: (date) {
                           bloc.onChooseStartDate(date: date);

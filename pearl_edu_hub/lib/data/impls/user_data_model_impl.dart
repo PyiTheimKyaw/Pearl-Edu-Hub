@@ -71,6 +71,7 @@ class UserDataModelImpl extends UserDataModel {
     String? meetUrl,
     List<int>? lectureIds,
     int? classId,
+    String? liveTitle,
   }) {
     return _userDataAgent.createLiveSession(
         startTime: startTime,
@@ -78,7 +79,8 @@ class UserDataModelImpl extends UserDataModel {
         date: date,
         meetUrl: meetUrl,
         lectureIds: lectureIds,
-        classId: classId);
+        classId: classId,
+        liveTitle: liveTitle);
   }
 
   // From persistence

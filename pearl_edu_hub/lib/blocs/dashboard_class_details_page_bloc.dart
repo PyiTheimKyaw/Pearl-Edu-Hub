@@ -23,6 +23,7 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
   List<LiveSessionVO>? liveSessions;
   String? chosenEndTime;
   String? meetingLink;
+  String? liveTitle;
   bool isVisibleLectureChoiceDialog = false;
 
   final UserDataModel _userDataModel = UserDataModelImpl();
@@ -30,6 +31,11 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
   DashboardClassDetailsPageBloc({required int classId}) {
     setSuccessState();
     fetchAndGetClassDetail(id: classId);
+  }
+
+  void onChangedLiveTitle(String title) {
+    liveTitle = title;
+    notifySafely();
   }
 
   void onChangedMeetingLink(String link) {
@@ -94,6 +100,7 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
             date: chosenStartDate,
             meetUrl: meetingLink,
             classId: classDetail?.id,
+            liveTitle: liveTitle,
             lectureIds: getLectureIds())
         .then((value) async {
       await fetchAndGetClassDetail(id: classDetail?.id ?? 0);

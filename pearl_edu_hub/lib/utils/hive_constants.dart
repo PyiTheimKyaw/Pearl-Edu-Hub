@@ -3,6 +3,7 @@ const int kDashboardClassesVOHiveTypeId = 1;
 const int kLecturesVOHiveTypeId = 2;
 const int kEnrollmentsVOHiveTypeId = 3;
 const int kLiveSessionVOHiveTypeId = 4;
+const int kStudentVOHiveTypeId = 5;
 
 // Boxes
 const String kBoxDashboardClasses = "dashboard_classes_box";

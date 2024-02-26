@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pearl_edu_hub/network/api_constants.dart';
 import 'package:pearl_edu_hub/network/responses/base_response.dart';
 import 'package:pearl_edu_hub/network/responses/class_details_response.dart';
@@ -9,7 +10,13 @@ import 'package:retrofit/retrofit.dart';
 
 part 'pearl_api.g.dart';
 
-@RestApi(baseUrl: "http://localhost:8082/pearlEduHubApi")
+@RestApi(
+    baseUrl:
+    // kIsWeb
+    //     ? "http://localhost:8082/pearlEduHubApi"
+    //     :
+    "http://192.168.1.3:8082/pearlEduHubApi"
+)
 abstract class PearlApi {
   factory PearlApi(Dio dio) = _PearlApi;
 
@@ -45,5 +52,6 @@ abstract class PearlApi {
     @Query(kParamMeetUrl) String meetUrl,
     @Query(kParamLectureIds) String lectureIds,
     @Query(kParamClassId) int classId,
+    @Query(kParamLiveTitle) String liveTitle,
   );
 }

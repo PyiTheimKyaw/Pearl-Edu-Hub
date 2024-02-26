@@ -59,7 +59,7 @@ class CustomizedTextField extends StatelessWidget {
           offset: inputValue?.length ?? 0,
         ),
       style: const TextStyle(
-        fontFamily: kFontMulish,
+        fontFamily: kFontTWK,
         fontSize: kFont16,
         fontWeight: FontWeight.w400,
       ),

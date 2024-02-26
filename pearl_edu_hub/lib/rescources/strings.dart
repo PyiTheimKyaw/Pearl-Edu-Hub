@@ -26,3 +26,4 @@ const String kTextAddLiveSession = "Add Live Session";
 const String kTextEnrolledStudents = "Enrolled Students";
 const String kTextLiveSessions = "Live Sessions";
 const String kTextMeetingLink = "Meeting Link";
+const String kTextLiveTitle = "Live Title";

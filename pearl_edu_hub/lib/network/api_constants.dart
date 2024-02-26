@@ -16,3 +16,4 @@ const String kParamStartTime = "start_time";
 const String kParamEndTime = "end_time";
 const String kParamDate = "date";
 const String kParamMeetUrl = "meet_url";
+const String kParamLiveTitle = "live_title";

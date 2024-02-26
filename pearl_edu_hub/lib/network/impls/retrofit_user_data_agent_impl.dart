@@ -81,14 +81,22 @@ class RetrofitUserDataAgentImpl extends UserDataAgent {
   }
 
   @override
-  Future<BaseResponse> createLiveSession(
-      {String? startTime,
-      String? endTime,
-      String? date,
-      String? meetUrl,
-      List<int>? lectureIds,
-      int? classId}) {
-    return mPearlApi.createLiveSession(startTime ?? "", endTime ?? "",
-        date ?? "", meetUrl ?? "", lectureIds?.join(",") ?? "", classId ?? 0);
+  Future<BaseResponse> createLiveSession({
+    String? startTime,
+    String? endTime,
+    String? date,
+    String? meetUrl,
+    List<int>? lectureIds,
+    int? classId,
+    String? liveTitle,
+  }) {
+    return mPearlApi.createLiveSession(
+        startTime ?? "",
+        endTime ?? "",
+        date ?? "",
+        meetUrl ?? "",
+        lectureIds?.join(",") ?? "",
+        classId ?? 0,
+        liveTitle ?? "");
   }
 }

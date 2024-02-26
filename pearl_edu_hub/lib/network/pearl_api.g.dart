@@ -13,7 +13,7 @@ class _PearlApi implements PearlApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:8082/pearlEduHubApi';
+    baseUrl ??= 'http://192.168.1.3:8082/pearlEduHubApi';
   }
 
   final Dio _dio;
@@ -179,6 +179,7 @@ class _PearlApi implements PearlApi {
     String meetUrl,
     String lectureIds,
     int classId,
+    String liveTitle,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
@@ -188,6 +189,7 @@ class _PearlApi implements PearlApi {
       r'meet_url': meetUrl,
       r'lecture_ids': lectureIds,
       r'class_id': classId,
+      r'live_title': liveTitle,
     };
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;

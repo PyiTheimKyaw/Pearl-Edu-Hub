@@ -27,6 +27,7 @@ abstract class UserDataModel {
     String? meetUrl,
     List<int>? lectureIds,
     int? classId,
+    String? liveTitle,
   });
 
 //   From persistence

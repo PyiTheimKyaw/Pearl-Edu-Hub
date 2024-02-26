@@ -28,5 +28,6 @@ abstract class UserDataAgent {
     String? meetUrl,
     List<int>? lectureIds,
     int? classId,
+    String? liveTitle,
   });
 }

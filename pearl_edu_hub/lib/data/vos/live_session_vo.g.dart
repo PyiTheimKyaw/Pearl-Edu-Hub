@@ -18,20 +18,21 @@ class LiveSessionVOAdapter extends TypeAdapter<LiveSessionVO> {
     };
     return LiveSessionVO(
       fields[0] as int?,
-      fields[1] as String?,
-      fields[2] as String?,
+      fields[1] as String,
+      fields[2] as String,
       fields[3] as String?,
       fields[4] as String?,
       fields[5] as String?,
       fields[6] as String?,
       fields[7] as int?,
+      fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, LiveSessionVO obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class LiveSessionVOAdapter extends TypeAdapter<LiveSessionVO> {
       ..writeByte(6)
       ..write(obj.createdAt)
       ..writeByte(7)
-      ..write(obj.classId);
+      ..write(obj.classId)
+      ..writeByte(8)
+      ..write(obj.liveTitle);
   }
 
   @override
@@ -68,13 +71,14 @@ class LiveSessionVOAdapter extends TypeAdapter<LiveSessionVO> {
 LiveSessionVO _$LiveSessionVOFromJson(Map<String, dynamic> json) =>
     LiveSessionVO(
       json['id'] as int?,
-      json['start_time'] as String?,
-      json['end_time'] as String?,
+      json['start_time'] as String,
+      json['end_time'] as String,
       json['date'] as String?,
       json['lecture_ids'] as String?,
       json['meet_url'] as String?,
       json['created_at'] as String?,
       json['class_id'] as int?,
+      json['live_title'] as String?,
     );
 
 Map<String, dynamic> _$LiveSessionVOToJson(LiveSessionVO instance) =>
@@ -87,4 +91,5 @@ Map<String, dynamic> _$LiveSessionVOToJson(LiveSessionVO instance) =>
       'meet_url': instance.meetUrl,
       'created_at': instance.createdAt,
       'class_id': instance.classId,
+      'live_title': instance.liveTitle,
     };

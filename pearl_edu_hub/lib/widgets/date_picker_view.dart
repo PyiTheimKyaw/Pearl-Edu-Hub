@@ -72,7 +72,7 @@ class DatePickerView extends StatelessWidget {
 
           selectedTime.then((value) {
             if (value != null) {
-              onChooseDOB("${value.hour}-${value.minute}");
+              onChooseDOB("${value.hour}:${value.minute}");
             }
           });
         } else {

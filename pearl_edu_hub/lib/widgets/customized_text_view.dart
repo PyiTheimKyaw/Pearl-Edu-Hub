@@ -57,7 +57,7 @@ class CustomizedTextView extends StatelessWidget {
     }
 
     return DefaultTextStyle(
-      style: const TextStyle(color: Colors.black, fontFamily: kFontMulish),
+      style: const TextStyle(color: Colors.black, fontFamily: kFontTWK),
       child: Text(
         textData,
         style: allInOneStyle ??
@@ -65,7 +65,7 @@ class CustomizedTextView extends StatelessWidget {
                 color: textColor,
                 fontSize: getFontSizeOnMultiDimensions(),
                 fontWeight: textFontWeight,
-                fontFamily: kFontMulish,
+                fontFamily: kFontTWK,
                 fontStyle: fontStyle,
                 height: 1.2,
                 decoration: textDecoration),
