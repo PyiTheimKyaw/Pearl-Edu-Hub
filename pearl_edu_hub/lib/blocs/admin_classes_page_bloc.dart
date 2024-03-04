@@ -1,4 +1,4 @@
-import 'package:html_editor_enhanced/html_editor.dart';
+// import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:pearl_edu_hub/blocs/base_bloc.dart';
 import 'package:pearl_edu_hub/data/impls/user_data_model_impl.dart';
 import 'package:pearl_edu_hub/data/models/user_data_model.dart';
@@ -16,7 +16,7 @@ class AdminClassesPageBloc extends BaseBloc {
   List<LectureVO>? lectures;
   ClassesVO? selectedClass;
   bool isVisibleLectureChoiceDialog = false;
-  final HtmlEditorController controller = HtmlEditorController();
+  // final HtmlEditorController controller = HtmlEditorController();
 
   final UserDataModel userDataModel = UserDataModelImpl();
 

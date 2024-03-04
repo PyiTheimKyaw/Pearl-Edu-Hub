@@ -15,6 +15,7 @@ const String kTextClose = "Close";
 const String kTextNA = "N/A";
 const String kTextSave = "Save";
 const String kTextCreate = "Create";
+const String kTextUpdate = "Update";
 const String kTextSuccess = "Success";
 //Classes page
 const String kTextCreateClass = "Create class";
@@ -27,3 +28,6 @@ const String kTextEnrolledStudents = "Enrolled Students";
 const String kTextLiveSessions = "Live Sessions";
 const String kTextMeetingLink = "Meeting Link";
 const String kTextLiveTitle = "Live Title";
+
+// Dashboard class details page
+const String kTextUpdateLive = "Update Live";

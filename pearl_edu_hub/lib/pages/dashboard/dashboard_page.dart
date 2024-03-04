@@ -16,13 +16,14 @@ import 'package:pearl_edu_hub/responsive/responsive.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 import 'package:provider/provider.dart';
 
-final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+
     return ChangeNotifierProvider(
       create: (BuildContext context) => DashboardPageBloc(),
       child: Scaffold(
@@ -36,7 +37,7 @@ class DashboardPage extends StatelessWidget {
           builder: (BuildContext context, sidebarItemIndex, Widget? child) =>
               Responsive(
                   mobile: _ContentsSectionView(
-                    sidebarItemIndex: sidebarItemIndex,
+                    sidebarItemIndex: sidebarItemIndex, onTapMenuMobile: (){scaffoldKey.currentState!.openDrawer();},
                   ),
                   desktop: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -58,7 +59,7 @@ class DashboardPage extends StatelessWidget {
                       Expanded(
                         flex: 4,
                         child: _ContentsSectionView(
-                          sidebarItemIndex: sidebarItemIndex,
+                          sidebarItemIndex: sidebarItemIndex, onTapMenuMobile: (){scaffoldKey.currentState!.openDrawer();},
                         ),
                       ),
                     ],
@@ -72,10 +73,11 @@ class DashboardPage extends StatelessWidget {
 class _ContentsSectionView extends StatelessWidget {
   const _ContentsSectionView({
     required this.sidebarItemIndex,
+    required this.onTapMenuMobile,
   });
 
   final int sidebarItemIndex;
-
+  final Function onTapMenuMobile;
   @override
   Widget build(BuildContext context) {
     return Consumer<DashboardPageBloc>(
@@ -85,7 +87,9 @@ class _ContentsSectionView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const _DashboardAppBarView(),
+               _DashboardAppBarView(
+                onTapMenuMobile: onTapMenuMobile,
+              ),
               SizedBox(
                 child: [
                   AdminDashboardPage(
@@ -96,7 +100,7 @@ class _ContentsSectionView extends StatelessWidget {
                       if (Responsive.isDesktop(context)) {
                         bloc.onTapMenu();
                       } else {
-                        scaffoldKey.currentState!.openDrawer();
+                        onTapMenuMobile();
                       }
                     },
                   ),
@@ -110,7 +114,7 @@ class _ContentsSectionView extends StatelessWidget {
                       if (Responsive.isDesktop(context)) {
                         bloc.onTapMenu();
                       } else {
-                        scaffoldKey.currentState!.openDrawer();
+                       onTapMenuMobile();
                       }
                     },
                   ),
@@ -119,7 +123,7 @@ class _ContentsSectionView extends StatelessWidget {
                       if (Responsive.isDesktop(context)) {
                         bloc.onTapMenu();
                       } else {
-                        scaffoldKey.currentState!.openDrawer();
+                        onTapMenuMobile();
                       }
                     },
                   ),
@@ -128,7 +132,7 @@ class _ContentsSectionView extends StatelessWidget {
                       if (Responsive.isDesktop(context)) {
                         bloc.onTapMenu();
                       } else {
-                        scaffoldKey.currentState!.openDrawer();
+                        onTapMenuMobile();
                       }
                     },
                   ),
@@ -137,7 +141,7 @@ class _ContentsSectionView extends StatelessWidget {
                       if (Responsive.isDesktop(context)) {
                         bloc.onTapMenu();
                       } else {
-                        scaffoldKey.currentState!.openDrawer();
+                        onTapMenuMobile();
                       }
                     },
                   ),
@@ -146,7 +150,7 @@ class _ContentsSectionView extends StatelessWidget {
                       if (Responsive.isDesktop(context)) {
                         bloc.onTapMenu();
                       } else {
-                        scaffoldKey.currentState!.openDrawer();
+                        onTapMenuMobile();
                       }
                     },
                   ),
@@ -155,7 +159,7 @@ class _ContentsSectionView extends StatelessWidget {
                       if (Responsive.isDesktop(context)) {
                         bloc.onTapMenu();
                       } else {
-                        scaffoldKey.currentState!.openDrawer();
+                        onTapMenuMobile();
                       }
                     },
                   ),
@@ -351,8 +355,8 @@ class _AppLogoAndNameView extends StatelessWidget {
 }
 
 class _DashboardAppBarView extends StatelessWidget {
-  const _DashboardAppBarView();
-
+  const _DashboardAppBarView({required this.onTapMenuMobile});
+  final Function onTapMenuMobile;
   @override
   Widget build(BuildContext context) {
     return Consumer<DashboardPageBloc>(
@@ -369,7 +373,7 @@ class _DashboardAppBarView extends StatelessWidget {
                     if (Responsive.isDesktop(context)) {
                       bloc.onTapMenu();
                     } else {
-                      scaffoldKey.currentState!.openDrawer();
+                      onTapMenuMobile();
                     }
                   },
                   child: const Icon(

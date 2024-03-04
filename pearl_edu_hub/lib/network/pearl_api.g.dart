@@ -13,7 +13,9 @@ class _PearlApi implements PearlApi {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://192.168.1.3:8082/pearlEduHubApi';
+    // baseUrl ??= 'http://192.168.1.3:8082/pearlEduHubApi';
+    baseUrl ??= 'http://localhost:8082/pearlEduHubApi';
+
   }
 
   final Dio _dio;

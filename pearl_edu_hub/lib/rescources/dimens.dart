@@ -33,3 +33,5 @@ const double kRadius90 = 90.0;
 const double kAppLogoSize = 90.0;
 const double kDashboardMenuItemSize = 24.0;
 const double kDashboardSelectedMenuItemSize = 30.0;
+
+const double kLectureRoundedImageSizeSmall = 25.0;

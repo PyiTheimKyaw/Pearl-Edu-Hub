@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +20,13 @@ import 'package:pearl_edu_hub/utils/strings_extension.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_field.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 import 'package:pearl_edu_hub/widgets/date_picker_view.dart';
+import 'package:pearl_edu_hub/widgets/image_from_servlet.dart';
 import 'package:pearl_edu_hub/widgets/loading_state_widget.dart';
 import 'package:pearl_edu_hub/widgets/primary_button.dart';
 import 'package:pearl_edu_hub/widgets/rounded_image_view.dart';
 import 'package:provider/provider.dart';
 
+import 'package:http/http.dart' as http;
 class DashboardClassDetailsPage extends StatelessWidget {
   const DashboardClassDetailsPage(
       {super.key, required this.classId, required this.onTapBack});
@@ -316,13 +321,15 @@ class _LiveSessionItemView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             (kIsWeb)
-                                ? RoundedImageView(
+                                ? const RoundedImageView(
                                     imageData:
                                         NetworkImage(kUserPlaceHolderImage),
+                                    imageSize: kLectureRoundedImageSizeSmall,
                                   )
-                                : RoundedImageView(
+                                : const RoundedImageView(
                                     imageData:
                                         AssetImage(kUserPlaceHolderImage),
+                                    imageSize: kLectureRoundedImageSizeSmall,
                                   ),
                             const SizedBox(
                               width: kMargin4,
@@ -360,14 +367,40 @@ class _LiveSessionItemView extends StatelessWidget {
               textColor: kPrimaryColor,
             ),
           ),
-          InkWell(
-              onTap: () {
-                //   TODO: add action for delete live session
-              },
-              child: const Icon(
-                Icons.delete,
-                color: kRedColor,
-              ))
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              PrimaryButton(
+                  buttonText: kTextUpdateLive,
+                  isDense: true,
+                  btnVerPadding: kMargin8,
+                  btnHorPadding: kMargin8,
+                  buttonTextSize: kFont13,
+                  onTapButton: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return _AddOrEditLiveSessionDialog(
+                            classId: liveSession?.classId ?? 0,
+                            selectedLive: liveSession,
+                            isUpdate: true,
+                          );
+                        });
+                  }),
+              const SizedBox(
+                width: kMargin12,
+              ),
+              InkWell(
+                onTap: () {
+                  //   TODO: add action for delete live session
+                },
+                child: const Icon(
+                  Icons.delete,
+                  color: kRedColor,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
@@ -456,7 +489,26 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
 
   final ClassesVO classDetail;
   final Function onTapBack;
+  Future<void> uploadImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
+    if (result != null) {
+      List<int> bytes = result.files.single.bytes!;
+      var url = 'http://localhost:8082/pearlEduHubApi/upload'; // Replace with your servlet URL
 
+      var request = http.MultipartRequest('POST', Uri.parse(url));
+      request.files.add(
+        http.MultipartFile.fromBytes('image', bytes, filename: 'image.jpg'),
+      );
+      request.fields['file_name'] = 'abc.jpg';
+
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        print('Image uploaded successfully');
+      } else {
+        print('Failed to upload image');
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -522,6 +574,7 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
             ),
           ],
         ),
+        ImageDisplayPage(1),
         const Spacer(),
         Selector<DashboardClassDetailsPageBloc, int>(
           selector: (BuildContext context, bloc) => bloc.tabIndex,
@@ -539,7 +592,19 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
                 visible: tabIndex == 0,
                 child: PrimaryButton(
                   buttonText: kTextAddNewStudent,
-                  onTapButton: () {},
+                  onTapButton: () async{
+                    // FilePickerResult? result = await FilePicker.platform.pickFiles(
+                    //   type: FileType.any,
+                      // allowedExtensions: ['pdf'],
+                    // );
+
+                    // if (result != null) {
+                    //   File file = File(result.files.single.path!);
+                      uploadImage();
+                    // } else {
+                      // User canceled the picker
+                    // }
+                  },
                   isDense: true,
                 ),
               ),
@@ -584,17 +649,18 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
 }
 
 class _AddOrEditLiveSessionDialog extends StatelessWidget {
-  const _AddOrEditLiveSessionDialog({
-    required this.classId,
-  });
+  const _AddOrEditLiveSessionDialog(
+      {required this.classId, this.selectedLive, this.isUpdate});
 
   final int classId;
+  final LiveSessionVO? selectedLive;
+  final bool? isUpdate;
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) =>
-          DashboardClassDetailsPageBloc(classId: classId),
+      create: (BuildContext context) => DashboardClassDetailsPageBloc(
+          classId: classId, selectedLive: selectedLive),
       child: Consumer<DashboardClassDetailsPageBloc>(
         builder: (BuildContext context, bloc, Widget? child) => Stack(
           children: [
@@ -703,10 +769,15 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
                         height: kMargin24,
                       ),
                       PrimaryButton(
-                          buttonText: kTextCreate,
+                          buttonText:
+                              (isUpdate ?? false) ? kTextUpdate : kTextCreate,
                           isDense: true,
                           onTapButton: () {
-                            bloc.createLiveSession();
+                            if(isUpdate ?? false) {
+                              bloc.createLiveSession();
+                            }else{
+
+                            }
                           }),
                     ],
                   ),

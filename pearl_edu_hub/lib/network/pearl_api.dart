@@ -13,9 +13,10 @@ part 'pearl_api.g.dart';
 @RestApi(
     baseUrl:
     // kIsWeb
-    //     ? "http://localhost:8082/pearlEduHubApi"
+    //     ?
+      "http://localhost:8082/pearlEduHubApi"
     //     :
-    "http://192.168.1.3:8082/pearlEduHubApi"
+    // "http://192.168.1.3:8082/pearlEduHubApi"
 )
 abstract class PearlApi {
   factory PearlApi(Dio dio) = _PearlApi;

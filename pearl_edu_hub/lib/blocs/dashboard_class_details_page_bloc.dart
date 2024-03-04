@@ -28,9 +28,12 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
 
   final UserDataModel _userDataModel = UserDataModelImpl();
 
-  DashboardClassDetailsPageBloc({required int classId}) {
+  DashboardClassDetailsPageBloc(
+      {required int classId, LiveSessionVO? selectedLive}) {
     setSuccessState();
-    fetchAndGetClassDetail(id: classId);
+
+    fetchAndGetClassDetail(id: classId, selectedLive: selectedLive);
+
   }
 
   void onChangedLiveTitle(String title) {
@@ -128,12 +131,37 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
     });
   }
 
-  Future<void> fetchAndGetClassDetail({required int id}) async {
+  Future<void> fetchAndGetClassDetail(
+      {required int id, LiveSessionVO? selectedLive}) async {
     return _userDataModel
         .getClassDetailFromDatabase(classId: id)
         .listen((value) {
       classDetail = value;
       liveSessions = classDetail?.liveSessions;
+      liveTitle = selectedLive?.liveTitle;
+      chosenStartDate = selectedLive?.date;
+      chosenStartTime = selectedLive?.startTime;
+      chosenEndTime = selectedLive?.endTime;
+      meetingLink = selectedLive?.meetUrl;
+      if(selectedLive==null){
+        classDetail?.lectures.map((e) {
+          e.isSelected = false;
+          notifySafely();
+        }).toList();
+      }
+      List<String>? dummyIds = selectedLive?.lectureIds?.split(",").toList();
+      print("Dummy Ids $dummyIds ${selectedLive}");
+      if (dummyIds != null && dummyIds.isNotEmpty) {
+        classDetail?.lectures.map((e) {
+          if (dummyIds.contains(e.id.toString())) {
+            e.isSelected = true;
+            notifySafely();
+          }else{
+            e.isSelected = false;
+            notifySafely();
+          }
+        }).toList();
+      }
       notifySafely();
     }).onError((error) {});
   }
