@@ -574,7 +574,7 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
             ),
           ],
         ),
-        ImageDisplayPage(1),
+        ImageFromServlet(),
         const Spacer(),
         Selector<DashboardClassDetailsPageBloc, int>(
           selector: (BuildContext context, bloc) => bloc.tabIndex,

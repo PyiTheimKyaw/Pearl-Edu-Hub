@@ -63,7 +63,7 @@ class CustomizedTextView extends StatelessWidget {
         style: allInOneStyle ??
             TextStyle(
                 color: textColor,
-                fontSize: getFontSizeOnMultiDimensions(),
+                fontSize: textFontSize,
                 fontWeight: textFontWeight,
                 fontFamily: kFontTWK,
                 fontStyle: fontStyle,
