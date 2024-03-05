@@ -9,7 +9,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:pearl_edu_hub/route/navi.dart';
 
 void main() async {
-  usePathUrlStrategy();
+  // usePathUrlStrategy();
   await Hive.initFlutter();
   await BoxHelper().openBoxes();
   runApp(const MyApp());
@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: kFontTWK,
       ),
-      home: const DashboardPage(),
-      initialRoute: Navi.getDashboard,
+      home: const HomePage(),
+      initialRoute: Navi.initialRoute,
       getPages: [
         GetPage(
           name: Navi.initialRoute,
