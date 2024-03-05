@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:pearl_edu_hub/network/responses/base_response.dart';
 import 'package:pearl_edu_hub/network/responses/class_details_response.dart';
 import 'package:pearl_edu_hub/network/responses/classes_response.dart';
@@ -30,4 +32,5 @@ abstract class UserDataAgent {
     int? classId,
     String? liveTitle,
   });
+  Future<Uint8List> downloadCV();
 }

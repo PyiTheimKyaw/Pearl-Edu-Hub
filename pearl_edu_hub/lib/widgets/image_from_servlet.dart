@@ -38,6 +38,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class ImageFromServlet extends StatefulWidget {
+  const ImageFromServlet({super.key});
+
   @override
   _ImageFromServletState createState() => _ImageFromServletState();
 }
@@ -53,7 +55,7 @@ class _ImageFromServletState extends State<ImageFromServlet> {
 
   Future<void> _fetchImage() async {
     // Replace 'your_servlet_url' with the actual URL of your servlet
-    String url = 'http://localhost:8082/pearlEduHubApi/image?id=2'; // Assuming id=1 for example
+    String url = 'http://localhost:8082/pearlEduHubApi/image?id=3'; // Assuming id=1 for example
 
     try {
       final response = await http.get(Uri.parse(url));
@@ -72,8 +74,6 @@ class _ImageFromServletState extends State<ImageFromServlet> {
 
   @override
   Widget build(BuildContext context) {
-    return _imageData != null
-        ? Image.memory(_imageData!)
-        : CircularProgressIndicator();
+    return _imageData != null ? Image.memory(_imageData!) : CircularProgressIndicator();
   }
 }

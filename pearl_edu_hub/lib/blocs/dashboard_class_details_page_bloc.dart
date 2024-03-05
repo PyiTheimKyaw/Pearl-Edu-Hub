@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,15 +26,21 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
   String? meetingLink;
   String? liveTitle;
   bool isVisibleLectureChoiceDialog = false;
+  Uint8List? imageData;
 
   final UserDataModel _userDataModel = UserDataModelImpl();
 
-  DashboardClassDetailsPageBloc(
-      {required int classId, LiveSessionVO? selectedLive}) {
+  DashboardClassDetailsPageBloc({required int classId, LiveSessionVO? selectedLive}) {
     setSuccessState();
+    _userDataModel.downloadCV().then((value) {
+      print("Image data ${value}");
+      imageData = value;
+      notifySafely();
+    }).catchError((error){
+      print("Image err ${error.toString()}");
+    });
 
     fetchAndGetClassDetail(id: classId, selectedLive: selectedLive);
-
   }
 
   void onChangedLiveTitle(String title) {
@@ -109,8 +116,7 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
       await fetchAndGetClassDetail(id: classDetail?.id ?? 0);
       Get.back();
       Get.back();
-      Get.dialog(SuccessDialog(
-          dialogSubTitle: value.msg ?? "", dialogTitle: kTextSuccess));
+      Get.dialog(SuccessDialog(dialogSubTitle: value.msg ?? "", dialogTitle: kTextSuccess));
     }).catchError((error) async {
       Get.back();
       switch (error.runtimeType) {
@@ -131,11 +137,8 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
     });
   }
 
-  Future<void> fetchAndGetClassDetail(
-      {required int id, LiveSessionVO? selectedLive}) async {
-    return _userDataModel
-        .getClassDetailFromDatabase(classId: id)
-        .listen((value) {
+  Future<void> fetchAndGetClassDetail({required int id, LiveSessionVO? selectedLive}) async {
+    return _userDataModel.getClassDetailFromDatabase(classId: id).listen((value) {
       classDetail = value;
       liveSessions = classDetail?.liveSessions;
       liveTitle = selectedLive?.liveTitle;
@@ -143,7 +146,7 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
       chosenStartTime = selectedLive?.startTime;
       chosenEndTime = selectedLive?.endTime;
       meetingLink = selectedLive?.meetUrl;
-      if(selectedLive==null){
+      if (selectedLive == null) {
         classDetail?.lectures.map((e) {
           e.isSelected = false;
           notifySafely();
@@ -156,7 +159,7 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
           if (dummyIds.contains(e.id.toString())) {
             e.isSelected = true;
             notifySafely();
-          }else{
+          } else {
             e.isSelected = false;
             notifySafely();
           }

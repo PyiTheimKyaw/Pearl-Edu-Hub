@@ -27,9 +27,9 @@ import 'package:pearl_edu_hub/widgets/rounded_image_view.dart';
 import 'package:provider/provider.dart';
 
 import 'package:http/http.dart' as http;
+
 class DashboardClassDetailsPage extends StatelessWidget {
-  const DashboardClassDetailsPage(
-      {super.key, required this.classId, required this.onTapBack});
+  const DashboardClassDetailsPage({super.key, required this.classId, required this.onTapBack});
 
   final String classId;
   final Function onTapBack;
@@ -37,11 +37,9 @@ class DashboardClassDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) =>
-          DashboardClassDetailsPageBloc(classId: int.parse(classId)),
+      create: (BuildContext context) => DashboardClassDetailsPageBloc(classId: int.parse(classId)),
       child: Consumer<DashboardClassDetailsPageBloc>(
-        builder: (BuildContext context, bloc, Widget? child) =>
-            LoadingStateWidget<DashboardClassDetailsPageBloc>(
+        builder: (BuildContext context, bloc, Widget? child) => LoadingStateWidget<DashboardClassDetailsPageBloc>(
           loadingState: bloc.getLoadingState,
           dialogLoadingState: bloc.getDialogLoadingState,
           widgetForSuccessState: SingleChildScrollView(
@@ -81,12 +79,10 @@ class _ClassDetailsInfoSectionView extends StatefulWidget {
   final Function(int) onChangeTabIndex;
 
   @override
-  State<_ClassDetailsInfoSectionView> createState() =>
-      _ClassDetailsInfoSectionViewState();
+  State<_ClassDetailsInfoSectionView> createState() => _ClassDetailsInfoSectionViewState();
 }
 
-class _ClassDetailsInfoSectionViewState
-    extends State<_ClassDetailsInfoSectionView>
+class _ClassDetailsInfoSectionViewState extends State<_ClassDetailsInfoSectionView>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
 
@@ -120,8 +116,7 @@ class _ClassDetailsInfoSectionViewState
             indicatorColor: kPrimaryColor,
             padding: EdgeInsets.zero,
             labelPadding: const EdgeInsets.only(bottom: kMargin16),
-            labelStyle:
-                const TextStyle(fontSize: kFont16, fontWeight: FontWeight.bold),
+            labelStyle: const TextStyle(fontSize: kFont16, fontWeight: FontWeight.bold),
             tabs: const [
               Text(
                 kTextEnrolledStudents,
@@ -199,8 +194,7 @@ class _EnrolledStudentsSectionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DashboardClassDetailsPageBloc>(
       builder: (BuildContext context, bloc, Widget? child) => Container(
-        decoration: BoxDecoration(
-            color: kWhiteColor, border: Border.all(color: kInvisibleColor)),
+        decoration: BoxDecoration(color: kWhiteColor, border: Border.all(color: kInvisibleColor)),
         child: Column(
           children: [
             Container(
@@ -280,8 +274,7 @@ class _LiveSessionItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: kMargin16, vertical: kMargin24),
+      padding: const EdgeInsets.symmetric(horizontal: kMargin16, vertical: kMargin24),
       decoration: BoxDecoration(
         color: kWhiteColor,
         border: Border.all(color: kInvisibleColor.withOpacity(0.3)),
@@ -312,37 +305,33 @@ class _LiveSessionItemView extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ...?liveSession
-                  ?.getLecturesForLiveSession(classLectures)
-                  ?.map((e) => Padding(
-                        padding: const EdgeInsets.only(bottom: kMargin4),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            (kIsWeb)
-                                ? const RoundedImageView(
-                                    imageData:
-                                        NetworkImage(kUserPlaceHolderImage),
-                                    imageSize: kLectureRoundedImageSizeSmall,
-                                  )
-                                : const RoundedImageView(
-                                    imageData:
-                                        AssetImage(kUserPlaceHolderImage),
-                                    imageSize: kLectureRoundedImageSizeSmall,
-                                  ),
-                            const SizedBox(
-                              width: kMargin4,
-                            ),
-                            CustomizedTextView(
-                              textData: e.name ?? kTextNA,
-                              textFontSize: kFont16,
-                              textFontWeight: FontWeight.w600,
-                              textAlign: TextAlign.start,
-                            )
-                          ],
+              ...?liveSession?.getLecturesForLiveSession(classLectures)?.map((e) => Padding(
+                    padding: const EdgeInsets.only(bottom: kMargin4),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        (kIsWeb)
+                            ? const RoundedImageView(
+                                imageData: NetworkImage(kUserPlaceHolderImage),
+                                imageSize: kLectureRoundedImageSizeSmall,
+                              )
+                            : const RoundedImageView(
+                                imageData: AssetImage(kUserPlaceHolderImage),
+                                imageSize: kLectureRoundedImageSizeSmall,
+                              ),
+                        const SizedBox(
+                          width: kMargin4,
                         ),
-                      ))
+                        CustomizedTextView(
+                          textData: e.name ?? kTextNA,
+                          textFontSize: kFont16,
+                          textFontWeight: FontWeight.w600,
+                          textAlign: TextAlign.start,
+                        )
+                      ],
+                    ),
+                  ))
             ],
           )),
           Expanded(
@@ -354,8 +343,7 @@ class _LiveSessionItemView extends StatelessWidget {
           ),
           Expanded(
               child: CustomizedTextView(
-            textData:
-                "${liveSession?.startTime.formattedTime()} - ${liveSession?.endTime.formattedTime()}",
+            textData: "${liveSession?.startTime.formattedTime()} - ${liveSession?.endTime.formattedTime()}",
             textFontSize: kFont16,
             textFontWeight: FontWeight.w600,
           )),
@@ -417,8 +405,7 @@ class _EnrolledStudentItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          const EdgeInsets.symmetric(horizontal: kMargin4, vertical: kMargin8),
+      padding: const EdgeInsets.symmetric(horizontal: kMargin4, vertical: kMargin8),
       decoration: BoxDecoration(
         color: kWhiteColor,
         border: Border.all(color: kInvisibleColor),
@@ -484,11 +471,11 @@ class _EnrolledStudentItemView extends StatelessWidget {
 }
 
 class _ClassInfoAndActionButtons extends StatelessWidget {
-  const _ClassInfoAndActionButtons(
-      {required this.classDetail, required this.onTapBack});
+  const _ClassInfoAndActionButtons({required this.classDetail, required this.onTapBack});
 
   final ClassesVO classDetail;
   final Function onTapBack;
+
   Future<void> uploadImage() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image);
     if (result != null) {
@@ -509,6 +496,7 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -566,8 +554,7 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
               height: kMargin4,
             ),
             CustomizedTextView(
-              textData:
-                  "Lectures: ${classDetail.lectures.map((e) => e.name ?? "").toList().join(",")}",
+              textData: "Lectures: ${classDetail.lectures.map((e) => e.name ?? "").toList().join(",")}",
               textFontWeight: FontWeight.w600,
               textFontSize: kFont16,
               fontStyle: FontStyle.italic,
@@ -575,6 +562,8 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
           ],
         ),
         ImageFromServlet(),
+        // Consumer<DashboardClassDetailsPageBloc>(
+        //     builder: (BuildContext context, bloc, Widget? child) => Image.memory(bloc.imageData ?? Uint8List(0))),
         const Spacer(),
         Selector<DashboardClassDetailsPageBloc, int>(
           selector: (BuildContext context, bloc) => bloc.tabIndex,
@@ -592,17 +581,17 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
                 visible: tabIndex == 0,
                 child: PrimaryButton(
                   buttonText: kTextAddNewStudent,
-                  onTapButton: () async{
+                  onTapButton: () async {
                     // FilePickerResult? result = await FilePicker.platform.pickFiles(
                     //   type: FileType.any,
-                      // allowedExtensions: ['pdf'],
+                    // allowedExtensions: ['pdf'],
                     // );
 
                     // if (result != null) {
                     //   File file = File(result.files.single.path!);
-                      uploadImage();
+                    uploadImage();
                     // } else {
-                      // User canceled the picker
+                    // User canceled the picker
                     // }
                   },
                   isDense: true,
@@ -649,8 +638,7 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
 }
 
 class _AddOrEditLiveSessionDialog extends StatelessWidget {
-  const _AddOrEditLiveSessionDialog(
-      {required this.classId, this.selectedLive, this.isUpdate});
+  const _AddOrEditLiveSessionDialog({required this.classId, this.selectedLive, this.isUpdate});
 
   final int classId;
   final LiveSessionVO? selectedLive;
@@ -659,23 +647,20 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (BuildContext context) => DashboardClassDetailsPageBloc(
-          classId: classId, selectedLive: selectedLive),
+      create: (BuildContext context) => DashboardClassDetailsPageBloc(classId: classId, selectedLive: selectedLive),
       child: Consumer<DashboardClassDetailsPageBloc>(
         builder: (BuildContext context, bloc, Widget? child) => Stack(
           children: [
             Dialog(
               clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(kRadius10)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(kRadius10)),
               backgroundColor: kWhiteColor,
               insetPadding: EdgeInsets.symmetric(
                   vertical: MediaQuery.of(context).size.height * 0.1,
                   horizontal: MediaQuery.of(context).size.width * 0.2),
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: kMargin16, horizontal: kMargin24),
+                  padding: const EdgeInsets.symmetric(vertical: kMargin16, horizontal: kMargin24),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -687,10 +672,8 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
                           Icons.live_tv,
                           color: kPrimaryColor,
                         ),
-                        inputBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kLightBrownColor)),
-                        focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kLightBrownColor)),
+                        inputBorder: const OutlineInputBorder(borderSide: BorderSide(color: kLightBrownColor)),
+                        focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: kLightBrownColor)),
                         onChangeValue: (value) {
                           bloc.onChangedLiveTitle(value);
                         },
@@ -738,10 +721,8 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
                           Icons.group,
                           color: kPrimaryColor,
                         ),
-                        inputBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kLightBrownColor)),
-                        focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kLightBrownColor)),
+                        inputBorder: const OutlineInputBorder(borderSide: BorderSide(color: kLightBrownColor)),
+                        focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: kLightBrownColor)),
                         onTapTextField: () {
                           bloc.onTapChoiceOfLecture(visible: true);
                         },
@@ -757,10 +738,8 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
                           Icons.meeting_room_outlined,
                           color: kPrimaryColor,
                         ),
-                        inputBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kLightBrownColor)),
-                        focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: kLightBrownColor)),
+                        inputBorder: const OutlineInputBorder(borderSide: BorderSide(color: kLightBrownColor)),
+                        focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: kLightBrownColor)),
                         onChangeValue: (value) {
                           bloc.onChangedMeetingLink(value);
                         },
@@ -769,15 +748,12 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
                         height: kMargin24,
                       ),
                       PrimaryButton(
-                          buttonText:
-                              (isUpdate ?? false) ? kTextUpdate : kTextCreate,
+                          buttonText: (isUpdate ?? false) ? kTextUpdate : kTextCreate,
                           isDense: true,
                           onTapButton: () {
-                            if(isUpdate ?? false) {
+                            if (isUpdate ?? false) {
                               bloc.createLiveSession();
-                            }else{
-
-                            }
+                            } else {}
                           }),
                     ],
                   ),

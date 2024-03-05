@@ -29,8 +29,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: kFontTWK,
       ),
-      home: const HomePage(),
-      initialRoute: Navi.initialRoute,
+      home: const DashboardPage(),
+      initialRoute: Navi.getDashboard,
       getPages: [
         GetPage(
           name: Navi.initialRoute,

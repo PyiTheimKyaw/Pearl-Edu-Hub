@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:pearl_edu_hub/data/models/user_data_model.dart';
 import 'package:pearl_edu_hub/data/vos/classes_vo.dart';
 import 'package:pearl_edu_hub/data/vos/lecture_vo.dart';
@@ -102,5 +104,10 @@ class UserDataModelImpl extends UserDataModel {
         .startWith(_dashboardClassesDao.getClassDetailsStream(id: classId))
         .map((event) =>
             _dashboardClassesDao.getDashboardClassDetails(id: classId));
+  }
+
+  @override
+  Future<Uint8List> downloadCV() {
+    return _userDataAgent.downloadCV();
   }
 }

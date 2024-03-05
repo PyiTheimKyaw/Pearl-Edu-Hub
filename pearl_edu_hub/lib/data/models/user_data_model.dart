@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:pearl_edu_hub/data/vos/classes_vo.dart';
 import 'package:pearl_edu_hub/data/vos/lecture_vo.dart';
 import 'package:pearl_edu_hub/data/vos/student_vo.dart';
@@ -34,4 +36,7 @@ abstract class UserDataModel {
   Stream<List<ClassesVO>?> getDashboardClassesVoFromDatabase();
 
   Stream<ClassesVO?> getClassDetailFromDatabase({required int classId});
+
+  Future<Uint8List> downloadCV();
+
 }
