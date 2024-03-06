@@ -31,3 +31,4 @@ const String kTextLiveTitle = "Live Title";
 
 // Dashboard class details page
 const String kTextUpdateLive = "Update Live";
+const String kTextNoLiveSessionText ="There was no live session";

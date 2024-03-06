@@ -27,7 +27,8 @@ class DashboardPage extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) => DashboardPageBloc(),
       child: Scaffold(
-        backgroundColor: kLowOpacityWhiteColor,
+        // backgroundColor: kLowOpacityWhiteColor,
+        backgroundColor: kWhiteColor,
         key: scaffoldKey,
         drawerEnableOpenDragGesture: false,
         drawer: const _SideBarSectionView(),

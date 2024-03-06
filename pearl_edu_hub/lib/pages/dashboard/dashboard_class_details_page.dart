@@ -20,6 +20,7 @@ import 'package:pearl_edu_hub/utils/strings_extension.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_field.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 import 'package:pearl_edu_hub/widgets/date_picker_view.dart';
+import 'package:pearl_edu_hub/widgets/empty_view_with_illustration_view.dart';
 import 'package:pearl_edu_hub/widgets/image_from_servlet.dart';
 import 'package:pearl_edu_hub/widgets/loading_state_widget.dart';
 import 'package:pearl_edu_hub/widgets/primary_button.dart';
@@ -165,7 +166,7 @@ class _LiveListSectionView extends StatelessWidget {
     return Selector<DashboardClassDetailsPageBloc, List<LiveSessionVO>?>(
       selector: (context, bloc) => bloc.liveSessions,
       shouldRebuild: (next, prev) => next != prev,
-      builder: (BuildContext context, liveSessions, Widget? child) => Container(
+      builder: (BuildContext context, liveSessions, Widget? child) => (liveSessions!=null && (liveSessions.isNotEmpty)) ? Container(
         decoration: const BoxDecoration(
           color: kWhiteColor,
         ),
@@ -182,7 +183,10 @@ class _LiveListSectionView extends StatelessWidget {
             height: kMargin16,
           ),
         ),
-      ),
+      ) : const Center(child: Padding(
+        padding: EdgeInsets.symmetric(vertical: kMargin24),
+        child: EmptyViewWithIllustrationView(emptyViewText: kTextNoLiveSessionText, emptyViewImage: kEmptyLiveSessionIllustration),
+      )),
     );
   }
 }
@@ -273,7 +277,7 @@ class _LiveSessionItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return  Container(
       padding: const EdgeInsets.symmetric(horizontal: kMargin16, vertical: kMargin24),
       decoration: BoxDecoration(
         color: kWhiteColor,
@@ -561,7 +565,7 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
             ),
           ],
         ),
-        ImageFromServlet(),
+        const ImageFromServlet(),
         // Consumer<DashboardClassDetailsPageBloc>(
         //     builder: (BuildContext context, bloc, Widget? child) => Image.memory(bloc.imageData ?? Uint8List(0))),
         const Spacer(),
@@ -751,7 +755,7 @@ class _AddOrEditLiveSessionDialog extends StatelessWidget {
                           buttonText: (isUpdate ?? false) ? kTextUpdate : kTextCreate,
                           isDense: true,
                           onTapButton: () {
-                            if (isUpdate ?? false) {
+                            if (!(isUpdate ?? false)) {
                               bloc.createLiveSession();
                             } else {}
                           }),

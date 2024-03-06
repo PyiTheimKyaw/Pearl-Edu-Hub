@@ -32,13 +32,13 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
 
   DashboardClassDetailsPageBloc({required int classId, LiveSessionVO? selectedLive}) {
     setSuccessState();
-    _userDataModel.downloadCV().then((value) {
-      print("Image data ${value}");
-      imageData = value;
-      notifySafely();
-    }).catchError((error){
-      print("Image err ${error.toString()}");
-    });
+    // _userDataModel.downloadCV().then((value) {
+    //   print("Image data ${value}");
+    //   imageData = value;
+    //   notifySafely();
+    // }).catchError((error){
+    //   print("Image err ${error.toString()}");
+    // });
 
     fetchAndGetClassDetail(id: classId, selectedLive: selectedLive);
   }

@@ -55,7 +55,7 @@ class _ImageFromServletState extends State<ImageFromServlet> {
 
   Future<void> _fetchImage() async {
     // Replace 'your_servlet_url' with the actual URL of your servlet
-    String url = 'http://localhost:8082/pearlEduHubApi/image?id=3'; // Assuming id=1 for example
+    String url = 'http://localhost:8082/pearlEduHubApi/image?id=2'; // Assuming id=1 for example
 
     try {
       final response = await http.get(Uri.parse(url));
