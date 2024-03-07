@@ -249,7 +249,7 @@ class _SideBarSectionView extends StatelessWidget {
             ),
             _SideBarItemView(
               itemIcon: Icons.attach_money,
-              itemLabel: kTextPaymentType,
+              itemLabel: kTextPaymentTypes,
               indexOfItem: 7,
               isChosen: sidebarItemIndex == 7,
               isMinimize: isMinimizeSideBar ?? false,

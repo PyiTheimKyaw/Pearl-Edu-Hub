@@ -15,7 +15,7 @@ class DashboardPageBloc extends BaseBloc {
     kTextAssignments,
     kTextPopQuizzes,
     kTextTransactions,
-    kTextPaymentType
+    kTextPaymentTypes
   ];
 
   void getPath(final pat) {

@@ -7,7 +7,7 @@ const String kTextLectures = "Lectures";
 const String kTextAssignments = "Assignments";
 const String kTextPopQuizzes = "Pop Quizzes";
 const String kTextTransactions = "Transactions";
-const String kTextPaymentType = "Payment Types";
+const String kTextPaymentTypes = "Payment Types";
 const String kTextTotalClasses = "Total Classes";
 const String kTextTotalStudents = "Total Students";
 const String kTextTotalLectures = "Total Lectures";
@@ -23,6 +23,10 @@ const String kTextName = "Name";
 const String kTextImage = "Image";
 const String kTextAccName = "Account Name";
 const String kTextAccNum = "Account Number";
+const String kTextCancel = "Cancel";
+const String kTextBrowseNow = "Browse Now";
+const String kTextDeleteConfirmationAlert = "Are you sure to delete this";
+const String kTextDelete = "Delete";
 
 ///Pages
 //Classes page
@@ -43,6 +47,10 @@ const String kTextNoLiveSessionText ="There was no live session";
 
 // Dashboard Payment Types page
 const String kTextCreateNewPaymentType = "Create new payment type";
+const String kTextPaymentName = "Payment Name";
+const String kTextPaymentInfo = "Payment Information";
+const String kTextDragAndDropFile = "Drag and Drop file here or";
+const String kTextPaymentType = "Payment Type";
 
 ///Dummy Strings
 const String kDummyTextID = "1";

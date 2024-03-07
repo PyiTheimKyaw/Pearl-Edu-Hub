@@ -14,6 +14,8 @@ const Color kLightDarkColor = Color(0xFF959499);
 const Color kScoreProgressBgColor = Color(0xFFE8EFF7);
 const Color kLightDensePrimaryColor = Color(0xFF95B6D8);
 Color kTransparentColor = Colors.transparent.withOpacity(0.5);
+const Color kWarningAlertColor = Color(0xFFFB5404);
+
 //App specific
 const Color kDevelopedByColor = Color(0xFFC0CEEF);
 const Color kInvisibleColor = Color(0xFFB7B7BA);
