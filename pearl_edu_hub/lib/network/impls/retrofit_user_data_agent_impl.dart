@@ -8,7 +8,6 @@ import 'package:pearl_edu_hub/network/responses/class_details_response.dart';
 import 'package:pearl_edu_hub/network/responses/classes_response.dart';
 import 'package:pearl_edu_hub/network/responses/lectures_response.dart';
 import 'package:pearl_edu_hub/network/responses/students_response.dart';
-import 'package:pearl_edu_hub/utils/environment_config.dart';
 import 'package:pearl_edu_hub/utils/error_handler.dart';
 
 class RetrofitUserDataAgentImpl extends UserDataAgent {

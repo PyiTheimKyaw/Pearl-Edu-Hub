@@ -1,3 +1,4 @@
+/// All
 const String kAppName = "Pearl Edu Hub";
 const String kTextDashboard = "Dashboard";
 const String kTextClasses = "Classes";
@@ -17,6 +18,13 @@ const String kTextSave = "Save";
 const String kTextCreate = "Create";
 const String kTextUpdate = "Update";
 const String kTextSuccess = "Success";
+const String kTextId = "Id";
+const String kTextName = "Name";
+const String kTextImage = "Image";
+const String kTextAccName = "Account Name";
+const String kTextAccNum = "Account Number";
+
+///Pages
 //Classes page
 const String kTextCreateClass = "Create class";
 const String kTextEditClass = "Edit Class";
@@ -32,3 +40,14 @@ const String kTextLiveTitle = "Live Title";
 // Dashboard class details page
 const String kTextUpdateLive = "Update Live";
 const String kTextNoLiveSessionText ="There was no live session";
+
+// Dashboard Payment Types page
+const String kTextCreateNewPaymentType = "Create new payment type";
+
+///Dummy Strings
+const String kDummyTextID = "1";
+const String kDummyTextPaymentName = "KBZ";
+const String kDummyTextAccName = "U Kyaw Zay Yar";
+const String kDummyTextAccNum = "40243242342342";
+
+

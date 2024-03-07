@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:pearl_edu_hub/network/api_constants.dart';
 import 'package:pearl_edu_hub/network/responses/base_response.dart';
 import 'package:pearl_edu_hub/network/responses/class_details_response.dart';

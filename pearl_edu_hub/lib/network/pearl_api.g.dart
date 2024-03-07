@@ -10,9 +10,7 @@ part of 'pearl_api.dart';
 
 class _PearlApi implements PearlApi {
   _PearlApi(
-    this._dio, {
-    this.baseUrl,
-  }) {
+    this._dio) {
     // baseUrl ??= 'http://192.168.1.5:8082/pearlEduHubApi';
     baseUrl ??= 'http://localhost:8082/pearlEduHubApi';
 

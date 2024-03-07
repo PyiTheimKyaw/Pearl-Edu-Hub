@@ -5,7 +5,6 @@ import 'package:pearl_edu_hub/helpers/box_helper.dart';
 import 'package:pearl_edu_hub/pages/dashboard/dashboard_page.dart';
 import 'package:pearl_edu_hub/pages/home_page.dart';
 import 'package:pearl_edu_hub/rescources/fonts.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:pearl_edu_hub/route/navi.dart';
 
 void main() async {
@@ -29,8 +28,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: kFontTWK,
       ),
-      home: const DashboardPage(),
-      initialRoute: Navi.getDashboard,
+      home: const HomePage(),
+      initialRoute: Navi.initialRoute,
       getPages: [
         GetPage(
           name: Navi.initialRoute,

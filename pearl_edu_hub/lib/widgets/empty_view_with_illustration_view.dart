@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
-import 'package:pearl_edu_hub/rescources/images.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 
 class EmptyViewWithIllustrationView extends StatelessWidget {

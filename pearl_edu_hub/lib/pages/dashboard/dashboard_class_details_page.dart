@@ -1,11 +1,7 @@
-import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:intl/intl.dart';
 import 'package:pearl_edu_hub/blocs/dashboard_class_details_page_bloc.dart';
 import 'package:pearl_edu_hub/data/vos/classes_vo.dart';
 import 'package:pearl_edu_hub/data/vos/enrollment_vo.dart';
@@ -166,27 +162,32 @@ class _LiveListSectionView extends StatelessWidget {
     return Selector<DashboardClassDetailsPageBloc, List<LiveSessionVO>?>(
       selector: (context, bloc) => bloc.liveSessions,
       shouldRebuild: (next, prev) => next != prev,
-      builder: (BuildContext context, liveSessions, Widget? child) => (liveSessions!=null && (liveSessions.isNotEmpty)) ? Container(
-        decoration: const BoxDecoration(
-          color: kWhiteColor,
-        ),
-        child: ListView.separated(
-          padding: const EdgeInsets.all(kMargin16),
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: liveSessions?.length ?? 0,
-          itemBuilder: (context, index) => _LiveSessionItemView(
-            liveSession: liveSessions?[index],
-            classLectures: classLectures,
-          ),
-          separatorBuilder: (context, index) => const SizedBox(
-            height: kMargin16,
-          ),
-        ),
-      ) : const Center(child: Padding(
-        padding: EdgeInsets.symmetric(vertical: kMargin24),
-        child: EmptyViewWithIllustrationView(emptyViewText: kTextNoLiveSessionText, emptyViewImage: kEmptyLiveSessionIllustration),
-      )),
+      builder: (BuildContext context, liveSessions, Widget? child) =>
+          (liveSessions != null && (liveSessions.isNotEmpty))
+              ? Container(
+                  decoration: const BoxDecoration(
+                    color: kWhiteColor,
+                  ),
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(kMargin16),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: liveSessions.length,
+                    itemBuilder: (context, index) => _LiveSessionItemView(
+                      liveSession: liveSessions[index],
+                      classLectures: classLectures,
+                    ),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: kMargin16,
+                    ),
+                  ),
+                )
+              : const Center(
+                  child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: kMargin24),
+                  child: EmptyViewWithIllustrationView(
+                      emptyViewText: kTextNoLiveSessionText, emptyViewImage: kEmptyLiveSessionIllustration),
+                )),
     );
   }
 }
@@ -277,7 +278,7 @@ class _LiveSessionItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: kMargin16, vertical: kMargin24),
       decoration: BoxDecoration(
         color: kWhiteColor,
@@ -319,10 +320,12 @@ class _LiveSessionItemView extends StatelessWidget {
                             ? const RoundedImageView(
                                 imageData: NetworkImage(kUserPlaceHolderImage),
                                 imageSize: kLectureRoundedImageSizeSmall,
+                                isCircle: true,
                               )
                             : const RoundedImageView(
                                 imageData: AssetImage(kUserPlaceHolderImage),
                                 imageSize: kLectureRoundedImageSizeSmall,
+                                isCircle: true,
                               ),
                         const SizedBox(
                           width: kMargin4,
@@ -494,9 +497,7 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
 
       var response = await request.send();
       if (response.statusCode == 200) {
-        print('Image uploaded successfully');
       } else {
-        print('Failed to upload image');
       }
     }
   }

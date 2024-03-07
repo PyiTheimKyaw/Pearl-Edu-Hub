@@ -32,7 +32,6 @@
 //   }
 // }
 
-import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -41,10 +40,10 @@ class ImageFromServlet extends StatefulWidget {
   const ImageFromServlet({super.key});
 
   @override
-  _ImageFromServletState createState() => _ImageFromServletState();
+  ImageFromServletState createState() => ImageFromServletState();
 }
 
-class _ImageFromServletState extends State<ImageFromServlet> {
+class ImageFromServletState extends State<ImageFromServlet> {
   Uint8List? _imageData;
 
   @override
@@ -59,21 +58,18 @@ class _ImageFromServletState extends State<ImageFromServlet> {
 
     try {
       final response = await http.get(Uri.parse(url));
-      print("Rsponse is ${response}");
       if (response.statusCode == 200) {
         setState(() {
           _imageData = response.bodyBytes;
         });
-      } else {
-        print('Failed to load image: ${response.statusCode}');
-      }
+      } else {}
     } catch (e) {
-      print('Error loading image: $e');
+      throw Exception("");
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return _imageData != null ? Image.memory(_imageData!) : CircularProgressIndicator();
+    return _imageData != null ? Image.memory(_imageData!) : const CircularProgressIndicator();
   }
 }

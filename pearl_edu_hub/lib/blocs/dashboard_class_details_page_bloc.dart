@@ -153,7 +153,6 @@ class DashboardClassDetailsPageBloc extends BaseBloc {
         }).toList();
       }
       List<String>? dummyIds = selectedLive?.lectureIds?.split(",").toList();
-      print("Dummy Ids $dummyIds ${selectedLive}");
       if (dummyIds != null && dummyIds.isNotEmpty) {
         classDetail?.lectures.map((e) {
           if (dummyIds.contains(e.id.toString())) {
