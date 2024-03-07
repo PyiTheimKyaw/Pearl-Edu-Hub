@@ -11,6 +11,7 @@ import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
 import 'package:pearl_edu_hub/rescources/strings.dart';
 import 'package:pearl_edu_hub/route/app_bar_route.dart';
+import 'package:pearl_edu_hub/utils/strings_extension.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_field.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
 import 'package:pearl_edu_hub/widgets/date_picker_view.dart';
@@ -431,7 +432,7 @@ class _ClassItemView extends StatelessWidget {
               )),
           Expanded(
               child: CustomizedTextView(
-            textData: (classItem?.fees ?? 0).toString(),
+            textData: (classItem?.fees ?? 0).toString().formattedCurrency(),
             textFontSize: kFont16,
             textFontWeight: FontWeight.w500,
             textAlign: TextAlign.center,
