@@ -1,8 +1,18 @@
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 import 'package:pearl_edu_hub/rescources/colors.dart';
 import 'package:pearl_edu_hub/rescources/dimens.dart';
+import 'package:pearl_edu_hub/rescources/images.dart';
+import 'package:pearl_edu_hub/rescources/strings.dart';
+import 'package:pearl_edu_hub/responsive/responsive.dart';
+import 'package:pearl_edu_hub/utils/strings_extension.dart';
+import 'package:pearl_edu_hub/widgets/customized_text_field.dart';
 import 'package:pearl_edu_hub/widgets/customized_text_view.dart';
+import 'package:pearl_edu_hub/widgets/primary_button.dart';
 
 class DashboardLecturesPage extends StatelessWidget {
   const DashboardLecturesPage({super.key, required this.onTapMenu});
@@ -11,87 +21,21 @@ class DashboardLecturesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        margin: const EdgeInsets.only(
-            left: kMargin32, right: kMargin32, bottom: kMargin24),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(kRadius10),
-            border: Border.all(color: kInvisibleColor)),
+    print(
+        "Screen size is desktop ${MediaQuery.of(context).size.height} ${MediaQuery.of(context).size.width}"
+        " ${Responsive.isDesktopFromMediaQuery(context)} , mobile : ${Responsive.isMobileFromMediaQuery(context)}");
+    return const SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: kMargin32),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              padding: const EdgeInsets.all(kMargin16),
-              clipBehavior: Clip.antiAlias,
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(219, 226, 236, 1.0),
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(kRadius10),
-                    topRight: Radius.circular(kRadius10)),
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "ID",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.w600,
-                    textAlign: TextAlign.start,
-                  )),
-                  Expanded(
-                    flex: 2,
-                    child: CustomizedTextView(
-                      textData: "Name",
-                      textFontSize: kFont16,
-                      textFontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Image",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.w600,
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Phone",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.w600,
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Email",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.w600,
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Current Class",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.w600,
-                    textAlign: TextAlign.center,
-                  )),
-                ],
-              ),
+            _SearchAndAddLectureButtonSectionView(),
+            SizedBox(
+              height: kMargin24,
             ),
-            ListView.separated(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: kMargin8, vertical: kMargin8),
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 40,
-              itemBuilder: (context, index) => const _StudentItemView(),
-              separatorBuilder: (context, index) => const SizedBox(
-                height: kMargin12,
-              ),
-            )
+            _LectureListSectionView(),
           ],
         ),
       ),
@@ -99,73 +43,149 @@ class DashboardLecturesPage extends StatelessWidget {
   }
 }
 
-class _StudentItemView extends StatelessWidget {
-  const _StudentItemView();
+class _LectureListSectionView extends StatelessWidget {
+  const _LectureListSectionView();
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: 6,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: Responsive.isDesktopFromMediaQuery(context)
+            ? 3
+            : Responsive.isMobileFromMediaQuery(context)
+                ? 1
+                : 2,
+        crossAxisSpacing: kMargin8,
+        mainAxisSpacing: kMargin8,
+        childAspectRatio: Responsive.isDesktopFromMediaQuery(context) ? 4 / 3 : 1.4,
+      ),
+      itemBuilder: (context, index) => const _LectureItemView(),
+    );
+  }
+}
+
+class _LectureItemView extends StatelessWidget {
+  const _LectureItemView();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          const EdgeInsets.symmetric(horizontal: kMargin4, vertical: kMargin16),
-      decoration: BoxDecoration(border: Border.all(color: kInvisibleColor)),
-      child: const Row(
+      padding: const EdgeInsets.symmetric(horizontal: kMargin16, vertical: kMargin24),
+      decoration: BoxDecoration(
+        color: kWhiteColor,
+        borderRadius: BorderRadius.circular(kRadius10),
+        border: Border.all(color: kInvisibleColor.withOpacity(0.5)),
+        boxShadow: const [
+          BoxShadow(
+            color: kInvisibleColor,
+            blurRadius: 1,
+            offset: Offset(1, 1),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-              child: CustomizedTextView(
-            textData: "1",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.start,
-          )),
-          Expanded(
-              flex: 2,
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: CustomizedTextView(
-                  textData: "Pyi Theim Kyaw",
-                  textFontSize: kFont16,
-                  textFontWeight: FontWeight.w500,
-                  textColor: kPrimaryColor,
-                  textDecoration: TextDecoration.underline,
+          CustomizedTextView(
+            textData: "${kTextId.toUpperCase()}: $kDummyTextID",
+            textFontSize: kFont13,
+            textFontWeight: FontWeight.w600,
+          ),
+          const SizedBox(
+            height: kMargin8,
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: AspectRatio(
+                  aspectRatio: Responsive.isDesktopFromMediaQuery(context) ? 0.9 : 1,
+                  child: const Image(
+                    image: AssetImage(
+                      kDummyPersonImage,
+                    ),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              )),
-          Expanded(
-              child: CustomizedTextView(
-            textData: "2900000",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          )),
-          Expanded(
-              child: CustomizedTextView(
-            textData: "2023-32,232",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          )),
-          Expanded(
-              child: CustomizedTextView(
-            textData: "2023-32,232",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          )),
-          Expanded(
-              child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: CustomizedTextView(
-              textData: "80",
-              textFontSize: kFont16,
-              textFontWeight: FontWeight.w500,
-              textAlign: TextAlign.center,
-              textColor: kPrimaryColor,
-              textDecoration: TextDecoration.underline,
-            ),
-          )),
+              ),
+              const SizedBox(
+                width: kMargin4,
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CustomizedTextView(
+                      textData: kDummyTextAccName,
+                      textFontSize: kFont13,
+                      textColor: kPrimaryColor,
+                      textFontWeight: FontWeight.w700,
+                      textDecoration: TextDecoration.underline,
+                    ),
+                    SizedBox(
+                      height: kMargin8,
+                    ),
+                    CustomizedTextView(
+                      textData: kDummyTextPhNum.formatPhoneNumber(),
+                      textFontWeight: FontWeight.w600,
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ],
       ),
+    );
+  }
+}
+
+class _SearchAndAddLectureButtonSectionView extends StatelessWidget {
+  const _SearchAndAddLectureButtonSectionView();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width * 0.15,
+            child: CustomizedTextField(
+              onChangeValue: (value) {},
+              hintText: kTextSearch,
+              isFilled: true,
+              filledColor: kWhiteColor,
+              inputBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(kRadius25),
+                  borderSide: const BorderSide(color: kWhiteColor)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(kRadius25),
+                  borderSide: const BorderSide(color: kWhiteColor)),
+              prefixIcon: const Icon(
+                Icons.search_outlined,
+                color: kInvisibleColor,
+              ),
+              suffixIcon: const Icon(
+                Icons.close,
+                color: kInvisibleColor,
+              ),
+            )),
+        const Spacer(),
+        PrimaryButton(
+          buttonText: kTextAddNewLecture,
+          onTapButton: () {},
+          isDense: true,
+        )
+      ],
     );
   }
 }

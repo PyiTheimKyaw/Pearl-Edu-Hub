@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 const Color kPrimaryColor = Color(0xFF5E8BFF);
 const Color kDashboardBgColor = Color(0xFF212332);
 const Color kUnselectedTabBarColor = Color(0xFFEAF2FE);
-
+const Color kDashboardContentsBgColor = Color.fromRGBO(229, 236, 244, 1.0);
 
 
 

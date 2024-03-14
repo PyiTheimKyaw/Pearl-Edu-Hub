@@ -8,3 +8,4 @@ const String kEmptyLiveSessionIllustration ="assets/images/empty_view_live_sessi
 
 ///Dummy images
 const String kDummyKPayImage = "assets/images/kpay.png";
+const String kDummyPersonImage = "assets/images/dummy_profile_img.jpeg";

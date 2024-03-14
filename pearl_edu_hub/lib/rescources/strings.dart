@@ -27,6 +27,7 @@ const String kTextCancel = "Cancel";
 const String kTextBrowseNow = "Browse Now";
 const String kTextDeleteConfirmationAlert = "Are you sure to delete this";
 const String kTextDelete = "Delete";
+const String kTextSearch = "Search";
 
 ///Pages
 //Classes page
@@ -57,10 +58,15 @@ const String kTextPaymentInfo = "Payment Information";
 const String kTextDragAndDropFile = "Drag and Drop file here or";
 const String kTextPaymentType = "Payment Type";
 
+// Dashboard Lectures Page
+const String kTextAddNewLecture = "Add New Lecture";
+
+
 ///Dummy Strings
 const String kDummyTextID = "1";
 const String kDummyTextPaymentName = "KBZ";
 const String kDummyTextAccName = "U Kyaw Zay Yar";
 const String kDummyTextAccNum = "40243242342342";
+const String kDummyTextPhNum = "09403479301";
 
 

@@ -24,18 +24,14 @@ class Responsive extends StatelessWidget {
   }
 
   static double getTopMarginForScreensWithAppBar(BuildContext context) {
-    return kBottomNavigationBarHeight +
-        MediaQuery.of(context).padding.bottom +
-        90;
+    return kBottomNavigationBarHeight + MediaQuery.of(context).padding.bottom + 90;
   }
 
-  static double getBottomMarginForScreenWithBottomNavigationBar(
-      BuildContext context) {
+  static double getBottomMarginForScreenWithBottomNavigationBar(BuildContext context) {
     return 102;
   }
 
-  static double getHeightForGraduationCeremonySectionInWeb(
-      BuildContext context) {
+  static double getHeightForGraduationCeremonySectionInWeb(BuildContext context) {
     return MediaQuery.of(context).size.height * 0.7;
   }
 
@@ -56,18 +52,17 @@ class Responsive extends StatelessWidget {
     return breakpoint.device == LayoutClass.largeHandset ||
         breakpoint.device == LayoutClass.mediumHandset ||
         breakpoint.device == LayoutClass.smallHandset ||
-        MediaQuery.of(context).size.width < 768;
+        (MediaQuery.of(context).size.width < 738 && MediaQuery.of(context).size.height < 630);
   }
 
   static bool isTablet(BoxConstraints constraints, BuildContext context) {
-    return (((constraints.maxWidth <= 1280 && constraints.maxWidth >= 768) &&
-        !kIsWeb) ||
+    return (((constraints.maxWidth <= 1280 && constraints.maxWidth >= 768) && !kIsWeb) ||
         isTabletWeb(context));
   }
 
   static bool isTabletWeb(BuildContext context) {
     return (((MediaQuery.of(context).size.width <= 820) &&
-        (MediaQuery.of(context).size.width >= 768)) &&
+            (MediaQuery.of(context).size.width >= 768)) &&
         ((MediaQuery.of(context).size.height <= 1180) &&
             (MediaQuery.of(context).size.height >= 800)) &&
         kIsWeb);
@@ -75,16 +70,15 @@ class Responsive extends StatelessWidget {
 
   static bool isTabletFromMediaQuery(BuildContext context) {
     return (((MediaQuery.of(context).size.width < 1280 &&
-        MediaQuery.of(context).size.width >= 768) &&
-        !kIsWeb) ||
+                MediaQuery.of(context).size.width >= 768) &&
+            !kIsWeb) ||
         isTabletWeb(context));
   }
 
   static bool isTabletLandscapePositionFromMediaQuery(BuildContext context) {
     bool isTabletLandScape =
-        (((MediaQuery.of(context).size.width <= 1280 && !kIsWeb) ||
-            isTabletWeb(context)) &&
-            MediaQuery.of(context).size.width >= 960) &&
+        (((MediaQuery.of(context).size.width <= 1280 && !kIsWeb) || isTabletWeb(context)) &&
+                MediaQuery.of(context).size.width >= 960) &&
             (MediaQuery.of(context).orientation == Orientation.landscape);
     return isTabletLandScape;
   }
@@ -168,10 +162,7 @@ class Responsive extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final breakpoint = Breakpoint.fromConstraints(constraints);
-        if (breakpoint.device == LayoutClass.largeHandset ||
-            breakpoint.device == LayoutClass.mediumHandset ||
-            breakpoint.device == LayoutClass.smallHandset ||
-            MediaQuery.of(context).size.width < 768) {
+        if (isMobileFromMediaQuery(context)) {
           return mobile;
         }
         if (((MediaQuery.of(context).size.width <= 1280 && !kIsWeb) &&
@@ -192,8 +183,7 @@ class Responsive extends StatelessWidget {
 
   /// Check whether the device is Xiaomi A2
   static bool isXiaomiA2(BuildContext context) {
-    return (MediaQuery.of(context).size.width == kXiaomiA2Width) &&
-        isXiaomiA2Height(context);
+    return (MediaQuery.of(context).size.width == kXiaomiA2Width) && isXiaomiA2Height(context);
   }
 
   static bool isIPhone6SPlus(BuildContext context) {

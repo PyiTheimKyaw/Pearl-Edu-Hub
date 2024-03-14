@@ -28,7 +28,7 @@ class DashboardPage extends StatelessWidget {
       create: (BuildContext context) => DashboardPageBloc(),
       child: Scaffold(
         // backgroundColor: kLowOpacityWhiteColor,
-        backgroundColor: kWhiteColor,
+        backgroundColor: kDashboardContentsBgColor,
         key: scaffoldKey,
         drawerEnableOpenDragGesture: false,
         drawer: const _SideBarSectionView(),
@@ -38,6 +38,9 @@ class DashboardPage extends StatelessWidget {
           builder: (BuildContext context, sidebarItemIndex, Widget? child) =>
               Responsive(
                   mobile: _ContentsSectionView(
+                    sidebarItemIndex: sidebarItemIndex, onTapMenuMobile: (){scaffoldKey.currentState!.openDrawer();},
+                  ),
+                  tablet: _ContentsSectionView(
                     sidebarItemIndex: sidebarItemIndex, onTapMenuMobile: (){scaffoldKey.currentState!.openDrawer();},
                   ),
                   desktop: Row(
@@ -98,7 +101,7 @@ class _ContentsSectionView extends StatelessWidget {
                       bloc.onChangePageIndex(index);
                     },
                     onTapMenu: () {
-                      if (Responsive.isDesktop(context)) {
+                      if (Responsive.isDesktopFromMediaQuery(context)) {
                         bloc.onTapMenu();
                       } else {
                         onTapMenuMobile();
@@ -112,7 +115,7 @@ class _ContentsSectionView extends StatelessWidget {
                   ),
                   DashboardStudentsPage(
                     onTapMenu: () {
-                      if (Responsive.isDesktop(context)) {
+                      if (Responsive.isDesktopFromMediaQuery(context)) {
                         bloc.onTapMenu();
                       } else {
                        onTapMenuMobile();
@@ -121,7 +124,7 @@ class _ContentsSectionView extends StatelessWidget {
                   ),
                   DashboardLecturesPage(
                     onTapMenu: () {
-                      if (Responsive.isDesktop(context)) {
+                      if (Responsive.isDesktopFromMediaQuery(context)) {
                         bloc.onTapMenu();
                       } else {
                         onTapMenuMobile();
@@ -130,7 +133,7 @@ class _ContentsSectionView extends StatelessWidget {
                   ),
                   DashboardAssignmentsPage(
                     onTapMenu: () {
-                      if (Responsive.isDesktop(context)) {
+                      if (Responsive.isDesktopFromMediaQuery(context)) {
                         bloc.onTapMenu();
                       } else {
                         onTapMenuMobile();
@@ -139,7 +142,7 @@ class _ContentsSectionView extends StatelessWidget {
                   ),
                   DashboardPopQuizzesPage(
                     onTapMenu: () {
-                      if (Responsive.isDesktop(context)) {
+                      if (Responsive.isDesktopFromMediaQuery(context)) {
                         bloc.onTapMenu();
                       } else {
                         onTapMenuMobile();
@@ -148,7 +151,7 @@ class _ContentsSectionView extends StatelessWidget {
                   ),
                   DashboardTransactionsPage(
                     onTapMenu: () {
-                      if (Responsive.isDesktop(context)) {
+                      if (Responsive.isDesktopFromMediaQuery(context)) {
                         bloc.onTapMenu();
                       } else {
                         onTapMenuMobile();
@@ -157,7 +160,7 @@ class _ContentsSectionView extends StatelessWidget {
                   ),
                   DashboardPaymentTypesPage(
                     onTapMenu: () {
-                      if (Responsive.isDesktop(context)) {
+                      if (Responsive.isDesktopFromMediaQuery(context)) {
                         bloc.onTapMenu();
                       } else {
                         onTapMenuMobile();
@@ -371,7 +374,7 @@ class _DashboardAppBarView extends StatelessWidget {
                 cursor: SystemMouseCursors.click,
                 child: GestureDetector(
                   onTap: () {
-                    if (Responsive.isDesktop(context)) {
+                    if (Responsive.isDesktopFromMediaQuery(context)) {
                       bloc.onTapMenu();
                     } else {
                       onTapMenuMobile();
