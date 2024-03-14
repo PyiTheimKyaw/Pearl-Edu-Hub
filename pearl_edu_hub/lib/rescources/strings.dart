@@ -38,12 +38,17 @@ const String kTextAddPopQuiz = "Add Pop Quiz";
 const String kTextAddLiveSession = "Add Live Session";
 const String kTextEnrolledStudents = "Enrolled Students";
 const String kTextLiveSessions = "Live Sessions";
+const String kTextEntranceQuestions = "Entrance Questions";
 const String kTextMeetingLink = "Meeting Link";
 const String kTextLiveTitle = "Live Title";
 
 // Dashboard class details page
 const String kTextUpdateLive = "Update Live";
 const String kTextNoLiveSessionText ="There was no live session";
+const String kTextEnrollmentId = "Enrollment ID";
+const String kTextSubmittedAt = "Submitted At";
+const String kTextStudentId= "Student ID";
+const String kTextStatus = "Status";
 
 // Dashboard Payment Types page
 const String kTextCreateNewPaymentType = "Create new payment type";

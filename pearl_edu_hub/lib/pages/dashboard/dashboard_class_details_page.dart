@@ -40,26 +40,19 @@ class DashboardClassDetailsPage extends StatelessWidget {
           dialogLoadingState: bloc.getDialogLoadingState,
           widgetForSuccessState: SingleChildScrollView(
             child: (bloc.classDetail != null)
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: kMargin32),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _ClassInfoAndActionButtons(
-                          classDetail: bloc.classDetail!,
-                          onTapBack: onTapBack,
-                        ),
-                        const SizedBox(
-                          height: kMargin24,
-                        ),
-                        _ClassDetailsInfoSectionView(
-                          onChangeTabIndex: (index) {
-                            bloc.onChangeTabIndex(index);
-                          },
-                        )
-                      ],
-                    ),
+                ? Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _ClassInfoAndActionButtons(
+                        classDetail: bloc.classDetail!,
+                        onTapBack: onTapBack,
+                      ),
+                      const SizedBox(
+                        height: kMargin24,
+                      ),
+                      const _ClassDetailsInfoSectionView()
+                    ],
                   )
                 : const SizedBox.shrink(),
           ),
@@ -70,9 +63,7 @@ class DashboardClassDetailsPage extends StatelessWidget {
 }
 
 class _ClassDetailsInfoSectionView extends StatefulWidget {
-  const _ClassDetailsInfoSectionView({required this.onChangeTabIndex});
-
-  final Function(int) onChangeTabIndex;
+  const _ClassDetailsInfoSectionView();
 
   @override
   State<_ClassDetailsInfoSectionView> createState() => _ClassDetailsInfoSectionViewState();
@@ -80,21 +71,13 @@ class _ClassDetailsInfoSectionView extends StatefulWidget {
 
 class _ClassDetailsInfoSectionViewState extends State<_ClassDetailsInfoSectionView>
     with SingleTickerProviderStateMixin {
-  late TabController tabController;
-
-  @override
-  void initState() {
-    tabController = TabController(length: 4, vsync: this);
-    tabController.addListener(_handleTabSelection);
-    super.initState();
-  }
-
-  _handleTabSelection() {
-    if (tabController.indexIsChanging) {
-      widget.onChangeTabIndex(tabController.index);
-      setState(() {});
-    }
-  }
+  List<String> tabLabelLists = [
+    kTextEnrolledStudents,
+    kTextEntranceQuestions,
+    kTextAssignments,
+    kTextPopQuizzes,
+    kTextLiveSessions
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -103,49 +86,151 @@ class _ClassDetailsInfoSectionViewState extends State<_ClassDetailsInfoSectionVi
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TabBar(
-            dividerColor: Colors.transparent,
-            controller: tabController,
-            labelColor: Colors.black,
-            unselectedLabelColor: kUnselectedTabColor,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorColor: kPrimaryColor,
-            padding: EdgeInsets.zero,
-            labelPadding: const EdgeInsets.only(bottom: kMargin16),
-            labelStyle: const TextStyle(fontSize: kFont16, fontWeight: FontWeight.bold),
-            tabs: const [
-              Text(
-                kTextEnrolledStudents,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: kClassDetailTabContainerHeight,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: const EdgeInsets.symmetric(horizontal: kMargin32),
+                    itemCount: tabLabelLists.length,
+                    itemBuilder: (context, index) => _TabBarItemView(
+                      tabLabel: tabLabelLists[index],
+                      isSelected: bloc.tabIndex == index,
+                      onChangedTab: () {
+                        bloc.onChangeTabIndex(index);
+                      },
+                    ),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      width: kMargin8,
+                    ),
+                  ),
+                ),
               ),
-              Text(
-                kTextAssignments,
+              const SizedBox(
+                width: kMargin24,
               ),
-              Text(
-                kTextPopQuizzes,
+              Visibility(
+                visible: bloc.tabIndex == 0,
+                child: PrimaryButton(
+                  buttonText: kTextAddNewStudent,
+                  onTapButton: () async {
+                    // FilePickerResult? result = await FilePicker.platform.pickFiles(
+                    //   type: FileType.any,
+                    // allowedExtensions: ['pdf'],
+                    // );
+
+                    // if (result != null) {
+                    //   File file = File(result.files.single.path!);
+                    // uploadImage();
+                    // } else {
+                    // User canceled the picker
+                    // }
+                  },
+                  isDense: true,
+                ),
               ),
-              Text(
-                kTextLiveSessions,
+              Visibility(
+                visible: bloc.tabIndex == 1,
+                child: PrimaryButton(
+                  buttonText: kTextAddAssignment,
+                  onTapButton: () {},
+                  isDense: true,
+                ),
+              ),
+              Visibility(
+                visible: bloc.tabIndex == 2,
+                child: PrimaryButton(
+                  buttonText: kTextAddPopQuiz,
+                  onTapButton: () {},
+                  isDense: true,
+                ),
+              ),
+              Visibility(
+                visible: bloc.tabIndex == 3,
+                child: PrimaryButton(
+                  buttonText: kTextAddLiveSession,
+                  onTapButton: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return _AddOrEditLiveSessionDialog(
+                            classId: bloc.classDetail?.id ?? 0,
+                          );
+                        });
+                  },
+                  isDense: true,
+                ),
+              ),
+              const SizedBox(
+                width: kMargin32,
               ),
             ],
           ),
           const SizedBox(
             height: kMargin8,
           ),
-          [
-            // Company Profile section view
-            const _EnrolledStudentsSectionView(),
-            // Job Description Section View
-            const Text("Addign"),
-            const Text("Stud"),
-            // Job Description Section View
-            _LiveListSectionView(
-              classLectures: bloc.classDetail?.lectures,
-            ),
-          ][tabController.index],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: kMargin32),
+            child: [
+              // Company Profile section view
+              const _EnrolledStudentsSectionView(),
+              const Text("Entrance ques"),
+
+              // Job Description Section View
+              const Text("Addign"),
+              const Text("Stud"),
+              // Job Description Section View
+              _LiveListSectionView(
+                classLectures: bloc.classDetail?.lectures,
+              ),
+            ][bloc.tabIndex],
+          ),
           const SizedBox(
             height: kMargin48,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class _TabBarItemView extends StatelessWidget {
+  const _TabBarItemView({
+    required this.tabLabel,
+    this.isSelected = false,
+    required this.onChangedTab,
+  });
+
+  final String tabLabel;
+  final bool? isSelected;
+  final Function onChangedTab;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        onChangedTab();
+      },
+      child: Container(
+        height: kClassDetailTabItemHeight,
+        padding: const EdgeInsets.all(kMargin16),
+        decoration: ShapeDecoration(
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero,
+          ),
+          color: (isSelected ?? false) ? kPrimaryColor : kUnselectedTabBarColor,
+          shadows: const [BoxShadow(offset: Offset(1, 0.8), color: kLightBrownColor, blurRadius: 0.4)],
+        ),
+        child: CustomizedTextView(
+          textData: tabLabel,
+          textFontSize: kFont16,
+          textFontWeight: (isSelected ?? false) ? FontWeight.w700 : FontWeight.w400,
+          textColor: (isSelected ?? false) ? kWhiteColor : kBlackColor,
+        ),
       ),
     );
   }
@@ -168,7 +253,7 @@ class _LiveListSectionView extends StatelessWidget {
                     color: kWhiteColor,
                   ),
                   child: ListView.separated(
-                    padding: const EdgeInsets.all(kMargin16),
+                    padding: const EdgeInsets.symmetric(vertical: kMargin16),
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: liveSessions.length,
@@ -201,49 +286,62 @@ class _EnrolledStudentsSectionView extends StatelessWidget {
         decoration: BoxDecoration(color: kWhiteColor, border: Border.all(color: kInvisibleColor)),
         child: Column(
           children: [
-            Container(
-              color: kPrimaryColor,
-              padding: const EdgeInsets.all(kMargin16),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomizedTextView(
-                    textData: "ID",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                  ),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Submitted At",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Name",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Status",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                  )),
-                  Expanded(
-                      child: CustomizedTextView(
-                    textData: "Amount",
-                    textFontSize: kFont16,
-                    textFontWeight: FontWeight.bold,
-                    textAlign: TextAlign.center,
-                  )),
-                ],
-              ),
-            ),
+
+            // Container(
+            //   color: kPrimaryColor,
+            //   padding: const EdgeInsets.all(kMargin16),
+            //   child: const Row(
+            //     mainAxisSize: MainAxisSize.min,
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Expanded(
+            //         flex: 1,
+            //         child: CustomizedTextView(
+            //           textData: kTextEnrollmentId,
+            //           textFontSize: kFont16,
+            //           textFontWeight: FontWeight.bold,
+            //           textColor: kWhiteColor,
+            //         ),
+            //       ),
+            //       Expanded(
+            //           flex: 2,
+            //           child: CustomizedTextView(
+            //             textData: kTextSubmittedAt,
+            //             textFontSize: kFont16,
+            //             textFontWeight: FontWeight.bold,
+            //             textAlign: TextAlign.center,
+            //             textColor: kWhiteColor,
+            //           )),
+            //       Expanded(
+            //           flex: 2,
+            //           child: CustomizedTextView(
+            //             textData: kTextStudentId,
+            //             textFontSize: kFont16,
+            //             textFontWeight: FontWeight.bold,
+            //             textAlign: TextAlign.center,
+            //             textColor: kWhiteColor,
+            //           )),
+            //       Expanded(
+            //           flex: 3,
+            //           child: CustomizedTextView(
+            //             textData: kTextName,
+            //             textFontSize: kFont16,
+            //             textFontWeight: FontWeight.bold,
+            //             textAlign: TextAlign.center,
+            //             textColor: kWhiteColor,
+            //           )),
+            //       Expanded(
+            //           flex: 2,
+            //           child: CustomizedTextView(
+            //             textData: kTextStatus,
+            //             textFontSize: kFont16,
+            //             textFontWeight: FontWeight.bold,
+            //             textAlign: TextAlign.center,
+            //             textColor: kWhiteColor,
+            //           )),
+            //     ],
+            //   ),
+            // ),
             const SizedBox(
               height: kMargin12,
             ),
@@ -430,39 +528,51 @@ class _EnrolledStudentItemView extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomizedTextView(
-            textData: "# ${enrollment?.id ?? 0}",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
+          Expanded(
+            flex: 1,
+            child: InkWell(
+              onTap: () {
+                //   TODO: navigate to enrollment detail
+              },
+              child: CustomizedTextView(
+                textData: "# ${enrollment?.id ?? 0}",
+                textFontSize: kFont16,
+                textFontWeight: FontWeight.w500,
+              ),
+            ),
           ),
           Expanded(
+              flex: 2,
               child: CustomizedTextView(
-            textData: enrollment?.createdAt ?? "",
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          )),
+                textData: enrollment?.createdAt ?? "",
+                textFontSize: kFont16,
+                textFontWeight: FontWeight.w500,
+                textAlign: TextAlign.center,
+              )),
           Expanded(
+              flex: 2,
+              child: CustomizedTextView(
+                textData: "# ${enrollment?.student?.id ?? 0}",
+                textFontSize: kFont16,
+                textFontWeight: FontWeight.w500,
+                textAlign: TextAlign.center,
+              )),
+          Expanded(
+              flex: 3,
               child: InkWell(
-            onTap: () {
-              //   TODO: student detail action
-            },
-            child: CustomizedTextView(
-              textData: enrollment?.student?.name ?? "",
-              textFontSize: kFont16,
-              textColor: kPrimaryColor,
-              textFontWeight: FontWeight.w600,
-              textAlign: TextAlign.center,
-            ),
-          )),
+                onTap: () {
+                  //   TODO: student detail action
+                },
+                child: CustomizedTextView(
+                  textData: enrollment?.student?.name ?? "",
+                  textFontSize: kFont16,
+                  textColor: kPrimaryColor,
+                  textFontWeight: FontWeight.w600,
+                  textAlign: TextAlign.center,
+                ),
+              )),
           Expanded(
-              child: CustomizedTextView(
-            textData: enrollment?.status ?? kTextNA,
-            textFontSize: kFont16,
-            textFontWeight: FontWeight.w500,
-            textAlign: TextAlign.center,
-          )),
-          Expanded(
+            flex: 2,
             child: CustomizedTextView(
               textData: "${enrollment?.amount ?? 0}",
               textFontSize: kFont16,
@@ -502,136 +612,139 @@ class _ClassInfoAndActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        InkWell(
-          onTap: () {
-            onTapBack();
-          },
-          child: const Icon(Icons.arrow_back_ios),
-        ),
-        const SizedBox(
-          width: kMargin16,
-        ),
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomizedTextView(
-              textData: "Class Name: ${classDetail.className ?? ""}",
-              textColor: kPrimaryColor,
-              textFontWeight: FontWeight.bold,
-              textFontSize: kFont20,
-            ),
-            const SizedBox(
-              height: kMargin12,
-            ),
-            CustomizedTextView(
-              textData: "Start Date: ${classDetail.startDate ?? " "}",
-              textFontWeight: FontWeight.w600,
-              textFontSize: kFont16,
-            ),
-            const SizedBox(
-              height: kMargin12,
-            ),
-            CustomizedTextView(
-              textData: "End Date: ${classDetail.endDate ?? " "}",
-              textFontWeight: FontWeight.w600,
-              textFontSize: kFont16,
-            ),
-            const SizedBox(
-              height: kMargin12,
-            ),
-            CustomizedTextView(
-              textData: "Class Fees: ${(classDetail.fees ?? 0).toString().formattedCurrency()}",
-              textFontWeight: FontWeight.w600,
-              textFontSize: kFont16,
-            ),
-            const SizedBox(
-              height: kMargin12,
-            ),
-            CustomizedTextView(
-              textData: "Lectures: ${classDetail.lectures.map((e) => e.name ?? "").toList().join(",")}",
-              textFontWeight: FontWeight.w600,
-              textFontSize: kFont16,
-            ),
-          ],
-        ),
-        const Spacer(),
-        const ImageFromServlet(),
-        // Consumer<DashboardClassDetailsPageBloc>(
-        //     builder: (BuildContext context, bloc, Widget? child) => Image.memory(bloc.imageData ?? Uint8List(0))),
-        const Spacer(),
-        Selector<DashboardClassDetailsPageBloc, int>(
-          selector: (BuildContext context, bloc) => bloc.tabIndex,
-          builder: (BuildContext context, tabIndex, Widget? child) => Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kMargin32),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
+            onTap: () {
+              onTapBack();
+            },
+            child: const Icon(Icons.arrow_back_ios),
+          ),
+          const SizedBox(
+            width: kMargin16,
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PrimaryButton(
-                buttonText: kTextEditClass,
-                onTapButton: () {},
-                isDense: true,
+              CustomizedTextView(
+                textData: "Class Name: ${classDetail.className ?? ""}",
+                textColor: kPrimaryColor,
+                textFontWeight: FontWeight.bold,
+                textFontSize: kFont20,
               ),
               const SizedBox(
                 height: kMargin12,
               ),
-              Visibility(
-                visible: tabIndex == 0,
-                child: PrimaryButton(
-                  buttonText: kTextAddNewStudent,
-                  onTapButton: () async {
-                    // FilePickerResult? result = await FilePicker.platform.pickFiles(
-                    //   type: FileType.any,
-                    // allowedExtensions: ['pdf'],
-                    // );
-
-                    // if (result != null) {
-                    //   File file = File(result.files.single.path!);
-                    uploadImage();
-                    // } else {
-                    // User canceled the picker
-                    // }
-                  },
-                  isDense: true,
-                ),
+              CustomizedTextView(
+                textData: "Start Date: ${classDetail.startDate ?? " "}",
+                textFontWeight: FontWeight.w600,
+                textFontSize: kFont16,
               ),
-              Visibility(
-                visible: tabIndex == 1,
-                child: PrimaryButton(
-                  buttonText: kTextAddAssignment,
-                  onTapButton: () {},
-                  isDense: true,
-                ),
+              const SizedBox(
+                height: kMargin12,
               ),
-              Visibility(
-                visible: tabIndex == 2,
-                child: PrimaryButton(
-                  buttonText: kTextAddPopQuiz,
-                  onTapButton: () {},
-                  isDense: true,
-                ),
+              CustomizedTextView(
+                textData: "End Date: ${classDetail.endDate ?? " "}",
+                textFontWeight: FontWeight.w600,
+                textFontSize: kFont16,
               ),
-              Visibility(
-                visible: tabIndex == 3,
-                child: PrimaryButton(
-                  buttonText: kTextAddLiveSession,
-                  onTapButton: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return _AddOrEditLiveSessionDialog(
-                            classId: classDetail.id ?? 0,
-                          );
-                        });
-                  },
-                  isDense: true,
-                ),
+              const SizedBox(
+                height: kMargin12,
+              ),
+              CustomizedTextView(
+                textData: "Class Fees: ${(classDetail.fees ?? 0).toString().formattedCurrency()}",
+                textFontWeight: FontWeight.w600,
+                textFontSize: kFont16,
+              ),
+              const SizedBox(
+                height: kMargin12,
+              ),
+              CustomizedTextView(
+                textData: "Lectures: ${classDetail.lectures.map((e) => e.name ?? "").toList().join(",")}",
+                textFontWeight: FontWeight.w600,
+                textFontSize: kFont16,
               ),
             ],
           ),
-        )
-      ],
+          const Spacer(),
+          const ImageFromServlet(),
+          // Consumer<DashboardClassDetailsPageBloc>(
+          //     builder: (BuildContext context, bloc, Widget? child) => Image.memory(bloc.imageData ?? Uint8List(0))),
+          const Spacer(),
+          Selector<DashboardClassDetailsPageBloc, int>(
+            selector: (BuildContext context, bloc) => bloc.tabIndex,
+            builder: (BuildContext context, tabIndex, Widget? child) => Column(
+              children: [
+                PrimaryButton(
+                  buttonText: kTextEditClass,
+                  onTapButton: () {},
+                  isDense: true,
+                ),
+                const SizedBox(
+                  height: kMargin12,
+                ),
+                Visibility(
+                  visible: tabIndex == 0,
+                  child: PrimaryButton(
+                    buttonText: kTextAddNewStudent,
+                    onTapButton: () async {
+                      // FilePickerResult? result = await FilePicker.platform.pickFiles(
+                      //   type: FileType.any,
+                      // allowedExtensions: ['pdf'],
+                      // );
+
+                      // if (result != null) {
+                      //   File file = File(result.files.single.path!);
+                      uploadImage();
+                      // } else {
+                      // User canceled the picker
+                      // }
+                    },
+                    isDense: true,
+                  ),
+                ),
+                Visibility(
+                  visible: tabIndex == 1,
+                  child: PrimaryButton(
+                    buttonText: kTextAddAssignment,
+                    onTapButton: () {},
+                    isDense: true,
+                  ),
+                ),
+                Visibility(
+                  visible: tabIndex == 2,
+                  child: PrimaryButton(
+                    buttonText: kTextAddPopQuiz,
+                    onTapButton: () {},
+                    isDense: true,
+                  ),
+                ),
+                Visibility(
+                  visible: tabIndex == 3,
+                  child: PrimaryButton(
+                    buttonText: kTextAddLiveSession,
+                    onTapButton: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return _AddOrEditLiveSessionDialog(
+                              classId: classDetail.id ?? 0,
+                            );
+                          });
+                    },
+                    isDense: true,
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

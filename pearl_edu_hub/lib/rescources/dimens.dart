@@ -36,3 +36,5 @@ const double kDashboardSelectedMenuItemSize = 30.0;
 const double kInfoAlertIconSize = 100.0;
 const double kLectureRoundedImageSizeSmall = 25.0;
 const double kPaymentTypeImageSize = 40.0;
+const double kClassDetailTabItemHeight = 40.0;
+const double kClassDetailTabContainerHeight = 50.0;
